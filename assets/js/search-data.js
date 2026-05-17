@@ -16,6 +16,13 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/blog/";
           },
+        },{id: "nav-vision-amp-venture",
+          title: "vision &amp; venture",
+          description: "Where I am headed, how I got here, and what drives the work.",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/vision/";
+          },
         },{id: "nav-projects",
           title: "projects",
           description: "Embedded systems, robotics, and computer-vision projects.",
