@@ -1,0 +1,8 @@
+github_users:
+  - alexandergmzx
+
+repo_description_lines_max: 2
+
+# Pin specific repos to highlight on the repositories page.
+# Add entries like "alexandergmzx/handmade_drivers_on_baremetal" once those repos are public.
+github_repos:

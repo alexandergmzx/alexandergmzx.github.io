@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Microchip favicon">
+  <!-- Chip body -->
+  <rect x="16" y="16" width="32" height="32" rx="3" ry="3" fill="#2c7d3e"/>
+
+  <!-- Left pins -->
+  <rect x="9"  y="21" width="7" height="3" fill="#2c7d3e"/>
+  <rect x="9"  y="29" width="7" height="3" fill="#2c7d3e"/>
+  <rect x="9"  y="37" width="7" height="3" fill="#2c7d3e"/>
+
+  <!-- Right pins -->
+  <rect x="48" y="21" width="7" height="3" fill="#2c7d3e"/>
+  <rect x="48" y="29" width="7" height="3" fill="#2c7d3e"/>
+  <rect x="48" y="37" width="7" height="3" fill="#2c7d3e"/>
+
+  <!-- Top pins -->
+  <rect x="21" y="9"  width="3" height="7" fill="#2c7d3e"/>
+  <rect x="29" y="9"  width="3" height="7" fill="#2c7d3e"/>
+  <rect x="37" y="9"  width="3" height="7" fill="#2c7d3e"/>
+
+  <!-- Bottom pins -->
+  <rect x="21" y="48" width="3" height="7" fill="#2c7d3e"/>
+  <rect x="29" y="48" width="3" height="7" fill="#2c7d3e"/>
+  <rect x="37" y="48" width="3" height="7" fill="#2c7d3e"/>
+
+  <!-- Pin-1 indicator dot -->
+  <circle cx="22" cy="22" r="2.2" fill="#ffffff"/>
+</svg>

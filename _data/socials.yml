@@ -1,0 +1,7 @@
+# Social media links and identifiers, rendered in the order they are defined here.
+# Field names follow the jekyll-socials plugin convention.
+# https://github.com/george-gca/jekyll-socials
+cv_pdf: /assets/pdf/alexander_gomez_cv.pdf # exported from the CV docx; drop the PDF at this path
+github_username: alexandergmzx
+linkedin_username: alexandergmzx
+rss_icon: true # comment this line to hide the RSS icon

@@ -1,0 +1,155 @@
+cv:
+  name: Jesus Alexander Gomez Gomez
+  label: Embedded Systems Engineer
+  location: Mexico City metro area
+  image: ""
+  summary: Embedded Systems Engineer with 3+ years of professional experience in real-time systems, embedded C/C++ development, and cross-functional team collaboration across multiple international projects.
+
+  social_networks:
+    - network: GitHub
+      username: alexandergmzx
+    - network: LinkedIn
+      username: alexandergmzx
+
+  address:
+    city: Mexico City
+    countryCode: MX
+
+  sections:
+    Education:
+      - institution: Universidad de Guadalajara
+        location: Jalisco, Mexico
+        area: Embedded Linux
+        studyType: Diploma
+        start_date: 2022-08
+        end_date: 2023-05
+        highlights:
+          - Completed May 2023.
+
+      - institution: Tecnológico de Monterrey
+        location: Mexico City, Mexico
+        url: https://tec.mx/en
+        area: Digital Systems and Robotics
+        studyType: Bachelor of Engineering
+        start_date: 2014-08
+        end_date: 2019-12
+        highlights:
+          - President of the Society of Robotics Engineering Students (SEIR), 2014–2017.
+          - International exchange at TU Graz (2018) — Space Systems Engineering &amp; Embedded Systems.
+
+      - institution: TU Graz
+        location: Styria, Austria
+        area: Space Systems Engineering & Embedded Systems
+        studyType: Exchange Program
+        start_date: 2018-01
+        end_date: 2018-06
+        highlights:
+          - Designed and built a closed-loop temperature regulation system (MOSFET heating, precision sensors, PID firmware, sub-degree accuracy).
+
+    Experience:
+      - company: Dextra Technologies (a Deloitte Consulting business)
+        position: Embedded Software Developer II
+        location: Monterrey, Nuevo Leon, Mexico
+        start_date: 2022-01
+        end_date: 2024-07
+        summary: Real-time embedded development across two international automotive projects.
+        highlights:
+          - "Verizon Connect (2023–2024): developed and maintained Pomulator, a system to emulate car trips with micro-applications that improved data availability for high-level (Android) testing. Multi-threaded C++ on Yocto with bash tooling; CAN diagnostics for crucial telemetry. Collaborated remotely with the Dublin team."
+          - "Continental (2022–2023): developed and maintained diagnostics modules in C for the Body Control Module RTOS — requirements-to-code, unit tests, and physical bench testing. Reproduced and debugged hardware-level issues."
+          - Cross-functional collaboration with teams in Ireland, the US, England, Germany, India, and Poland.
+          - Led the team's migration to Git repositories.
+
+      - company: Amdocs
+        position: Software Developer I
+        location: Zapopan, Jalisco, Mexico
+        start_date: 2021-01
+        end_date: 2022-01
+        summary: Backend telecom services for AT&amp;T Mexico.
+        highlights:
+          - Analyzed, supported, and maintained backend services in Unix shell, Python, and C/C++.
+          - GDB-based memory-fault debugging on a production codebase.
+          - SCRUM delivery with direct client communication.
+
+    Projects:
+      - name: Delta robot parallel manipulator
+        summary: 3-DOF parallel mechanism programmed with a microcontroller and ROS2 Jazzy. Forward and inverse kinematics with coordinated multi-axis motion and real-time control. Built during the RWTH Aachen &amp; Universal Robots Executive Certificate program.
+        start_date: 2025-07
+        end_date: 2025-07
+
+      - name: Hostile-zone rescue robot with SLAM
+        summary: Hardware adaptation, disk imaging, modeling, and ROS programming of a mobile robot for closed-environment detection using Simultaneous Localization And Mapping.
+        start_date: 2019-08
+        end_date: 2019-12
+
+      - name: Mexican Sign Language recognition (OpenCV + Keras)
+        summary: Researched, modeled, and trained an AI for real-time recognition of the LSM (Lengua de Señas Mexicana) hand-sign alphabet from a webcam.
+        start_date: 2019-02
+        end_date: 2019-05
+
+      - name: Furuta self-balancing pendulum
+        summary: Designed and implemented an inverted pendulum on Arduino with PID control, rotary-encoder position feedback, and PWM-controlled DC motor for real-time stabilization.
+        start_date: 2019-08
+        end_date: 2019-12
+
+      - name: Inverse-kinematics quadruped robot
+        summary: CAD design, PCB layout, mathematical modeling, and firmware for an obstacle-avoiding four-legged robot.
+        start_date: 2018-09
+        end_date: 2018-12
+
+      - name: Bare-metal STM32 driver tutorial
+        summary: Custom GPIO, UART, and serial-display drivers written from register-level programming without HAL libraries — demonstrating hardware abstraction and low-level embedded fundamentals.
+        url: https://github.com/alexandergmzx/handmade_drivers_on_baremetal
+        start_date: 2020-06
+        end_date: 2020-06
+
+      - name: "Billy Mouth — animatronic text-to-speech"
+        summary: Self text-to-speech-to-movements system driving an animatronic mouth.
+        start_date: 2025-10
+        end_date: 2025-10
+
+    Skills:
+      - name: Embedded Systems
+        keywords: "RTOS development, embedded Linux, real-time systems, bare-metal firmware"
+      - name: Robotics
+        keywords: "ROS2, SLAM, inverse kinematics, PID control"
+      - name: Hardware
+        keywords: "CAN bus, microcontrollers (STM32, Arduino), sensors, AC/DC motors, Ethernet"
+      - name: Testing &amp; Debugging
+        keywords: "GDB, unit testing, bench testing"
+      - name: Tools
+        keywords: "Yocto, LabVIEW, Cadence PSpice, Siemens TIA Portal, MATLAB, Simulink, Git"
+      - name: Methodologies
+        keywords: "SCRUM, Agile"
+
+    Certifications:
+      - name: C++ — Data Structures Specialization
+        issuer: University of Illinois Urbana-Champaign
+
+      - name: ROS2 Executive Certificate
+        issuer: RWTH Aachen
+        date: 2025-07
+
+      - name: Embedded Linux Diploma
+        issuer: Universidad de Guadalajara
+        date: 2023-05
+
+      - name: Google IT Automation with Python — Professional Certificate
+        issuer: Google
+
+      - name: Open Source Software Development, Linux and Git Specialization
+        issuer: The Linux Foundation
+
+      - name: LabVIEW Associate Developer
+        issuer: Tecnológico de Monterrey
+
+    Languages:
+      - name: Spanish
+        summary: Native speaker
+      - name: English
+        summary: IELTS C1
+      - name: German
+        summary: A2
+
+    Interests:
+      - name: Sports
+        keywords: "Water polo, basketball, association football"
