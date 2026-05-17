@@ -2,10 +2,11 @@
 # Site settings
 # -----------------------------------------------------------------------------
 
-title: blank # the website title (if blank, full name will be used instead)
+title: Alexander Gomez
 first_name: Jesus Alexander
 middle_name:
 last_name: Gomez Gomez
+navbar_logo: alx-gomez-logo.png # logo image shown in navbar instead of name text; stored in assets/img/
 contact_note: >
   Reach out via LinkedIn or GitHub.
 description: > # the ">" symbol means to ignore newlines until "footer_text:"
@@ -15,7 +16,7 @@ footer_text: >
   Hosted by <a href="https://pages.github.com/" target="_blank">GitHub Pages</a>.
 keywords: embedded systems, robotics, computer vision, real-time systems, embedded linux, RTOS, C++, ROS2, microcontrollers, software developer
 lang: en # the language of your site (for example: en, fr, cn, ru, etc.)
-icon: chip-icon.svg # microchip favicon stored under assets/img/
+icon: favicon_alx.png # favicon stored under assets/img/
 
 url: https://alexandergmzx.github.io # the base hostname & protocol for your site
 baseurl: # the subpath of your site, e.g. /blog/. Leave blank for root

@@ -4,7 +4,14 @@
     <div class="container">
       {% if page.permalink != '/' %}
         <a class="navbar-brand title font-weight-lighter" href="{{ site.baseurl }}/">
-          {% if site.title == 'blank' %}
+          {% if site.navbar_logo %}
+            <img
+              src="{{ site.navbar_logo | prepend: '/assets/img/' | relative_url }}"
+              alt="{{ site.title }}"
+              height="36"
+              style="max-height:36px;width:auto;"
+            >
+          {% elsif site.title == 'blank' %}
             {% if site.first_name %}
               <span class="font-weight-bold">
                 {{- site.first_name -}}
