@@ -10,5 +10,3 @@ category: academic
 The Furuta pendulum is a rotary-arm inverted pendulum — the canonical "balance an unstable system from sensor feedback" control problem. Built August to December 2019.
 
 I designed and implemented the full system: **Arduino-based microcontroller firmware**, **rotary encoders** for joint-position feedback, a **PWM-driven DC motor** for the actuated horizontal arm, and **PID gains** tuned to keep the upright pendulum stable against disturbance.
-
-> Replace `assets/img/4.jpg` with a photo of the pendulum or a plot of the step-response.

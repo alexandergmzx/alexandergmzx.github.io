@@ -12,5 +12,3 @@ A teaching-by-doing personal project (June 2020): write the firmware drivers for
 Drivers built: **GPIO**, **UART**, and a **serial display**. The point was to demonstrate the layers underneath the convenience APIs — clock trees, register banks, peripheral state machines — and to keep the kind of bare-metal fluency that lets you debug at the bus level when something goes wrong.
 
 Source: **[github.com/alexandergmzx/handmade_drivers_on_baremetal](https://github.com/alexandergmzx/handmade_drivers_on_baremetal)**
-
-> Replace `assets/img/7.jpg` with a photo of the dev board or a screenshot of the serial output.

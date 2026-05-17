@@ -197,6 +197,7 @@ exclude:
   - vendor
   - AGENTS.md
   - CLAUDE.md
+  - MANUAL.md
   - ANALYTICS.md
   - QUICKSTART.md
   - CUSTOMIZE.md
