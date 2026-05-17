@@ -18,7 +18,7 @@ ninja.data = [{
           },
         },{id: "nav-teaching",
           title: "teaching",
-          description: "Course materials, schedules, and resources for classes taught.",
+          description: "Workshops, mentoring, and course materials.",
           section: "Navigation",
           handler: () => {
             window.location.href = "/teaching/";
@@ -104,13 +104,6 @@ ninja.data = [{
         section: 'Socials',
         handler: () => {
           window.open("/assets/pdf/alexander_gomez_cv.pdf", "_blank");
-        },
-      },{
-        id: 'social-email',
-        title: 'email',
-        section: 'Socials',
-        handler: () => {
-          window.open("mailto:%61%6C%65%78%61%6E%64%65%72.%67%6F%6D%65%7A.%63%6F%6E%74%61%63%74@%67%6D%61%69%6C.%63%6F%6D", "_blank");
         },
       },{
         id: 'social-github',
