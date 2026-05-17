@@ -3,14 +3,14 @@
 # -----------------------------------------------------------------------------
 
 title: Alexander Gomez
-first_name: Jesus Alexander
+first_name: Alexander
 middle_name:
-last_name: Gomez Gomez
+last_name: Gomez
 navbar_logo: alx-gomez-logo.png # logo image shown in navbar instead of name text; stored in assets/img/
 contact_note: >
   Reach out via LinkedIn or GitHub.
 description: > # the ">" symbol means to ignore newlines until "footer_text:"
-  Embedded Systems Engineer · Robotics · Computer Vision · Software Developer.
+  Embedded Software Engineer.
 footer_text: >
   Powered by <a href="https://jekyllrb.com/" target="_blank">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio">al-folio</a> theme.
   Hosted by <a href="https://pages.github.com/" target="_blank">GitHub Pages</a>.
@@ -20,7 +20,7 @@ icon: favicon_alx.png # favicon stored under assets/img/
 
 url: https://alexandergmzx.github.io # the base hostname & protocol for your site
 baseurl: # the subpath of your site, e.g. /blog/. Leave blank for root
-last_updated: false # set to true if you want to display last updated in the footer
+last_updated: true # set to true if you want to display last updated in the footer
 impressum_path: # set to path to include impressum link in the footer, use the same path as permalink in a page, helps to conform with EU GDPR
 back_to_top: true # set to false to disable the back to top button
 
@@ -55,7 +55,7 @@ external_services:
 
 navbar_fixed: true
 navbar_about: false # set to true to show the hardcoded "about" link in the navbar
-footer_fixed: true
+footer_fixed: false
 search_enabled: true
 socials_in_search: true
 posts_in_search: true
