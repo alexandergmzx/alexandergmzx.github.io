@@ -2,7 +2,7 @@
 layout: about
 title: about
 permalink: /
-subtitle: Robotics · Embedded Software Engineering
+subtitle: Computer Vision · Robotics · Embedded Software Engineering
 
 profile:
   align: right
@@ -25,9 +25,9 @@ latest_posts:
   limit: 3 # leave blank to include all the blog posts
 ---
 
-[Projects](/projects/)
+**[Projects](/projects/)**
 
-[Curriculum Vitae](/cv/)
+**[Curriculum Vitae](/cv/)**
 
 I am an **embedded systems engineer** who loves to work with real-time systems and embedded C/C++. I have done it professionally most recently at **DXC technologies (Luxoft)** on ADAS Software development projects, previously at **Dextra Technologies (a Deloitte Consulting business)** on the Verizon Connect and Continental projects, and previously at **Amdocs** on AT&amp;T telecom backend. My day-to-day spans RTOS-es, embedded Linux, multi-threaded C++, CAN-bus diagnostics, and all the debugging that real hardware demands.
 
