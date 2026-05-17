@@ -39,65 +39,65 @@ I am a confident engineer, who looks for the best in every person and environmen
 
 ## Values
 
-<div class="d-flex flex-wrap justify-content-center my-4">
-  <div class="text-center m-2">
-    <img src="/assets/img/Values/courage.jpg" alt="Courage" class="rounded img-fluid" style="height:80px;width:80px;object-fit:cover;" />
-    <p class="small font-weight-bold mt-1 mb-0">1. Courage</p>
+<div style="display:flex;flex-wrap:wrap;justify-content:center;margin:1.5rem 0;">
+  <div style="text-align:center;margin:0.5rem;">
+    <img src="/assets/img/Values/courage.jpg" alt="Courage" style="height:80px;width:80px;object-fit:cover;border-radius:4px;" />
+    <p style="font-size:0.875rem;font-weight:bold;margin:0.25rem 0 0;">1. Courage</p>
   </div>
-  <div class="text-center m-2">
-    <img src="/assets/img/Values/sobriety.png" alt="Sobriety" class="rounded img-fluid" style="height:80px;width:80px;object-fit:cover;" />
-    <p class="small font-weight-bold mt-1 mb-0">2. Sobriety</p>
+  <div style="text-align:center;margin:0.5rem;">
+    <img src="/assets/img/Values/sobriety.png" alt="Sobriety" style="height:80px;width:80px;object-fit:cover;border-radius:4px;" />
+    <p style="font-size:0.875rem;font-weight:bold;margin:0.25rem 0 0;">2. Sobriety</p>
   </div>
-  <div class="text-center m-2">
-    <img src="/assets/img/Values/resilience.jpg" alt="Resilience" class="rounded img-fluid" style="height:80px;width:80px;object-fit:cover;" />
-    <p class="small font-weight-bold mt-1 mb-0">3. Resilience</p>
+  <div style="text-align:center;margin:0.5rem;">
+    <img src="/assets/img/Values/resilience.jpg" alt="Resilience" style="height:80px;width:80px;object-fit:cover;border-radius:4px;" />
+    <p style="font-size:0.875rem;font-weight:bold;margin:0.25rem 0 0;">3. Resilience</p>
   </div>
-  <div class="text-center m-2">
-    <img src="/assets/img/Values/diligence.jpg" alt="Diligence" class="rounded img-fluid" style="height:80px;width:80px;object-fit:cover;" />
-    <p class="small font-weight-bold mt-1 mb-0">4. Diligence</p>
+  <div style="text-align:center;margin:0.5rem;">
+    <img src="/assets/img/Values/diligence.jpg" alt="Diligence" style="height:80px;width:80px;object-fit:cover;border-radius:4px;" />
+    <p style="font-size:0.875rem;font-weight:bold;margin:0.25rem 0 0;">4. Diligence</p>
   </div>
-  <div class="text-center m-2">
-    <img src="/assets/img/Values/perspective.jpg" alt="Perspective" class="rounded img-fluid" style="height:80px;width:80px;object-fit:cover;" />
-    <p class="small font-weight-bold mt-1 mb-0">5. Perspective</p>
+  <div style="text-align:center;margin:0.5rem;">
+    <img src="/assets/img/Values/perspective.jpg" alt="Perspective" style="height:80px;width:80px;object-fit:cover;border-radius:4px;" />
+    <p style="font-size:0.875rem;font-weight:bold;margin:0.25rem 0 0;">5. Perspective</p>
   </div>
-  <div class="text-center m-2">
-    <img src="/assets/img/Values/discipline.jpg" alt="Discipline" class="rounded img-fluid" style="height:80px;width:80px;object-fit:cover;" />
-    <p class="small font-weight-bold mt-1 mb-0">6. Discipline</p>
+  <div style="text-align:center;margin:0.5rem;">
+    <img src="/assets/img/Values/discipline.jpg" alt="Discipline" style="height:80px;width:80px;object-fit:cover;border-radius:4px;" />
+    <p style="font-size:0.875rem;font-weight:bold;margin:0.25rem 0 0;">6. Discipline</p>
   </div>
-  <div class="text-center m-2">
-    <img src="/assets/img/Values/persistence.jpg" alt="Persistence" class="rounded img-fluid" style="height:80px;width:80px;object-fit:cover;" />
-    <p class="small font-weight-bold mt-1 mb-0">7. Persistence</p>
+  <div style="text-align:center;margin:0.5rem;">
+    <img src="/assets/img/Values/persistence.jpg" alt="Persistence" style="height:80px;width:80px;object-fit:cover;border-radius:4px;" />
+    <p style="font-size:0.875rem;font-weight:bold;margin:0.25rem 0 0;">7. Persistence</p>
   </div>
-  <div class="text-center m-2">
-    <img src="/assets/img/Values/dedication.jpg" alt="Dedication" class="rounded img-fluid" style="height:80px;width:80px;object-fit:cover;" />
-    <p class="small font-weight-bold mt-1 mb-0">8. Dedication</p>
+  <div style="text-align:center;margin:0.5rem;">
+    <img src="/assets/img/Values/dedication.jpg" alt="Dedication" style="height:80px;width:80px;object-fit:cover;border-radius:4px;" />
+    <p style="font-size:0.875rem;font-weight:bold;margin:0.25rem 0 0;">8. Dedication</p>
   </div>
-  <div class="text-center m-2">
-    <img src="/assets/img/Values/effort.jpg" alt="Effort" class="rounded img-fluid" style="height:80px;width:80px;object-fit:cover;" />
-    <p class="small font-weight-bold mt-1 mb-0">9. Effort</p>
+  <div style="text-align:center;margin:0.5rem;">
+    <img src="/assets/img/Values/effort.jpg" alt="Effort" style="height:80px;width:80px;object-fit:cover;border-radius:4px;" />
+    <p style="font-size:0.875rem;font-weight:bold;margin:0.25rem 0 0;">9. Effort</p>
   </div>
-  <div class="text-center m-2">
-    <img src="/assets/img/Values/passion.png" alt="Passion" class="rounded img-fluid" style="height:80px;width:80px;object-fit:cover;" />
-    <p class="small font-weight-bold mt-1 mb-0">10. Passion</p>
+  <div style="text-align:center;margin:0.5rem;">
+    <img src="/assets/img/Values/passion.png" alt="Passion" style="height:80px;width:80px;object-fit:cover;border-radius:4px;" />
+    <p style="font-size:0.875rem;font-weight:bold;margin:0.25rem 0 0;">10. Passion</p>
   </div>
-  <div class="text-center m-2">
-    <img src="/assets/img/Values/humility.jpg" alt="Humility" class="rounded img-fluid" style="height:80px;width:80px;object-fit:cover;" />
-    <p class="small font-weight-bold mt-1 mb-0">11. Humility</p>
+  <div style="text-align:center;margin:0.5rem;">
+    <img src="/assets/img/Values/humility.jpg" alt="Humility" style="height:80px;width:80px;object-fit:cover;border-radius:4px;" />
+    <p style="font-size:0.875rem;font-weight:bold;margin:0.25rem 0 0;">11. Humility</p>
   </div>
-  <div class="text-center m-2">
-    <img src="/assets/img/Values/health.png" alt="Health" class="rounded img-fluid" style="height:80px;width:80px;object-fit:cover;" />
-    <p class="small font-weight-bold mt-1 mb-0">12. Health</p>
+  <div style="text-align:center;margin:0.5rem;">
+    <img src="/assets/img/Values/health.png" alt="Health" style="height:80px;width:80px;object-fit:cover;border-radius:4px;" />
+    <p style="font-size:0.875rem;font-weight:bold;margin:0.25rem 0 0;">12. Health</p>
   </div>
-  <div class="text-center m-2">
-    <img src="/assets/img/Values/altruism.png" alt="Altruism" class="rounded img-fluid" style="height:80px;width:80px;object-fit:cover;" />
-    <p class="small font-weight-bold mt-1 mb-0">13. Altruism</p>
+  <div style="text-align:center;margin:0.5rem;">
+    <img src="/assets/img/Values/altruism.png" alt="Altruism" style="height:80px;width:80px;object-fit:cover;border-radius:4px;" />
+    <p style="font-size:0.875rem;font-weight:bold;margin:0.25rem 0 0;">13. Altruism</p>
   </div>
-  <div class="text-center m-2">
-    <img src="/assets/img/Values/acceptance.jpg" alt="Acceptance" class="rounded img-fluid" style="height:80px;width:80px;object-fit:cover;" />
-    <p class="small font-weight-bold mt-1 mb-0">14. Acceptance</p>
+  <div style="text-align:center;margin:0.5rem;">
+    <img src="/assets/img/Values/acceptance.jpg" alt="Acceptance" style="height:80px;width:80px;object-fit:cover;border-radius:4px;" />
+    <p style="font-size:0.875rem;font-weight:bold;margin:0.25rem 0 0;">14. Acceptance</p>
   </div>
-  <div class="text-center m-2">
-    <img src="/assets/img/Values/optimism.jpg" alt="Optimism" class="rounded img-fluid" style="height:80px;width:80px;object-fit:cover;" />
-    <p class="small font-weight-bold mt-1 mb-0">15. Optimism</p>
+  <div style="text-align:center;margin:0.5rem;">
+    <img src="/assets/img/Values/optimism.jpg" alt="Optimism" style="height:80px;width:80px;object-fit:cover;border-radius:4px;" />
+    <p style="font-size:0.875rem;font-weight:bold;margin:0.25rem 0 0;">15. Optimism</p>
   </div>
 </div>
