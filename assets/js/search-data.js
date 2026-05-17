@@ -38,8 +38,8 @@ ninja.data = [{
             window.location.href = "/books/";
           },
         },{id: "nav-vision-amp-venture",
-          title: "vision &amp; venture",
-          description: "Where I am headed, how I got here, and what drives the work.",
+          title: "Vision &amp; Venture",
+          description: "",
           section: "Navigation",
           handler: () => {
             window.location.href = "/vision/";
