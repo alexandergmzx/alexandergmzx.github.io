@@ -1,5 +1,24 @@
 {% assign rates = site.data.teaching_rates %}
 {% if rates and rates.services %}
+  <style>
+    #teaching-estimator .form-select,
+    #teaching-estimator .form-control {
+      background-color: var(--global-card-bg-color);
+      color: var(--global-text-color);
+      border-color: var(--global-divider-color, rgba(128, 128, 128, 0.3));
+    }
+    #teaching-estimator .form-select:focus,
+    #teaching-estimator .form-control:focus {
+      background-color: var(--global-card-bg-color);
+      color: var(--global-text-color);
+      border-color: var(--global-theme-color);
+      box-shadow: 0 0 0 0.2rem rgba(var(--global-theme-color-rgb, 128, 128, 128), 0.25);
+    }
+    #teaching-estimator .form-label {
+      color: var(--global-text-color);
+    }
+  </style>
+
   <script id="teaching-estimator-data" type="application/json">
     {
       "currency": {{ rates.currency | default: "USD" | jsonify }},
@@ -22,7 +41,7 @@
   </script>
 
   <form id="teaching-estimator" class="row g-3 align-items-end" autocomplete="off">
-    <div class="col-md-5">
+    <div class="col-md-7">
       <label for="estimator-service" class="form-label">Service</label>
       <select id="estimator-service" class="form-select">
         {% for s in rates.services %}
@@ -31,31 +50,11 @@
       </select>
     </div>
 
-    <div class="col-md-3">
+    <div class="col-md-5">
       <label for="estimator-quantity" class="form-label">
         <span id="estimator-quantity-label">Quantity</span>
       </label>
-      <input
-        type="number"
-        id="estimator-quantity"
-        class="form-control"
-        min="1"
-        step="1"
-        value="1"
-      >
-    </div>
-
-    <div class="col-md-4" id="estimator-group-wrap">
-      <label for="estimator-group" class="form-label">Group size (optional)</label>
-      <input
-        type="number"
-        id="estimator-group"
-        class="form-control"
-        min="1"
-        step="1"
-        value="1"
-      >
-      <div class="form-text" id="estimator-group-hint"></div>
+      <input type="number" id="estimator-quantity" class="form-control" min="1" step="1" value="1">
     </div>
 
     <div class="col-12">
@@ -66,7 +65,7 @@
         style="
           background: var(--global-card-bg-color);
           color: var(--global-text-color);
-          border: 1px solid var(--global-divider-color, rgba(128,128,128,0.3));
+          border: 1px solid var(--global-divider-color, rgba(128, 128, 128, 0.3));
           border-radius: 0.375rem;
           padding: 0.85rem 1rem;
         "
@@ -78,9 +77,11 @@
     </div>
   </form>
 
-  <p class="text-muted small mt-2">Estimates are a guideline — the exact quote depends on scope. Confirm on a short intro call.</p>
+  <p class="small mt-2" style="color: var(--global-text-color-light);">
+    Estimates are a guideline — the exact quote depends on scope. Confirm on a short intro call.
+  </p>
 
   <script defer src="{{ '/assets/js/teaching-estimator.js' | relative_url | bust_file_cache }}"></script>
 {% else %}
-  <p class="text-muted">Estimator unavailable — populate <code>_data/teaching_rates.yml</code>.</p>
+  <p style="color: var(--global-text-color-light);">Estimator unavailable — populate <code>_data/teaching_rates.yml</code>.</p>
 {% endif %}
