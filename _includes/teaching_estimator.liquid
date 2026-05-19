@@ -59,10 +59,21 @@
     </div>
 
     <div class="col-12">
-      <div class="alert alert-secondary mb-0" role="status" aria-live="polite">
+      <div
+        id="estimator-result"
+        role="status"
+        aria-live="polite"
+        style="
+          background: var(--global-card-bg-color);
+          color: var(--global-text-color);
+          border: 1px solid var(--global-divider-color, rgba(128,128,128,0.3));
+          border-radius: 0.375rem;
+          padding: 0.85rem 1rem;
+        "
+      >
         <strong>Estimated total:</strong>
         <span id="estimator-total">—</span>
-        <div class="small text-muted mt-1" id="estimator-note"></div>
+        <div class="small mt-1" style="color: var(--global-text-color-light);" id="estimator-note"></div>
       </div>
     </div>
   </form>
