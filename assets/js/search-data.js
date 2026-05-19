@@ -18,7 +18,7 @@ ninja.data = [{
           },
         },{id: "nav-teaching",
           title: "teaching",
-          description: "Workshops, mentoring, and course materials.",
+          description: "Live cohorts, 1:1 mentoring, and code review in Python and DevOps — delivered through didakta.automato.",
           section: "Navigation",
           handler: () => {
             window.location.href = "/teaching/";
@@ -98,6 +98,16 @@ ninja.data = [{
           description: "Self text-to-speech-to-movements system driving an animatronic",
           section: "Projects",handler: () => {
               window.location.href = "/projects/08_billy_mouth_animatronic/";
+            },},{id: "teachings-python-for-devops",
+          title: 'Python for DevOps',
+          description: "Hands-on 12-week course covering Python tooling for automation, infrastructure, and CI/CD.",
+          section: "Teachings",handler: () => {
+              window.location.href = "/teaching/python-for-devops/";
+            },},{id: "teachings-live-python-dev-course-july-2026-cohort-2-months",
+          title: 'Live Python Dev Course — July 2026 Cohort (2 months)',
+          description: "2-month live weekly Python development course launching July 2026. $500/seat.",
+          section: "Teachings",handler: () => {
+              window.location.href = "/teaching/weekly-live-july-2026/";
             },},{
         id: 'social-cv',
         title: 'CV',
