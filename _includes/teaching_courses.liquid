@@ -1,24 +1,28 @@
-{% if site.teachings and site.teachings.size > 0 %}
-  {% assign status_order = 'active,upcoming,past' | split: ',' %}
-  {% for status in status_order %}
-    {% assign group = site.teachings | where: 'status', status %}
-    {% if group.size > 0 %}
-      {% case status %}
-        {% when 'active' -%}
-          {%- assign group_heading = 'In delivery' %}
-        {% when 'upcoming' -%}
-          {%- assign group_heading = 'Upcoming' %}
-        {% else -%}
-          {%- assign group_heading = 'Past cohorts' %}
-      {% endcase %}
-      <h3 class="mt-4">{{ group_heading }}</h3>
-      <div class="row row-cols-1 row-cols-md-2">
-        {% for course in group %}
-          {% include course_card.liquid %}
-        {% endfor %}
-      </div>
-    {% endif %}
-  {% endfor %}
-{% else %}
-  <p>No courses listed yet — check back soon.</p>
-{% endif %}
+{%- assign status_order = "active,upcoming,past" | split: "," -%}
+{%- assign has_any = false -%}
+{%- for status in status_order -%}
+  {%- assign group = site.teachings | where: "status", status -%}
+  {%- if group.size > 0 -%}
+    {%- assign has_any = true -%}
+  {%- endif -%}
+{%- endfor -%}
+{%- if has_any -%}
+{%- for status in status_order -%}
+{%- assign group = site.teachings | where: "status", status -%}
+{%- if group.size > 0 -%}
+{%- case status -%}
+{%- when "active" -%}{%- assign group_heading = "In delivery" -%}
+{%- when "upcoming" -%}{%- assign group_heading = "Upcoming" -%}
+{%- else -%}{%- assign group_heading = "Past cohorts" -%}
+{%- endcase -%}
+<h3 class="mt-4">{{ group_heading }}</h3>
+<div class="row row-cols-1 row-cols-md-2">
+{%- for course in group %}
+{% include course_card.liquid %}
+{%- endfor %}
+</div>
+{%- endif -%}
+{%- endfor -%}
+{%- else -%}
+<p>No courses listed yet — check back soon.</p>
+{%- endif -%}

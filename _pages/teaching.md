@@ -13,15 +13,15 @@ estimate for a custom engagement, or book a slot directly below.
 
 ## Courses
 
-{% include teaching_courses.liquid %}
+<div>{% include teaching_courses.liquid %}</div>
 
 ## Estimate a service
 
 Pick a service and adjust the inputs to see a rough price. Final quotes are
 confirmed on a short intro call.
 
-{% include teaching_estimator.liquid %}
+<div>{% include teaching_estimator.liquid %}</div>
 
 ## Book a session
 
-{% include calendly_embed.liquid %}
+<div>{% include calendly_embed.liquid %}</div>
