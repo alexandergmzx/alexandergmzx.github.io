@@ -11,14 +11,14 @@ currency: USD
 services:
   - id: mentoring-1on1
     label: "1:1 Mentoring"
-    unit_label: "hours"
-    rate: 100
+    unit_label: "per 30 minutes"
+    rate: 20
     group_pricing: false
 
   - id: code-review
     label: "Async code / project review"
-    unit_label: "hours of review"
-    rate: 120
+    unit_label: "per 30 minutes of review"
+    rate: 30
     group_pricing: false
 
   - id: python-devops-seat
@@ -27,7 +27,7 @@ services:
     rate: 500
     group_pricing: true
 
-  - id: weekly-live-july-2026
+  - id: Live-july-2026
     label: "Live 2-month python dev course (July 2026 cohort)"
     unit_label: "seats"
     rate: 500
@@ -35,4 +35,4 @@ services:
 
 group_discount:
   threshold: 3 # 3+ seats
-  multiplier: 0.85 # 15% off
+  multiplier: 0.70 # 15% off
