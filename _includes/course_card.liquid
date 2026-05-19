@@ -1,0 +1,55 @@
+{% assign status = course.status | default: 'active' %}
+{% case status %}
+  {% when 'active' -%}
+    {%- assign badge_class = 'badge bg-success' -%}
+    {%- assign badge_label = 'In delivery' %}
+  {% when 'upcoming' -%}
+    {%- assign badge_class = 'badge bg-warning text-dark' -%}
+    {%- assign badge_label = 'Upcoming' %}
+  {% else -%}
+    {%- assign badge_class = 'badge bg-secondary' -%}
+    {%- assign badge_label = 'Archived' %}
+{% endcase %}
+
+<div class="col mb-4">
+  <div class="card h-100 hoverable">
+    <div class="card-body d-flex flex-column">
+      <div class="d-flex justify-content-between align-items-start mb-2">
+        <h3 class="card-title mb-0">{{ course.title }}</h3>
+        <span class="{{ badge_class }}">{{ badge_label }}</span>
+      </div>
+
+      {% if course.term or course.time %}
+        <p class="text-muted small mb-2">
+          {% if course.term %}{{ course.term }}{% endif %}
+          {% if course.term and course.time %} · {% endif %}
+          {% if course.time %}{{ course.time }}{% endif %}
+        </p>
+      {% endif %}
+
+      {% if course.description %}
+        <p class="card-text">{{ course.description }}</p>
+      {% endif %}
+
+      {% if course.price_summary %}
+        <p class="card-text">
+          <strong>{{ course.price_summary }}</strong>
+        </p>
+      {% endif %}
+
+      <div class="mt-auto pt-3">
+        <a href="{{ course.url | relative_url }}" class="btn btn-sm btn-outline-primary">Details</a>
+        {% if site.calendly_url %}
+          <a
+            href="{{ site.calendly_url }}"
+            class="btn btn-sm btn-primary"
+            target="_blank"
+            rel="noopener"
+          >
+            {{ course.cta_label | default: 'Book a call' }}
+          </a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>

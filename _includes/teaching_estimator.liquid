@@ -1,0 +1,75 @@
+{% assign rates = site.data.teaching_rates %}
+{% if rates and rates.services %}
+  <script id="teaching-estimator-data" type="application/json">
+    {
+      "currency": {{ rates.currency | default: "USD" | jsonify }},
+      "groupDiscount": {
+        "threshold": {{ rates.group_discount.threshold | default: 3 }},
+        "multiplier": {{ rates.group_discount.multiplier | default: 1 }}
+      },
+      "services": [
+        {% for s in rates.services %}
+          {
+            "id": {{ s.id | jsonify }},
+            "label": {{ s.label | jsonify }},
+            "unitLabel": {{ s.unit_label | default: "units" | jsonify }},
+            "rate": {% if s.rate == nil %}null{% else %}{{ s.rate }}{% endif %},
+            "groupPricing": {% if s.group_pricing %}true{% else %}false{% endif %}
+          }{% unless forloop.last %},{% endunless %}
+        {% endfor %}
+      ]
+    }
+  </script>
+
+  <form id="teaching-estimator" class="row g-3 align-items-end" autocomplete="off">
+    <div class="col-md-5">
+      <label for="estimator-service" class="form-label">Service</label>
+      <select id="estimator-service" class="form-select">
+        {% for s in rates.services %}
+          <option value="{{ s.id }}">{{ s.label }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="col-md-3">
+      <label for="estimator-quantity" class="form-label">
+        <span id="estimator-quantity-label">Quantity</span>
+      </label>
+      <input
+        type="number"
+        id="estimator-quantity"
+        class="form-control"
+        min="1"
+        step="1"
+        value="1"
+      >
+    </div>
+
+    <div class="col-md-4" id="estimator-group-wrap">
+      <label for="estimator-group" class="form-label">Group size (optional)</label>
+      <input
+        type="number"
+        id="estimator-group"
+        class="form-control"
+        min="1"
+        step="1"
+        value="1"
+      >
+      <div class="form-text" id="estimator-group-hint"></div>
+    </div>
+
+    <div class="col-12">
+      <div class="alert alert-secondary mb-0" role="status" aria-live="polite">
+        <strong>Estimated total:</strong>
+        <span id="estimator-total">—</span>
+        <div class="small text-muted mt-1" id="estimator-note"></div>
+      </div>
+    </div>
+  </form>
+
+  <p class="text-muted small mt-2">Estimates are a guideline — the exact quote depends on scope. Confirm on a short intro call.</p>
+
+  <script defer src="{{ '/assets/js/teaching-estimator.js' | relative_url | bust_file_cache }}"></script>
+{% else %}
+  <p class="text-muted">Estimator unavailable — populate <code>_data/teaching_rates.yml</code>.</p>
+{% endif %}

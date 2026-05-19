@@ -43,6 +43,10 @@ external_services:
   github_readme_stats_url: https://github-readme-stats.vercel.app
   github_profile_trophy_url: https://github-profile-trophy.vercel.app
 
+# Calendly URL for teaching page (booking widget + course CTAs).
+# Replace YOUR-HANDLE with the didakta-automatoautomato Calendly handle.
+calendly_url: https://calendly.com/didakta-automato
+
 # -----------------------------------------------------------------------------
 # RSS Feed
 # -----------------------------------------------------------------------------
