@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Delta robot parallel manipulator
-description: 3-DOF parallel manipulator with ROS2 Jazzy and real-time motion control
+description: 3-DOF parallel manipulator simulated in ROS 2 Jazzy with RViz and a browser dashboard
 img: assets/img/1.jpg
 importance: 1
 category: academic
@@ -9,4 +9,6 @@ category: academic
 
 Built during the **RWTH Aachen & Universal Robots Executive Certificate** program (July 2025). The delta robot is a 3-degree-of-freedom parallel mechanism — three motors at the base move a shared end-effector through coordinated arc trajectories.
 
-I programmed the microcontroller and the ROS2 Jazzy node that drives it, implementing both **forward and inverse kinematics** so the end-effector can be commanded in either joint space or Cartesian space. Coordinated multi-axis motion is handled with real-time control loops timed to the motor dynamics.
+The project has since grown into [**Delta_ROS2**](https://github.com/alexandergmzx/Delta_ROS2), a full **ROS 2 Jazzy** simulation workspace. It implements both **forward and inverse kinematics** — the end-effector can be commanded in joint space or Cartesian space — and drives the mechanism through coordinated arc trajectories. The stack is split into clean packages: a `description` package (URDF, meshes, RViz, launch files), a `serial` package exposing an inverse-kinematics service, joint-state publisher, trajectory action server, and a pseudo-Arduino emulator that stands in for the firmware, and a `ui` package — a **FastAPI + React browser dashboard** for live state, waypoint sequences, and demo presets. RViz remains the full ROS visualization path.
+
+Revived in 2026 after Armando nudged me back to it. The delta-robot physics, the inverse-kinematics math, and the Arduino firmware / pseudo-Arduino emulation were developed together with **Armando Rodriguez** ([@armandorodb](https://github.com/armandorodb)), robotics engineer.
