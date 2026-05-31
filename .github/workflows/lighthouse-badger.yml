@@ -22,7 +22,10 @@ env:
 
 # TRIGGERS
 on:
-  page_build:
+  # Disabled: this workflow requires a LIGHTHOUSE_BADGER_TOKEN secret (a PAT) that
+  # is not configured, so every page_build run failed at checkout. Manual-only for now.
+  # To re-enable automatic runs, create the secret and uncomment `page_build:` below.
+  # page_build:
   # schedule: # Check your schedule here => https://crontab.guru/
   #   - cron: '55 23 * * 0' # e.g. every Sunday at 23:55
   #
