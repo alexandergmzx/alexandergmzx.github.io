@@ -58,9 +58,12 @@ ninja.data = [{
               handler: () => {
                 window.location.href = "/repositories/";
               },
-            },{id: "projects-delta-robot-parallel-manipulator",
+            },{id: "news-resurrected-my-delta-robot-parallel-manipulator-project-the-code-is-live-on-github-back-at-it-with-my-collaborator-armando-rodriguez-who-nudged-me-to-pick-it-up-again-robot",
+          title: 'Resurrected my Delta robot parallel manipulator project — the code is live on...',
+          description: "",
+          section: "News",},{id: "projects-delta-robot-parallel-manipulator",
           title: 'Delta robot parallel manipulator',
-          description: "3-DOF parallel manipulator with ROS2 Jazzy and real-time motion control",
+          description: "3-DOF parallel manipulator simulated in ROS 2 Jazzy with RViz and a browser dashboard",
           section: "Projects",handler: () => {
               window.location.href = "/projects/01_delta_robot/";
             },},{id: "projects-hostile-zone-rescue-robot-with-slam",
