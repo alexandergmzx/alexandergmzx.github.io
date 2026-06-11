@@ -21,6 +21,13 @@ Built during the **RWTH Aachen & Universal Robots Executive Certificate** progra
   >
     <i class="fa-brands fa-github"></i> View the code on GitHub
   </a>
+  <a
+    class="btn btn-outline-primary"
+    role="button"
+    href="{{ '/projects/01_delta_robot/sim/' | relative_url }}"
+  >
+    <i class="fa-solid fa-cube"></i> Launch the interactive simulator
+  </a>
 </div>
 
 The project has since grown into [**Delta_ROS2**](https://github.com/alexandergmzx/Delta_ROS2), a full **ROS 2 Jazzy** simulation workspace. It implements both **forward and inverse kinematics** — the end-effector can be commanded in joint space or Cartesian space — and drives the mechanism through coordinated arc trajectories. The stack is split into clean packages: a `description` package (URDF, meshes, RViz, launch files), a `serial` package exposing an inverse-kinematics service, joint-state publisher, trajectory action server, and a pseudo-Arduino emulator that stands in for the firmware, and a `ui` package — a **FastAPI + React browser dashboard** for live state, waypoint sequences, and demo presets. RViz remains the full ROS visualization path.
