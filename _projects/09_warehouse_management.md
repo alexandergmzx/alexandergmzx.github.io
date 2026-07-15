@@ -1,0 +1,28 @@
+---
+layout: page
+title: Miniature warehouse management system
+description: End-to-end Spring Boot warehouse picking system with an HHT API, admin dashboard, and PostgreSQL audit trail
+img: assets/img/warehouse-management-dashboard.png
+importance: 9
+category: personal
+---
+
+A full-stack warehouse-management proof of concept built with **Java 21, Spring Boot, and PostgreSQL 17**. It models the picking workflow from released customer orders to atomic task claims, location and article scans, stock updates, and completed orders. A separate REST contract supports handheld terminals (HHTs), while a session-authenticated web dashboard gives administrators a live view of available, active, completed, and stuck tasks.
+
+{% include figure.liquid loading="eager" path="assets/img/warehouse-management-dashboard.png" class="img-fluid rounded z-depth-1" zoomable=true alt="Warehouse task dashboard showing available, completed, and stuck picking tasks" caption="The polling admin dashboard, with a stuck picking task highlighted for operational follow-up." %}
+
+<div class="text-center my-3">
+  <a
+    class="btn btn-outline-primary"
+    role="button"
+    href="https://github.com/alexandergmzx/warehouse-management"
+    target="_blank"
+    rel="external nofollow noopener"
+  >
+    <i class="fa-brands fa-github"></i> View the code on GitHub
+  </a>
+</div>
+
+The application includes **FIFO task allocation**, concurrent and idempotent picking operations, deterministic QR labels for locations and articles, structured JSON logging, and append-only stock-movement and task-transition ledgers enforced by database triggers. Flyway owns the schema, development fixtures are isolated from preproduction, and unsafe or incomplete preproduction configuration fails fast with an actionable diagnostic.
+
+The delivery is backed by **33 PostgreSQL integration tests** and 19 documented functional test cases, covering migrations, authentication, inventory integrity, concurrency, recovery paths, labels, logging, the dashboard, and a clean extension seam for future material-flow-control integration. The repository also contains SQL diagnostics, configuration matrices, requirements traceability, architecture decisions, runbooks for Linux and Windows, and retained runtime evidence.
