@@ -106,6 +106,11 @@ ninja.data = [{
           description: "Self text-to-speech-to-movements system driving an animatronic",
           section: "Projects",handler: () => {
               window.location.href = "/projects/08_billy_mouth_animatronic/";
+            },},{id: "projects-miniature-warehouse-management-system",
+          title: 'Miniature warehouse management system',
+          description: "End-to-end Spring Boot warehouse picking system with an HHT API, admin dashboard, and PostgreSQL audit trail",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/09_warehouse_management/";
             },},{id: "teachings-python-for-devops",
           title: 'Python for DevOps',
           description: "Hands-on 12-week course covering Python tooling for automation, infrastructure, and CI/CD.",
