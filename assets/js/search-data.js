@@ -58,18 +58,7 @@ ninja.data = [{
               handler: () => {
                 window.location.href = "/repositories/";
               },
-            },{id: "post-hello-world",
-        
-          title: "Hello world",
-        
-        description: "New note",
-        section: "Posts",
-        handler: () => {
-          
-            window.location.href = "/garden/2026/hello-world/";
-          
-        },
-      },{id: "post-how-this-garden-works",
+            },{id: "post-how-this-garden-works",
         
           title: "How this garden works",
         
