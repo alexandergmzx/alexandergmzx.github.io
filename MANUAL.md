@@ -194,9 +194,9 @@ visitors to where they should go next.
 Edit the page's front matter:
 
 ```yaml
-nav: true       # appears
-nav: false      # hidden (page is still reachable by direct URL)
-nav_order: 3    # position from left (lower number = further left)
+nav: true # appears
+nav: false # hidden (page is still reachable by direct URL)
+nav_order: 3 # position from left (lower number = further left)
 ```
 
 ### The "About" link
@@ -986,9 +986,9 @@ in markdown.
 ### YAML strings with special characters need quotes
 
 ```yaml
-title: "My: Cool Site"          # colon inside title needs quoting
-description: "A & B"             # ampersand also fine quoted
-title: Just a normal title       # no special chars, no quote needed
+title: "My: Cool Site" # colon inside title needs quoting
+description: "A & B" # ampersand also fine quoted
+title: Just a normal title # no special chars, no quote needed
 ```
 
 ### Markdown inside YAML doesn't render
