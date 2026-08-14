@@ -13,6 +13,9 @@ from datetime import date
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
+TEMPLATES_DIR = REPO_ROOT / "_templates"
+
+DEFAULT_BODY = "\n<!-- TODO: write content here -->\n"
 
 TYPES = {
     "1": "project",
@@ -25,13 +28,33 @@ TYPES = {
 
 MENU = """
 Content type:
-  1) project   → _projects/
-  2) post      → _posts/
-  3) news      → _news/
-  4) book      → _books/
-  5) teaching  → _teachings/
-  6) page      → _pages/
+  1) project      → _projects/
+  2) garden note  → _posts/
+  3) news         → _news/
+  4) book         → _books/
+  5) teaching     → _teachings/
+  6) page         → _pages/
 """
+
+# The garden beds. A note belongs to exactly one. Keep in sync with
+# display_categories in _config.yml — this is the only place to edit here.
+POST_CATEGORIES = ["tech", "poetry", "music", "language", "philosophy", "misc"]
+
+# Note type menu → (label, template name in _templates/, category).
+# A template of None means "blank": ask for the category instead.
+POST_TYPES = {
+    "1": ("poem", "poem", "poetry"),
+    "2": ("song cover", "cover", "music"),
+    "3": ("language note", "language", "language"),
+    "4": ("essay", "essay", "philosophy"),
+    "5": ("quick thought", "thought", "misc"),
+    "6": ("tech note", "tech", "tech"),
+    "7": ("blank", None, None),
+}
+
+POST_TYPE_MENU = "\nNote type:\n" + "".join(
+    f"  {key}) {label:<14}→ {category or 'pick a category'}\n" for key, (label, _tpl, category) in sorted(POST_TYPES.items())
+)
 
 
 def ask(prompt, default=None):
@@ -91,32 +114,95 @@ def build_project():
         f"importance: {importance}\n"
         f"category: {category}\n"
         f"---\n"
-    )
+    ) + DEFAULT_BODY
     return path, front_matter
 
 
-def build_post():
-    title = ask("Title")
-    description = ask("Description (optional)", "")
-    categories = ask("Categories (space-separated, optional)", "")
-    today = date.today().isoformat()
+def fill_template(name, tokens):
+    """Render _templates/<name>.md, substituting __TOKEN__ placeholders.
 
-    slug = slugify(title)
-    path = REPO_ROOT / "_posts" / f"{today}-{slug}.md"
+    Front-matter lines whose whole value is an empty token (e.g. no description)
+    are dropped instead of being emitted with nothing after the colon.
+    Returns None if the template file is missing, so callers can fall back.
+    """
+    template = TEMPLATES_DIR / f"{name}.md"
+    if not template.is_file():
+        return None
 
+    text = template.read_text(encoding="utf-8")
+    for token, value in tokens.items():
+        if value:
+            text = text.replace(token, value)
+        else:
+            text = re.sub(r"(?m)^[\w-]+:[ \t]*" + re.escape(token) + r"[ \t]*\n", "", text)
+            text = text.replace(token, "")
+    return text
+
+
+def generic_post(title, today, description, tags, category):
+    """Fallback front matter used for blank notes and missing templates."""
     desc_line = f"description: {description}\n" if description else ""
-    cat_line = f"categories: {categories}\n" if categories else ""
-    front_matter = (
+    tags_line = f"tags: {tags}\n" if tags else ""
+    return (
         f"---\n"
         f"layout: post\n"
         f"title: \"{title}\"\n"
         f"date: {today}\n"
         f"{desc_line}"
-        f"{cat_line}"
+        f"{tags_line}"
+        f"categories: {category}\n"
+        f"maturity: seedling\n"
         f"related_posts: false\n"
+        f"giscus_comments: true\n"
         f"---\n"
-    )
-    return path, front_matter
+    ) + DEFAULT_BODY
+
+
+def ask_post_category():
+    allowed = ", ".join(POST_CATEGORIES)
+    while True:
+        category = (ask(f"Category ({allowed})", "misc") or "").strip().lower()
+        if category in POST_CATEGORIES:
+            return category
+        print(f"  {category!r} is not a garden category. Pick one of: {allowed}")
+
+
+def build_post():
+    title = ask("Title") or "Untitled"
+    description = ask("Description (optional)", "")
+
+    print(POST_TYPE_MENU)
+    type_choice = ask("Note type", "7")
+    label, template, category = POST_TYPES.get(type_choice, POST_TYPES["7"])
+    if category is None:
+        category = ask_post_category()
+
+    tag_hint = "first tag = the language" if template == "language" else "lowercase, single words, 1-4"
+    tags = ask(f"Tags (space-separated, {tag_hint}, optional)", "")
+
+    today = date.today().isoformat()
+    slug = slugify(title)
+    path = REPO_ROOT / "_posts" / f"{today}-{slug}.md"
+
+    content = None
+    if template:
+        content = fill_template(
+            template,
+            {
+                "__TITLE__": title,
+                "__DATE__": today,
+                "__DESCRIPTION__": description,
+                "__TAGS__": tags,
+            },
+        )
+        if content is None:
+            print(f"  No _templates/{template}.md found — falling back to plain front matter.")
+
+    if content is None:
+        content = generic_post(title, today, description, tags, category)
+
+    print(f"  {label} → categories: {category}")
+    return path, content
 
 
 def build_news():
@@ -133,7 +219,7 @@ def build_news():
         f"title: \"{title}\"\n"
         f"date: {news_date}\n"
         f"---\n"
-    )
+    ) + DEFAULT_BODY
     return path, front_matter
 
 
@@ -161,7 +247,7 @@ def build_book():
         f"{rating_line}"
         f"{img_line}"
         f"---\n"
-    )
+    ) + DEFAULT_BODY
     return path, front_matter
 
 
@@ -178,7 +264,7 @@ def build_teaching():
         f"title: \"{title}\"\n"
         f"description: {description}\n"
         f"---\n"
-    )
+    ) + DEFAULT_BODY
     return path, front_matter
 
 
@@ -204,7 +290,7 @@ def build_page():
         f"{nav_line}"
         f"{nav_order_line}"
         f"---\n"
-    )
+    ) + DEFAULT_BODY
     return path, front_matter
 
 
@@ -227,14 +313,14 @@ def main():
         sys.exit(1)
 
     print(f"\n--- New {content_type} ---")
-    path, front_matter = BUILDERS[content_type]()
+    path, content = BUILDERS[content_type]()
 
     if not confirm_overwrite(path):
         print("Aborted.")
         sys.exit(0)
 
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(front_matter + "\n<!-- TODO: write content here -->\n", encoding="utf-8")
+    path.write_text(content, encoding="utf-8")
 
     print(f"\nCreated: {path.relative_to(REPO_ROOT)}")
 

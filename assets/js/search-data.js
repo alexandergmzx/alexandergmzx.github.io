@@ -23,12 +23,12 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/teaching/";
           },
-        },{id: "nav-blog",
-          title: "blog",
+        },{id: "nav-garden",
+          title: "garden",
           description: "",
           section: "Navigation",
           handler: () => {
-            window.location.href = "/blog/";
+            window.location.href = "/garden/";
           },
         },{id: "nav-bookshelf",
           title: "bookshelf",
@@ -58,7 +58,73 @@ ninja.data = [{
               handler: () => {
                 window.location.href = "/repositories/";
               },
-            },{id: "news-resurrected-my-delta-robot-parallel-manipulator-project-the-code-is-live-on-github-back-at-it-with-my-collaborator-armando-rodriguez-who-nudged-me-to-pick-it-up-again-robot",
+            },{id: "post-how-this-garden-works",
+        
+          title: "How this garden works",
+        
+        description: "Why this section is a garden instead of a blog, what the beds and the badges mean, and how the notes here are meant to be read.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/garden/2026/how-this-garden-works/";
+          
+        },
+      },{id: "post-what-grows-in-the-philosophy-bed",
+        
+          title: "What grows in the philosophy bed",
+        
+        description: "Questions I keep turning over, written out properly enough that the flaws in them become findable.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/garden/2026/what-grows-in-the-philosophy-bed/";
+          
+        },
+      },{id: "post-what-grows-in-the-language-bed",
+        
+          title: "What grows in the language bed",
+        
+        description: "Grammar that took a second pass to click, words that refuse to stay learned, and sentences found in the wild and taken apart.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/garden/2026/what-grows-in-the-language-bed/";
+          
+        },
+      },{id: "post-what-grows-in-the-music-bed",
+        
+          title: "What grows in the music bed",
+        
+        description: "Songs I have borrowed for a while — covers, the occasional rough take, and lyrics set beside their translation.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/garden/2026/what-grows-in-the-music-bed/";
+          
+        },
+      },{id: "post-what-grows-in-the-poetry-bed",
+        
+          title: "What grows in the poetry bed",
+        
+        description: "Why verse lives on the same site as firmware notes, and what to expect from the poems kept here.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/garden/2026/what-grows-in-the-poetry-bed/";
+          
+        },
+      },{id: "post-what-grows-in-the-tech-bed",
+        
+          title: "What grows in the tech bed",
+        
+        description: "The working notebook — embedded systems, robotics, and the parts of both that only show themselves on real hardware.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/garden/2026/what-grows-in-the-tech-bed/";
+          
+        },
+      },{id: "news-resurrected-my-delta-robot-parallel-manipulator-project-the-code-is-live-on-github-back-at-it-with-my-collaborator-armando-rodriguez-who-nudged-me-to-pick-it-up-again-robot",
           title: 'Resurrected my Delta robot parallel manipulator project — the code is live on...',
           description: "",
           section: "News",},{id: "news-published-my-miniature-warehouse-management-system-an-end-to-end-java-and-spring-boot-proof-of-concept-for-warehouse-picking-with-an-hht-api-live-admin-dashboard-qr-labels-postgresql-audit-ledgers-and-operational-diagnostics-explore-the-project-package",
