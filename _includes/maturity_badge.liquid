@@ -1,0 +1,18 @@
+{% comment %}
+  How grown a note is. Stages and their wording live in _data/garden.yml.
+
+  Usage:
+    {% include maturity_badge.liquid maturity=page.maturity %}
+    {% include maturity_badge.liquid maturity=post.maturity compact=true %}
+
+  Renders nothing when a note declares no maturity, so untagged notes stay
+  clean rather than being labelled by default.
+{% endcomment %}
+
+{% assign stage = site.data.garden.maturity[include.maturity] %}
+{% if stage %}
+  <span class="maturity maturity-{{ include.maturity }}" title="{{ stage.description }}">
+    <i class="fa-solid fa-{{ stage.icon }}"></i>
+    {%- unless include.compact %} {{ stage.label }}{% endunless %}
+  </span>
+{% endif %}

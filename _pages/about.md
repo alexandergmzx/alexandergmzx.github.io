@@ -22,7 +22,8 @@ announcements:
 latest_posts:
   enabled: true
   scrollable: true # adds a vertical scroll bar if there are more than 3 new posts items
-  limit: 3 # leave blank to include all the blog posts
+  limit: 3 # leave blank to include all the garden notes
+  category: tech # only surface notes from this garden bed here; leave blank for all of them
 ---
 
 **[Projects](/projects/)**
@@ -33,4 +34,4 @@ I am an **embedded systems engineer** who loves to work with real-time systems a
 
 I hold a [BEng in Digital Systems &amp; Robotics](https://tec.mx/en) from Tec de Monterrey and I am currently applying to a masters in embedded systems. My mission is to **build tools and solutions that improve the quality of life of the people around me**.
 
-On this site you will find my [blog](/blog/) is for longer-form notes; [news](#news) for short updates. For where I am headed and how I got here, see [Vision &amp; Venture](/vision/).
+On this site you will find my [garden](/garden/) — longer-form notes on engineering, and a few things that have nothing to do with it; [news](#news) for short updates. For where I am headed and how I got here, see [Vision &amp; Venture](/vision/).

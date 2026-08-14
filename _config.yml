@@ -96,9 +96,9 @@ bing_site_verification: # out your bing-site-verification ID (Bing Webmaster)
 # Blog
 # -----------------------------------------------------------------------------
 
-blog_name: Notes # blog_name will be displayed in your blog page
-blog_description: thoughts on embedded systems, robotics, and software
-permalink: /blog/:year/:title/
+blog_name: Garden # blog_name will be displayed in your blog page
+blog_description: a digital garden — tech notes, poetry, song covers, languages, and philosophy, all growing at their own pace
+permalink: /garden/:year/:title/
 lsi: false # produce an index for related posts
 
 # Pagination
@@ -112,10 +112,14 @@ related_blog_posts:
 # Giscus comments (RECOMMENDED)
 # Follow instructions on https://giscus.app/ to setup for your repo to fill out the information below.
 giscus:
-  repo: # <your-github-user-name>/<your-github-repo-name>
-  repo_id: # leave empty or specify your repo_id (see https://giscus.app/)
-  category: Comments # name of the category under which discussions will be created
-  category_id: # leave empty or specify your category_id (see https://giscus.app/)
+  repo: alexandergmzx/alexandergmzx.github.io # set explicitly so comments also work in local builds; CI overwrites it with the same value
+  repo_id: R_kgDOSfggeg
+  # "Announcements" is giscus's recommended category type: only maintainers can
+  # open threads there, so nobody can post into your Discussions directly — the
+  # giscus app creates a thread the first time someone comments on a note.
+  # Renaming this category in the GitHub UI is safe; the id below is what counts.
+  category: Announcements
+  category_id: DIC_kwDOSfgges4DDV72
   mapping: title # identify discussions by post title
   strict: 1 # use strict identification mode
   reactions_enabled: 1 # enable (1) or disable (0) emoji reactions
@@ -268,14 +272,16 @@ jekyll-archives:
   posts:
     enabled: [year, tags, categories] # enables year, tag and category archives (remove if you need to disable one of them).
     permalinks:
-      year: "/blog/:year/"
-      tags: "/blog/:type/:name/"
-      categories: "/blog/:type/:name/"
+      year: "/garden/:year/"
+      tags: "/garden/:type/:name/"
+      categories: "/garden/:type/:name/"
   books:
     enabled: [year, tags, categories] # enables year, tag and category archives (remove if you need to disable one of them).
 
 display_tags: [] # these tags will be displayed on the front page of your blog
-display_categories: [] # these categories will be displayed on the front page of your blog
+# The garden "beds". Each one is a category; a note belongs to exactly one.
+# Per-bed artwork and taglines live in _data/garden.yml.
+display_categories: [tech, poetry, music, language, philosophy, misc]
 
 # -----------------------------------------------------------------------------
 # Jekyll Scholar
@@ -382,7 +388,8 @@ imagemagick:
     - ".jpeg"
     - ".png"
     - ".tiff"
-    - ".gif"
+    # ".gif" is deliberately absent: resizing an animated GIF to webp without
+    # -coalesce freezes/garbles the animation. Serve GIFs as-is instead.
   output_formats:
     webp: "-auto-orient -quality 85"
 

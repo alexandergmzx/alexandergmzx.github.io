@@ -1,0 +1,34 @@
+{% comment %}
+  The bed switcher: one chip per category listed in `display_categories`.
+
+  Usage:
+    {% include garden_beds.liquid %}                 nothing marked active
+    {% include garden_beds.liquid active="poetry" %} that bed highlighted
+{% endcomment %}
+
+<nav class="garden-beds" aria-label="garden beds">
+  <ul>
+    <li>
+      <a
+        class="garden-bed{% unless include.active %} is-active{% endunless %}"
+        href="{{ '/garden/' | relative_url }}"
+      >
+        <i class="fa-solid fa-spa"></i><span>all notes</span>
+      </a>
+    </li>
+    {% for category in site.display_categories %}
+      {% assign bed = site.data.garden.beds[category] %}
+      <li>
+        <a
+          class="garden-bed{% if include.active == category %} is-active{% endif %}"
+          href="{{ category | slugify | prepend: '/garden/category/' | append: '/' | relative_url }}"
+          {% if bed.tagline %}
+            title="{{ bed.tagline }}"
+          {% endif %}
+        >
+          <i class="fa-solid fa-{{ bed.icon | default: 'leaf' }}"></i><span>{{ category }}</span>
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+</nav>

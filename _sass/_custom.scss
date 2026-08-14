@@ -1,0 +1,305 @@
+/*******************************************************************************
+ * The digital garden.
+ *
+ * A backdrop photograph with a veil over it, content on translucent panels,
+ * and a circuit-trace motif that runs under the bed switcher — wild growth on
+ * a board. Everything here is additive: no theme partial is modified, and
+ * every rule is scoped to a garden class, so the rest of the site is untouched.
+ ******************************************************************************/
+
+@use "variables" as v;
+@use "sass:color";
+
+:root {
+  // Panels float over the backdrop photograph, so they need a background of
+  // their own that is opaque enough to read against a busy image.
+  --garden-panel-bg: rgba(255, 255, 255, 0.88);
+  --garden-veil: rgba(255, 255, 255, 0.82);
+  --garden-chip-bg: rgba(255, 255, 255, 0.92);
+  --garden-trace: #{rgba(v.$purple-color, 0.28)};
+  --garden-accent: #{v.$purple-color};
+}
+
+html[data-theme="dark"] {
+  --garden-panel-bg: rgba(28, 28, 29, 0.86);
+  --garden-veil: rgba(18, 20, 18, 0.84);
+  --garden-chip-bg: rgba(33, 37, 41, 0.92);
+  --garden-trace: #{rgba(v.$green-color-bright, 0.3)};
+  --garden-accent: #{v.$green-color-bright};
+}
+
+/* -----------------------------------------------------------------------------
+ * Backdrop
+ *
+ * A fixed layer at z-index -1. The body's background colour propagates to the
+ * canvas, which is painted below negative z-index children, so this sits above
+ * the page colour and below every piece of content without the theme's own
+ * layout needing to know about it.
+ * -------------------------------------------------------------------------- */
+
+.garden-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.garden-bg-photo {
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+
+  // The veil. Without it, body text over a photograph is unreadable; with it,
+  // the photograph reads as atmosphere rather than as content.
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: var(--garden-veil);
+  }
+}
+
+/* -----------------------------------------------------------------------------
+ * Circuit traces — the motif tying the garden to the machine it grows in.
+ * -------------------------------------------------------------------------- */
+
+@mixin circuit-traces($opacity: 0.5) {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140' viewBox='0 0 140 140'%3E%3Cg fill='none' stroke='%232c7d3e' stroke-width='1.1' stroke-linecap='round'%3E%3Cpath d='M0 35h35v35h35V35h35v70h35'/%3E%3Cpath d='M35 0v35M105 105v35M70 70v70M0 105h35'/%3E%3C/g%3E%3Cg fill='%232c7d3e'%3E%3Ccircle cx='35' cy='35' r='3.2'/%3E%3Ccircle cx='70' cy='70' r='3.2'/%3E%3Ccircle cx='105' cy='105' r='3.2'/%3E%3C/g%3E%3C/svg%3E");
+  opacity: $opacity;
+}
+
+/* -----------------------------------------------------------------------------
+ * Garden pages: index and bed archives
+ * -------------------------------------------------------------------------- */
+
+.garden-hero {
+  text-align: center;
+  padding: 2.5rem 1rem 1.5rem;
+
+  h1 {
+    color: var(--global-text-color);
+    font-size: 3rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.4rem;
+  }
+
+  h2,
+  .garden-tagline {
+    color: var(--global-text-color-light);
+    font-size: 1.1rem;
+    font-weight: 400;
+    margin: 0 auto;
+    max-width: 40rem;
+  }
+
+  .garden-hero-icon {
+    color: var(--garden-accent);
+    font-size: 1.6rem;
+    margin-bottom: 0.75rem;
+    display: block;
+  }
+}
+
+/* The bed switcher: chips strung along a circuit bus. */
+.garden-beds {
+  position: relative;
+  margin: 1.5rem 0 2rem;
+  padding: 0.75rem 0;
+
+  // The bus line the chips sit on.
+  &::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background-color: var(--garden-trace);
+  }
+
+  ul {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.garden-bed {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.85rem;
+  border: 1px solid var(--garden-trace);
+  border-radius: 999px;
+  background-color: var(--garden-chip-bg);
+  color: var(--global-text-color);
+  font-size: 0.9rem;
+  line-height: 1.4;
+  text-decoration: none;
+  transition:
+    border-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+
+  i {
+    color: var(--garden-accent);
+    font-size: 0.85em;
+  }
+
+  &:hover {
+    border-color: var(--garden-accent);
+    color: var(--garden-accent);
+    text-decoration: none;
+    transform: translateY(-1px);
+  }
+
+  &.is-active {
+    border-color: var(--garden-accent);
+    color: var(--garden-accent);
+    font-weight: 600;
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.03);
+  }
+}
+
+/* The translucent sheet the notes are listed on. */
+.garden-panel {
+  position: relative;
+  background-color: var(--garden-panel-bg);
+  border: 1px solid var(--global-divider-color);
+  border-radius: 14px;
+  padding: 1.75rem 2rem;
+  backdrop-filter: blur(8px);
+  overflow: hidden;
+
+  // A whisper of circuitry in the corner of the sheet.
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 280px;
+    height: 280px;
+    pointer-events: none;
+    mask-image: linear-gradient(225deg, rgb(0 0 0 / 100%), transparent 70%);
+    @include circuit-traces(0.16);
+  }
+
+  > * {
+    position: relative;
+  }
+}
+
+@media (width <= 576px) {
+  .garden-panel {
+    padding: 1.25rem 1rem;
+  }
+
+  .garden-hero h1 {
+    font-size: 2.2rem;
+  }
+}
+
+/* -----------------------------------------------------------------------------
+ * Maturity badges — how grown a note is
+ * -------------------------------------------------------------------------- */
+
+.maturity {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.1rem 0.55rem;
+  border: 1px solid currentcolor;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  line-height: 1.6;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+.maturity-seedling {
+  color: #{v.$green-color-lime};
+}
+
+.maturity-budding {
+  color: #{v.$green-color};
+}
+
+.maturity-evergreen {
+  color: #{v.$purple-color}; // the theme's "embedded green"
+}
+
+html[data-theme="dark"] {
+  .maturity-evergreen {
+    color: #{v.$green-color-bright};
+  }
+}
+
+/* -----------------------------------------------------------------------------
+ * Verse
+ *
+ * `pre-line` is what holds a stanza together. Markdown collapses a single
+ * newline into a space, and Jekyll pins kramdown's `hard_wrap` to false even
+ * under GFM input, so without this a poem renders as one run-on paragraph.
+ * Preserving newlines in CSS keeps that fix scoped to verse: prose everywhere
+ * else on the site can still be wrapped in the source however you like.
+ * -------------------------------------------------------------------------- */
+
+.poem {
+  font-family: georgia, "iowan old style", "palatino linotype", "times new roman", serif;
+  font-size: 1.05rem;
+  line-height: 1.9;
+  margin: 1.6rem 0;
+  padding-left: 1.1rem;
+  border-left: 2px solid var(--garden-trace); // a stem
+  white-space: pre-line;
+}
+
+/* -----------------------------------------------------------------------------
+ * Embeds
+ * -------------------------------------------------------------------------- */
+
+.youtube-embed {
+  margin: 1.75rem 0;
+
+  iframe {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border: 0;
+    border-radius: 10px;
+  }
+
+  figcaption {
+    margin-top: 0.5rem;
+  }
+}
+
+/* -----------------------------------------------------------------------------
+ * Comments, folded away until asked for
+ * -------------------------------------------------------------------------- */
+
+.comments-toggle {
+  margin-top: 2.5rem;
+  max-width: v.$max-content-width;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.comments-toggle-btn {
+  border: 1px solid var(--garden-trace);
+  border-radius: 999px;
+  background-color: transparent;
+  color: var(--global-text-color-light);
+  padding: 0.3rem 1rem;
+
+  &:hover {
+    border-color: var(--garden-accent);
+    color: var(--garden-accent);
+  }
+}

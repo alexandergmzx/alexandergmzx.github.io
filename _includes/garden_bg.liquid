@@ -1,0 +1,31 @@
+{% comment %}
+  Fixed backdrop for garden pages.
+
+  Usage:
+    {% include garden_bg.liquid %}                   default artwork
+    {% include garden_bg.liquid category="poetry" %} that bed's artwork
+
+  Falls back to the default artwork when a bed has none of its own, and to a
+  plain background when no artwork has been added to the repository yet, so
+  the garden never renders a broken image.
+{% endcomment %}
+
+{% assign garden = site.data.garden %}
+{% assign bed = garden.beds[include.category] %}
+{% assign bg_image = bed.image | default: garden.default.image %}
+{% assign static_paths = site.static_files | map: 'path' | join: ',' %}
+
+{% unless static_paths contains bg_image %}
+  {% assign bg_image = garden.default.image %}
+  {% unless static_paths contains bg_image %}
+    {% assign bg_image = '' %}
+  {% endunless %}
+{% endunless %}
+
+<div
+  class="garden-bg{% if bg_image != '' %} garden-bg-photo{% endif %}"
+  aria-hidden="true"
+  {% if bg_image != '' %}
+    style="background-image: url('{{ bg_image | relative_url }}')"
+  {% endif %}
+></div>

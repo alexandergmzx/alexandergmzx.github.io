@@ -1,21 +1,65 @@
 ---
 layout: default
 ---
-<div class="post">
-  <header class="post-header">
-    {% if page.type == 'categories' %}
-      <h1 class="post-title"><i class="fa-solid fa-tag fa-sm"></i> {{ page.title }}</h1>
-      <p class="post-description">an archive of {{ page.collection_name }} in this category</p>
-    {% elsif page.type == 'year' %}
-      <h1 class="post-title"><i class="fa-solid fa-calendar fa-sm"></i> {{ page.date | date: '%Y' }}</h1>
-      <p class="post-description">an archive of {{ page.collection_name }} from this year</p>
-    {% elsif page.type == 'tags' %}
-      <h1 class="post-title"><i class="fa-solid fa-hashtag fa-sm"></i> {{ page.title }}</h1>
-      <p class="post-description">an archive of {{ page.collection_name }} with this tag</p>
-    {% endif %}
-  </header>
+{% comment %}
+  This layout serves every archive on the site, so the garden dressing below is
+  gated on the URL: only /garden/... archives become beds. The books collection
+  also archives through here and must keep the plain treatment.
+{% endcomment %}
+{% assign url_beginning = page.url | slice: 0, 8 %}
+{% assign is_garden = false %}
+{% if url_beginning == '/garden/' %}
+  {% assign is_garden = true %}
+{% endif %}
 
-  <article class="archive">
+{% if is_garden %}
+  {% if page.type == 'categories' %}
+    {% include garden_bg.liquid category=page.title %}
+  {% else %}
+    {% include garden_bg.liquid %}
+  {% endif %}
+{% endif %}
+
+<div class="post">
+  {% if is_garden %}
+    {% assign bed = site.data.garden.beds[page.title] %}
+    <div class="garden-hero">
+      {% if page.type == 'categories' %}
+        <i class="fa-solid fa-{{ bed.icon | default: 'leaf' }} garden-hero-icon"></i>
+        <h1>{{ page.title }}</h1>
+        <h2>{{ bed.tagline | default: site.data.garden.default.tagline }}</h2>
+      {% elsif page.type == 'tags' %}
+        <i class="fa-solid fa-hashtag garden-hero-icon"></i>
+        <h1>{{ page.title }}</h1>
+        <h2>every note tagged “{{ page.title }}”</h2>
+      {% elsif page.type == 'year' %}
+        <i class="fa-solid fa-calendar garden-hero-icon"></i>
+        <h1>{{ page.date | date: '%Y' }}</h1>
+        <h2>everything planted that year</h2>
+      {% endif %}
+    </div>
+
+    {% if page.type == 'categories' %}
+      {% include garden_beds.liquid active=page.title %}
+    {% else %}
+      {% include garden_beds.liquid %}
+    {% endif %}
+  {% else %}
+    <header class="post-header">
+      {% if page.type == 'categories' %}
+        <h1 class="post-title"><i class="fa-solid fa-tag fa-sm"></i> {{ page.title }}</h1>
+        <p class="post-description">an archive of {{ page.collection_name }} in this category</p>
+      {% elsif page.type == 'year' %}
+        <h1 class="post-title"><i class="fa-solid fa-calendar fa-sm"></i> {{ page.date | date: '%Y' }}</h1>
+        <p class="post-description">an archive of {{ page.collection_name }} from this year</p>
+      {% elsif page.type == 'tags' %}
+        <h1 class="post-title"><i class="fa-solid fa-hashtag fa-sm"></i> {{ page.title }}</h1>
+        <p class="post-description">an archive of {{ page.collection_name }} with this tag</p>
+      {% endif %}
+    </header>
+  {% endif %}
+
+  <article class="archive{% if is_garden %} garden-panel{% endif %}">
     <div class="table-responsive">
       <table class="table table-sm table-borderless">
         {% for document in page.documents %}
@@ -28,6 +72,9 @@ layout: default
                 <a class="post-link" href="{{ document.redirect }}" target="_blank">{{ document.title }}</a>
               {% else %}
                 <a class="post-link" href="{{ document.redirect | relative_url }}">{{ document.title }}</a>
+              {% endif %}
+              {% if is_garden and document.maturity %}
+                {% include maturity_badge.liquid maturity=document.maturity compact=true %}
               {% endif %}
             </td>
           </tr>

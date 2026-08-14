@@ -1,0 +1,29 @@
+{% comment %}
+  A responsive, privacy-friendly YouTube embed.
+
+  Usage:
+    {% include youtube.liquid id="dQw4w9WgXcQ" %}
+    {% include youtube.liquid id="dQw4w9WgXcQ" title="Bésame Mucho — guitar cover" caption="second take, drop-D" %}
+
+  `id` is the bare video id (the `v=` part of a watch URL), not a full URL.
+
+  This exists alongside the theme's video.liquid rather than reusing it:
+  video.liquid emits width="auto" height="auto" on the iframe, which is invalid
+  and collapses the player to roughly 300x150. Here the size comes from CSS
+  (aspect-ratio) instead. Playing from youtube-nocookie.com also keeps YouTube
+  from setting tracking cookies until the visitor actually starts the video.
+{% endcomment %}
+
+<figure class="youtube-embed{% if include.class %} {{ include.class }}{% endif %}">
+  <iframe
+    src="https://www.youtube-nocookie.com/embed/{{ include.id }}"
+    title="{{ include.title | default: 'YouTube video' }}"
+    loading="lazy"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    referrerpolicy="strict-origin-when-cross-origin"
+    allowfullscreen
+  ></iframe>
+  {% if include.caption %}
+    <figcaption class="caption">{{ include.caption }}</figcaption>
+  {% endif %}
+</figure>

@@ -1,0 +1,37 @@
+{% comment %}
+  Comments on a garden note, kept folded away until a reader asks for them.
+
+  Nothing is requested from giscus.app — and no third-party frame is created —
+  until the button is pressed, so a note that nobody comments on costs the
+  reader nothing. The button is also why this exists instead of the theme's
+  giscus.liquid, which loads the thread immediately.
+
+  Renders nothing at all until giscus is actually configured (repo_id and
+  category_id in _config.yml), rather than showing the theme's misconfiguration
+  warning to visitors.
+{% endcomment %}
+
+{% if site.giscus.repo_id != blank and site.giscus.category_id != blank %}
+  <div class="comments-toggle">
+    <button class="btn btn-sm comments-toggle-btn" type="button" id="show-comments" aria-controls="giscus_thread" aria-expanded="false">
+      <i class="fa-solid fa-comments"></i> show comments
+    </button>
+    <div id="giscus_thread" hidden></div>
+  </div>
+
+  <script>
+    document.getElementById('show-comments').addEventListener(
+      'click',
+      function () {
+        const thread = document.getElementById('giscus_thread');
+        thread.hidden = false;
+        this.setAttribute('aria-expanded', 'true');
+        this.remove();
+        const loader = document.createElement('script');
+        loader.src = "{{ '/assets/js/giscus-setup.js' | relative_url }}";
+        document.body.appendChild(loader);
+      },
+      { once: true }
+    );
+  </script>
+{% endif %}

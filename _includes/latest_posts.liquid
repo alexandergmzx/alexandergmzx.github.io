@@ -1,6 +1,16 @@
 <div class="news">
   {% if page.latest_posts != blank %}
-    {% assign latest_posts_size = site.posts | size %}
+    {% comment %}
+      `latest_posts.category` narrows this list to a single garden bed, so the
+      homepage can stay on-topic while the garden itself holds everything.
+    {% endcomment %}
+    {% assign wanted_category = page.latest_posts.category %}
+    {% if wanted_category != blank %}
+      {% assign source_posts = site.posts | where_exp: 'post', 'post.categories contains wanted_category' %}
+    {% else %}
+      {% assign source_posts = site.posts %}
+    {% endif %}
+    {% assign latest_posts_size = source_posts | size %}
     <div
       class="table-responsive"
       {% if page.latest_posts.scrollable and latest_posts_size > 3 %}
@@ -8,7 +18,7 @@
       {% endif %}
     >
       <table class="table table-sm table-borderless">
-        {% assign latest_posts = site.posts %}
+        {% assign latest_posts = source_posts %}
         {% if page.latest_posts.limit %}
           {% assign latest_posts_limit = page.latest_posts.limit %}
         {% else %}

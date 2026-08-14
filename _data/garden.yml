@@ -1,0 +1,54 @@
+# The digital garden: its beds, their artwork, and the maturity stages a note
+# can be in. The list of beds itself lives in `display_categories` in
+# _config.yml — this file only decorates them.
+#
+# Artwork: drop your own photographs in assets/img/garden/ and point `image` at
+# them. A bed with no image of its own falls back to `default.image`; if that
+# file is missing too, the page simply renders on the plain background. So the
+# garden looks intentional before you have added a single photograph.
+
+default:
+  image: assets/img/garden/garden.jpg
+  tagline: notes that grow at their own pace
+
+beds:
+  tech:
+    icon: microchip
+    tagline: circuits, robots, and the things I build
+    image: assets/img/garden/tech.jpg
+  poetry:
+    icon: feather-pointed
+    tagline: lines that arrived on their own
+    image: assets/img/garden/poetry.jpg
+  music:
+    icon: guitar
+    tagline: songs I borrowed for a while
+    image: assets/img/garden/music.jpg
+  language:
+    icon: language
+    tagline: words I am still learning to hold
+    image: assets/img/garden/language.jpg
+  philosophy:
+    icon: brain
+    tagline: questions I keep turning over
+    image: assets/img/garden/philosophy.jpg
+  misc:
+    icon: seedling
+    tagline: everything else, still taking shape
+    image: assets/img/garden/misc.jpg
+
+# A note declares one of these with `maturity:` in its front matter. Notes
+# without one simply show no badge.
+maturity:
+  seedling:
+    icon: seedling
+    label: seedling
+    description: just planted — rough, incomplete, and likely to change
+  budding:
+    icon: leaf
+    label: budding
+    description: taking shape — the idea is here, the edges are not
+  evergreen:
+    icon: tree
+    label: evergreen
+    description: settled — tended often enough that I stand behind it
