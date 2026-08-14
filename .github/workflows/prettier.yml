@@ -20,7 +20,11 @@ jobs:
       - name: Setup Node.js ⚙️
         uses: actions/setup-node@v4
       - name: Install Prettier 💾
-        run: npm install --save-dev --save-exact prettier @shopify/prettier-plugin-liquid
+        # Install the versions pinned in package-lock.json rather than whatever is
+        # latest on npm. Installing latest here meant a Prettier release could turn
+        # this workflow red on its own, on a commit that touched nothing related,
+        # and that `npx prettier . --write` locally would not reproduce the result.
+        run: npm ci
       - name: Prettier Check 🔎
         id: prettier
         run: npx prettier . --check
