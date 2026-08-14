@@ -1,0 +1,160 @@
+# Sveltia CMS — the schema behind /admin/, the panel used to plant and tend notes
+# from a phone. The shell that loads this file is admin/index.html.
+#
+# Publishing rights are not configured here. They are GitHub's: saving commits to
+# the repository through the GitHub API using a personal access token, so only an
+# account with write access to this repository can publish. Anyone else opening
+# /admin/ gets a sign-in screen and nothing else.
+#
+# Three places must be kept in step by hand when the taxonomy changes:
+#   categories options  ⇄  POST_CATEGORIES in _scripts/new_page.py
+#                       ⇄  display_categories in _config.yml
+#   the field list      ⇄  _templates/*.md, which remain the source of truth for
+#                          how each kind of note is structured
+
+backend:
+  name: github
+  repo: alexandergmzx/alexandergmzx.github.io
+  branch: main
+  # Token sign-in only. The other method, OAuth, needs a small server to hold the
+  # client secret; there is deliberately none, so its button is hidden rather than
+  # left there to fail. See MANUAL.md for why that trade is the safer one.
+  auth_methods: [token]
+
+site_url: https://alexander-gomez.com
+
+# Where photos land. Matches the convention documented in MANUAL.md; the directory
+# is created on the first upload.
+media_folder: assets/img/notes
+public_folder: /assets/img/notes
+
+media_libraries:
+  default:
+    config:
+      slugify_filename: true
+      max_file_size: 5242880 # 5 MB, measured before the conversion below
+      transformations:
+        # Photographs are converted in the browser before they are committed, so a
+        # 4 MB phone picture reaches the repository as a few hundred KB.
+        #
+        # jpeg and png are named individually rather than using the blanket
+        # raster_image key, so that GIFs pass through untouched: re-encoding an
+        # animated GIF flattens it to a still. _config.yml leaves .gif out of the
+        # image pipeline for the same reason.
+        jpeg: { format: webp, quality: 85, width: 1920, height: 1920 }
+        png: { format: webp, quality: 85, width: 1920, height: 1920 }
+
+slug:
+  encoding: ascii # Jekyll is unhappy with unicode in post filenames
+  clean_accents: true # "Bésame" → "besame"
+  timezone: local # the date in the filename follows the phone's day, not UTC
+
+editor:
+  preview: false # the preview cannot run Liquid, and phone screens are narrow
+
+output:
+  omit_empty_optional_fields: true # leave a field blank and the key is omitted entirely
+
+collections:
+  - name: notes
+    label: Garden notes
+    folder: _posts
+    create: true
+    extension: md
+    format: yaml-frontmatter
+    # Jekyll only treats a file as a post if it is named YYYY-MM-DD-slug.md. A note
+    # saved under any other shape is silently ignored — no error, no page.
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    summary: "{{title}}"
+    sortable_fields: [date, title]
+    fields:
+      - { name: layout, widget: hidden, default: post }
+
+      - { name: title, label: Title, widget: string }
+
+      # A malformed date fails the whole site build, not just this note, so the
+      # format is pinned to the one the existing notes use: 2026-08-13 10:00:00-0600
+      - name: date
+        label: Planted
+        widget: datetime
+        format: "YYYY-MM-DD HH:mm:ssZZ"
+        default: "{{now}}"
+
+      - name: description
+        label: Description
+        widget: string
+        required: false
+        hint: One line. Shown on the card in the garden listing and to search engines.
+
+      - name: tags
+        label: Tags
+        widget: string
+        required: false
+        hint: Space-separated, lowercase, one to four. Language notes lead with the language.
+
+      - name: categories
+        label: Bed
+        widget: select
+        options: [tech, poetry, music, language, philosophy, misc]
+        hint: Exactly one. Two categories file the note under an archive nobody links to.
+
+      - name: maturity
+        label: Maturity
+        widget: select
+        options: [seedling, budding, evergreen]
+        default: seedling
+
+      - name: published
+        label: Published
+        widget: boolean
+        default: true
+        hint: Turn off to keep a note as a draft — it stays in the repository but off the site.
+
+      - name: last_modified_at
+        label: Last tended
+        widget: datetime
+        format: "YYYY-MM-DD"
+        time_format: false
+        required: false
+        hint: Set this when you come back and materially change a note.
+
+      - name: thumbnail
+        label: Card thumbnail
+        widget: image
+        required: false
+        # HEIC is excluded on purpose. Browsers cannot display it, and the .gitignore
+        # rule that keeps it out locally does not apply to commits made through the
+        # API — one could otherwise land in the repository and render as a broken image.
+        accept: image/jpeg,image/png,image/webp,image/gif
+
+      - { name: featured, label: Pin to the top of the garden, widget: boolean, required: false }
+
+      - name: toc
+        label: Table of contents
+        widget: object
+        required: false
+        collapsed: true
+        fields:
+          - { name: beginning, label: Show at the top, widget: boolean, default: true }
+
+      - name: tabs
+        label: Uses tab groups
+        widget: boolean
+        required: false
+        hint: Required whenever the body uses {% tabs %}, or the tabs render unstyled.
+
+      - { name: related_posts, widget: hidden, default: false }
+      - { name: giscus_comments, widget: hidden, default: true }
+
+      # Raw markdown, and only raw markdown.
+      #
+      # Do not add rich_text to modes. A rich text editor round-trips the body
+      # through an internal document model, and this site's notes contain two things
+      # that do not survive that trip: kramdown attribute lists ({: .poem}, which
+      # must sit on the line directly below a stanza with no blank line between) and
+      # Liquid tags ({% include youtube.liquid %}, {% tabs %}, {% raw %}). They come
+      # back escaped, re-spaced, or gone.
+      - name: body
+        label: Body
+        widget: markdown
+        modes: [raw]
