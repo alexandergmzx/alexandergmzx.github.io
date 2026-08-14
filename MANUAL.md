@@ -86,6 +86,22 @@ The `Deploy site` GitHub Action runs automatically, builds the site with
 `JEKYLL_ENV=production`, and force-pushes the result to the `gh-pages` branch.
 GitHub Pages serves from `gh-pages`. Total time: ~2 minutes after `git push`.
 
+### The live address
+
+The site is served at **<https://alexander-gomez.com>**; `alexandergmzx.github.io`
+redirects there. The custom domain is held by a `CNAME` file on the `gh-pages`
+branch, which is why `keep_files:` in [`_config.yml`](_config.yml) lists it.
+
+`url:` in `_config.yml` must stay equal to that domain. It is what
+`canonical` tags, `feed.xml` and `sitemap.xml` are built from, so pointing it at
+the `github.io` address — as it did until August 2026 — tells search engines the
+canonical home of every page is an address that merely redirects.
+
+A GitHub Pages **user** site can hold only one custom domain. A subdomain such as
+`garden.alexander-gomez.com` therefore cannot point at this repository as well;
+make it a URL forward at the registrar to `https://alexander-gomez.com/garden/`
+(or straight to a bed) instead.
+
 ### Watching deploy status
 
 `https://github.com/alexandergmzx/alexandergmzx.github.io/actions` — the
