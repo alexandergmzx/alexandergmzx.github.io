@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>Garden CMS</title>
+  </head>
+  <body>
+    <!--
+      Sveltia CMS: the publishing panel for the garden, reachable at /admin/.
+
+      This file is deliberately plain. It carries no Jekyll front matter, so it is
+      copied through as a static file and never picks up the site layout, navbar or
+      Content-Security-Policy meta tag — the CMS wants a bare page.
+
+      Keep it free of links that point at this site with a leading slash. The
+      deploy-time link checker runs lychee over _site offline, and one of those here
+      would fail every deploy.
+
+      The version below is pinned on purpose. Bump it deliberately, and re-run the
+      body round-trip test from MANUAL.md afterwards: the CMS is pre-1.0 and the one
+      thing that must never regress is that it writes note bodies back byte for byte
+      ({: .poem} lines and {% include %} tags survive a save).
+
+      Releases: https://github.com/sveltia/sveltia-cms/releases
+      Note: dist/sveltia-cms.js is the classic build — it must NOT have type="module"
+      (dist/sveltia-cms.mjs is the module one).
+    -->
+    <script src="https://unpkg.com/@sveltia/cms@0.190.0/dist/sveltia-cms.js"></script>
+  </body>
+</html>
