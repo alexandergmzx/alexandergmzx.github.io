@@ -7,8 +7,8 @@ tags: new
 categories: tech
 maturity: seedling
 published: true
-featured: false
-tabs: false
+featured: true
+tabs: true
 related_posts: false
 giscus_comments: true
 ---
