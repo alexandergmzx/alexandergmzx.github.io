@@ -31,27 +31,28 @@ an LLM for every change. Every section starts with the **file you edit**, then a
 
 ## 0. Quick reference — file map
 
-| You want to change...                  | File                                                                                                      |
-| -------------------------------------- | --------------------------------------------------------------------------------------------------------- |
-| Site title in browser tab / meta tags  | [`_config.yml`](_config.yml) — `title:`                                                                   |
-| Your name, favicon, logo               | [`_config.yml`](_config.yml) — `first_name:`, `last_name:`, `icon:`, `navbar_logo:`                       |
-| Homepage bio text                      | [`_pages/about.md`](_pages/about.md) — body below front matter                                            |
-| Homepage sidebar info (location etc.)  | [`_pages/about.md`](_pages/about.md) — `profile.more_info`                                                |
-| Profile photo                          | `assets/img/alex_madera.png` (replace file); path in [`_pages/about.md`](_pages/about.md) `profile.image` |
-| Navbar items (order, show/hide)        | front matter of each `_pages/*.md` — `nav:` and `nav_order:`                                              |
-| Hardcoded "about" link in navbar       | [`_config.yml`](_config.yml) — `navbar_about:` (true/false)                                               |
-| The "more" dropdown contents           | [`_pages/dropdown.md`](_pages/dropdown.md)                                                                |
-| Add a new project                      | new file in [`_projects/`](_projects/)                                                                    |
-| Project categories                     | [`_pages/projects.md`](_pages/projects.md) — `display_categories:`                                        |
-| Add a garden note                      | new file in [`_posts/`](_posts/) — `YYYY-MM-DD-slug.md`, scaffolded from [`_templates/`](_templates/)     |
-| Garden categories (the six beds)       | [`_config.yml`](_config.yml) — `display_categories:`                                                      |
-| Add a news item                        | new file in [`_news/`](_news/)                                                                            |
-| CV content                             | [`_data/cv.yml`](_data/cv.yml)                                                                            |
-| Downloadable CV PDF                    | replace `assets/pdf/alexander_gomez_cv.pdf`                                                               |
-| Social icons (email, github, linkedin) | [`_data/socials.yml`](_data/socials.yml)                                                                  |
-| GitHub repo stats on `/repositories`   | [`_data/repositories.yml`](_data/repositories.yml)                                                        |
-| Theme color (accent green)             | [`_sass/_variables.scss`](_sass/_variables.scss) and [`_sass/_themes.scss`](_sass/_themes.scss)           |
-| Footer text                            | [`_config.yml`](_config.yml) — `footer_text:`                                                             |
+| You want to change...                  | File                                                                                                                                                                 |
+| -------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Site title in browser tab / meta tags  | [`_config.yml`](_config.yml) — `title:`                                                                                                                              |
+| Your name, favicon, logo               | [`_config.yml`](_config.yml) — `first_name:`, `last_name:`, `icon:`, `navbar_logo:`                                                                                  |
+| Homepage bio text                      | [`_pages/about.md`](_pages/about.md) — body below front matter                                                                                                       |
+| Homepage sidebar info (location etc.)  | [`_pages/about.md`](_pages/about.md) — `profile.more_info`                                                                                                           |
+| Profile photo                          | `assets/img/alex_madera.png` (replace file); path in [`_pages/about.md`](_pages/about.md) `profile.image`                                                            |
+| Navbar items (order, show/hide)        | front matter of each `_pages/*.md` — `nav:` and `nav_order:`                                                                                                         |
+| Hardcoded "about" link in navbar       | [`_config.yml`](_config.yml) — `navbar_about:` (true/false)                                                                                                          |
+| The "more" dropdown contents           | [`_pages/dropdown.md`](_pages/dropdown.md)                                                                                                                           |
+| Add a new project                      | new file in [`_projects/`](_projects/)                                                                                                                               |
+| Project categories                     | [`_pages/projects.md`](_pages/projects.md) — `display_categories:`                                                                                                   |
+| Add a garden note                      | [`/admin/`](#publishing-from-the-phone) from any browser, or a new file in [`_posts/`](_posts/) — `YYYY-MM-DD-slug.md`, scaffolded from [`_templates/`](_templates/) |
+| The phone publishing panel             | [`admin/index.html`](admin/index.html) (shell) and [`admin/config.yml`](admin/config.yml) (note schema)                                                              |
+| Garden categories (the six beds)       | [`_config.yml`](_config.yml) — `display_categories:`                                                                                                                 |
+| Add a news item                        | new file in [`_news/`](_news/)                                                                                                                                       |
+| CV content                             | [`_data/cv.yml`](_data/cv.yml)                                                                                                                                       |
+| Downloadable CV PDF                    | replace `assets/pdf/alexander_gomez_cv.pdf`                                                                                                                          |
+| Social icons (email, github, linkedin) | [`_data/socials.yml`](_data/socials.yml)                                                                                                                             |
+| GitHub repo stats on `/repositories`   | [`_data/repositories.yml`](_data/repositories.yml)                                                                                                                   |
+| Theme color (accent green)             | [`_sass/_variables.scss`](_sass/_variables.scss) and [`_sass/_themes.scss`](_sass/_themes.scss)                                                                      |
+| Footer text                            | [`_config.yml`](_config.yml) — `footer_text:`                                                                                                                        |
 
 ---
 
@@ -346,6 +347,11 @@ six months, it's a note.
 
 ### Planting a note
 
+Phone, or any browser: **<https://alexander-gomez.com/admin/>** → sign in → **Garden
+notes** → the **+** button. Fill the fields, write the body, save. That commits to
+`main` and the note is live in about two minutes. Leave **Published** off to keep it
+as a draft. See [Publishing from the phone](#publishing-from-the-phone) below.
+
 Helper: `python3 _scripts/new_page.py` → `2) garden note` → pick a type. It asks for
 title, description, note type and tags, then writes a pre-filled file into `_posts/`.
 See [section 16](#16-the-new_pagepy-helper).
@@ -573,7 +579,94 @@ _styles: >
   .my-thing { color: var(--global-theme-color); }
 ```
 
+### Publishing from the phone
+
+The panel at **<https://alexander-gomez.com/admin/>** plants new notes and tends old
+ones from a phone. It is [Sveltia CMS](https://github.com/sveltia/sveltia-cms): two
+static files in this repo — [`admin/index.html`](admin/index.html), a shell that
+loads the CMS from a pinned CDN build, and [`admin/config.yml`](admin/config.yml),
+which describes what a note is. There is no server and no database. Saving writes a
+commit to `main` through the GitHub API, exactly as if you had pushed it, and
+**Deploy site** publishes it about two minutes later.
+
+#### Who can publish
+
+Only an account with write access to this repository — which is you. The panel holds
+no accounts and no passwords of its own; it acts entirely through a GitHub token you
+paste into it. Somebody else opening `/admin/` sees a sign-in screen and can do
+nothing behind it, because GitHub refuses their writes. The security boundary is
+GitHub's permission model, not this page being hard to find.
+
+#### First-time setup
+
+Make a token, once:
+
+1. GitHub → your avatar → **Settings** → **Developer settings** → **Personal access
+   tokens** → **Fine-grained tokens** → **Generate new token**.
+2. Name it something like `garden-phone`. Expiration: **90 days**.
+3. Resource owner: your account. Repository access: **Only select repositories** →
+   `alexandergmzx.github.io`.
+4. Repository permissions → **Contents: Read and write**. That is the only one
+   needed; Metadata read is added automatically. Nothing else.
+5. Generate, and copy the `github_pat_…` string.
+
+Then on the phone: open `/admin/`, tap **Sign In Using Access Token**, paste. Easiest
+if you make the token in the phone's own browser so you never have to move it between
+devices. Finally, Chrome menu (⋮) → **Install app** — it then behaves like an app,
+which is what makes quick capture quick.
+
+The token grants write access to this one repository and nothing else, and it lives
+only in that browser's storage. Two consequences worth internalising: anyone who can
+unlock your phone can publish, and when it expires (GitHub emails you first) you just
+generate a new one and paste it in again. **If the phone is lost**: Settings →
+Developer settings → Fine-grained tokens → delete it. Publishing stops immediately
+and the site is untouched.
+
+#### Writing in it
+
+The fields are the front matter from [Front matter](#front-matter) above, and the
+body is **raw markdown** — the same text you would write in an editor, with all the
+conventions from [Body conventions](#body-conventions) intact. There is no rich text
+mode, deliberately: an editor that reformats as you type mangles `{: .poem}` and
+Liquid tags like `{% include youtube.liquid %}`.
+
+Nothing pre-fills the body from [`_templates/`](_templates/). For a poem or a cover,
+the fastest route is to open an existing note of that kind, copy its skeleton, and go
+from there.
+
+- **Drafts.** Turn **Published** off. The note is committed but stays off the site,
+  so you can start something on the phone and finish it at the desk.
+- **Tending.** Open any note from the list, edit, save. Set **Last tended** while you
+  are there, and bump **Maturity** if it earned it.
+- **Photos.** The image picker converts to webp in the browser before committing, so
+  a 4 MB phone photo lands as a few hundred KB in `assets/img/notes/`. HEIC is
+  refused on purpose — browsers cannot display it.
+- **One thing to do from the desktop.** Saving rewrites a note's front matter to the
+  schema in `admin/config.yml`. A note using keys outside it — `_styles:` is the one
+  that exists today — should be tended from the desktop, or it will lose them.
+
+#### If it ever misbehaves
+
+The CMS is pre-1.0 and its version is pinned in `admin/index.html` for that reason.
+Before bumping it, re-run this test, which is the one thing that must never regress:
+
+> Make a throwaway note whose body has two stanzas each followed immediately by
+> `{: .poem}` (no blank line between), an `{% include youtube.liquid id="x" %}` line,
+> and a `{% raw %}` block. Save. Reopen it, change a single word, save again. Then
+> `git pull` and `git diff HEAD~1 -- _posts/<file>`. **The diff must show only that
+> one word.** Any escaping (`\{:`), any inserted blank line, any mangled Liquid means
+> the body editor is rewriting your text: in `admin/config.yml`, change the `body`
+> field from `widget: markdown` to `widget: text` and it will stop.
+
+To remove the CMS entirely: delete the [`admin/`](admin/) directory and revoke the
+token. Notes it created are ordinary files and stay exactly as they are.
+
 ### Publishing checklist
+
+**From the phone** (`/admin/`): fill in, save, done — the sections above cover it.
+Prettier is skipped by design on this path (see [section 17](#17-code-formatting-prettier)).
+
+**From the desktop:**
 
 1. Scaffold: `python3 _scripts/new_page.py` → `2) garden note` → type.
 2. Write it. One long line per paragraph.
@@ -989,7 +1082,16 @@ npx prettier . --write
 
 Prettier touches: `.md`, `.yml`, `.scss`, `.html`, `.liquid`, `.json`, `.js`.
 
-Files Prettier ignores are listed in [`.prettierignore`](.prettierignore).
+Files Prettier ignores are listed in [`.prettierignore`](.prettierignore). **`_posts/`
+is one of them.** Notes get written from a phone through [`/admin/`](#publishing-from-the-phone),
+which has no way to run Prettier before saving, and `proseWrap` is left at `preserve`
+so Prettier would not reflow prose anyway — it would only churn front matter and turn
+CI red on every note. Format notes if you like; nothing checks them.
+
+Note also that CI installs Prettier with `npm ci`, from the versions pinned in
+`package.json`. That is deliberate: it used to install the latest release on every
+run, which meant a new Prettier could redden the build on a commit that changed
+nothing related, and `npx prettier . --write` locally would not reproduce it.
 
 If you genuinely want Prettier to not touch a file or block, you can add it to
 `.prettierignore` (whole file) or wrap a section with `<!-- prettier-ignore -->`
