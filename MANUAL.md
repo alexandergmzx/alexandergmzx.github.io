@@ -12,7 +12,7 @@ an LLM for every change. Every section starts with the **file you edit**, then a
 - [3. About page (homepage)](#3-about-page-homepage)
 - [4. Navigation menu](#4-navigation-menu)
 - [5. Projects](#5-projects)
-- [6. Blog posts](#6-blog-posts)
+- [6. The garden (notes)](#6-the-garden-notes)
 - [7. News (short milestones)](#7-news-short-milestones)
 - [8. CV (rendercv format)](#8-cv-rendercv-format)
 - [9. Bookshelf](#9-bookshelf)
@@ -43,7 +43,8 @@ an LLM for every change. Every section starts with the **file you edit**, then a
 | The "more" dropdown contents           | [`_pages/dropdown.md`](_pages/dropdown.md)                                                                |
 | Add a new project                      | new file in [`_projects/`](_projects/)                                                                    |
 | Project categories                     | [`_pages/projects.md`](_pages/projects.md) — `display_categories:`                                        |
-| Add a blog post                        | new file in [`_posts/`](_posts/) — `YYYY-MM-DD-slug.md`                                                   |
+| Add a garden note                      | new file in [`_posts/`](_posts/) — `YYYY-MM-DD-slug.md`, scaffolded from [`_templates/`](_templates/)     |
+| Garden categories (the six beds)       | [`_config.yml`](_config.yml) — `display_categories:`                                                      |
 | Add a news item                        | new file in [`_news/`](_news/)                                                                            |
 | CV content                             | [`_data/cv.yml`](_data/cv.yml)                                                                            |
 | Downloadable CV PDF                    | replace `assets/pdf/alexander_gomez_cv.pdf`                                                               |
@@ -152,7 +153,7 @@ announcements: # the news strip
   scrollable: true # scrolls if more than 3 items
   limit: 5 # max items to render
 
-latest_posts: # latest blog posts strip
+latest_posts: # latest garden notes strip
   enabled: true
   scrollable: true
   limit: 3
@@ -165,14 +166,14 @@ Your bio paragraphs go here as plain markdown.
 
 - **Change the sidebar location/info:** edit `profile.more_info`. Each `<p>` is a line.
 - **Hide the news strip on home:** `announcements: enabled: false`
-- **Hide the latest posts strip:** `latest_posts: enabled: false`
+- **Hide the latest notes strip:** `latest_posts: enabled: false`
 - **Hide the social icons:** `social: false`
 - **New profile photo:** drop the new image in `assets/img/`, change `profile.image:`
 
 ### Bio writing tips
 
 The body is rendered between the news/posts blocks. Keep it tight — the page is
-primarily a launch pad to projects, CV, blog. Use markdown links to direct
+primarily a launch pad to projects, CV, garden. Use markdown links to direct
 visitors to where they should go next.
 
 ---
@@ -183,7 +184,7 @@ visitors to where they should go next.
 
 1. **Projects** (`_pages/projects.md`, `nav_order: 1`)
 2. **Teaching** (`_pages/teaching.md`, `nav_order: 2`)
-3. **Blog** (`_pages/blog.md`, `nav_order: 3`)
+3. **Garden** (`_pages/garden.md`, `nav_order: 3`) — the digital garden at `/garden/`
 4. **Bookshelf** (`_pages/books.md`, `nav_order: 4`)
 5. **Vision & Venture** (`_pages/vision.md`, `nav_order: 5`)
 6. **more ▾** (`_pages/dropdown.md`, `nav_order: 6`) — contains CV, Repositories
@@ -306,40 +307,227 @@ category to `draft` (not in the list, so it's filtered out).
 
 ---
 
-## 6. Blog posts
+## 6. The garden (notes)
 
-### Adding a post
+The blog is a **digital garden**, served at [`/garden/`](_pages/garden.md). Notes
+get _planted_, then _tended_ — a note is never "done". Each one carries a maturity
+stage and can carry a last-tended date, and the expectation is that you go back and
+edit it in place instead of publishing a correction.
 
-Helper: `python3 _scripts/new_page.py` → pick `2) post`.
+Files still live in [`_posts/`](_posts/) as `YYYY-MM-DD-slug.md`. Note URLs are
+`/garden/:year/:title/`.
 
-Manual: create `_posts/YYYY-MM-DD-slug.md`:
+### What belongs in the garden
+
+Anything you would want to come back to: tech notes, poems, song covers, language
+notes, essays, stray thoughts.
+
+What does **not**: short dated announcements. Those are
+[news](#7-news-short-milestones) — `_news/` is a separate collection that feeds the
+homepage strip and is not part of the garden. Rule of thumb: if it is an
+announcement that will never need tending, it's news; if you'd want to expand it in
+six months, it's a note.
+
+### Planting a note
+
+Helper: `python3 _scripts/new_page.py` → `2) garden note` → pick a type. It asks for
+title, description, note type and tags, then writes a pre-filled file into `_posts/`.
+See [section 16](#16-the-new_pagepy-helper).
+
+Manual: copy a file out of [`_templates/`](_templates/) to
+`_posts/YYYY-MM-DD-slug.md` and replace the `__TITLE__`, `__DATE__`,
+`__DESCRIPTION__` and `__TAGS__` placeholders. `_templates/` is invisible to Jekyll
+(underscore-prefixed, not a collection, not in `include:`), so nothing you park
+there can accidentally publish.
+
+| Template                 | Category     | Comes with                                 |
+| ------------------------ | ------------ | ------------------------------------------ |
+| `_templates/poem.md`     | `poetry`     | two stanzas with `{: .poem}`               |
+| `_templates/cover.md`    | `music`      | YouTube embed + original/translation tabs  |
+| `_templates/language.md` | `language`   | toc, examples table, parallel-text tabs    |
+| `_templates/essay.md`    | `philosophy` | toc + skeleton headings                    |
+| `_templates/tech.md`     | `tech`       | toc + context / what I did / gotcha / refs |
+| `_templates/thought.md`  | `misc`       | nothing — one to three paragraphs          |
+
+### Front matter
 
 ```yaml
 ---
 layout: post
-title: "Post title"
-date: 2026-05-17
-description: 1-line summary for the listing page and SEO
-categories: embedded robotics # space-separated tags, single word each
-related_posts: false # disable auto "related posts" at the bottom
+title: "Note title"
+date: 2026-05-17 # planted
+last_modified_at: 2026-07-02 # last tended — add when you edit
+description: 1-line summary for the card and SEO
+tags: soldering stm32 # space-separated, free-form, 1-4
+categories: tech # EXACTLY ONE, from the six
+maturity: seedling # seedling | budding | evergreen
+related_posts: false
+giscus_comments: true
 ---
-# Post body
-
-Markdown. Use `code blocks`, [links](https://example.com), images
-(`![alt](/assets/img/file.jpg)`), etc.
 ```
 
-### When to use a blog post
+### Taxonomy: one category, a few tags
 
-Long-form: tutorials, project deep-dives, commentary on industry news,
-opinion pieces. Anything more than a paragraph or that has a thesis to argue.
+The **category** is which bed the note grows in. Exactly one per note, from this
+closed set:
 
-For short personal milestones, use [news](#7-news-short-milestones) instead.
+`tech` · `poetry` · `music` · `language` · `philosophy` · `misc`
 
-### Categories
+The list lives in `display_categories:` in [`_config.yml`](_config.yml). Giving a
+note two categories files it under a nested archive URL nobody links to — one,
+always.
 
-Categories show as filter chips on the `/blog/` page. Use single words, lowercase.
-Common ones for this site: `embedded`, `robotics`, `cv`, `firmware`, `tooling`.
+**Tags** are free-form: lowercase, single words, 1-4 per note, space-separated.
+They're the fine-grained axis; the category is the coarse one. For language notes
+the convention is **first tag = the language** (`tags: japanese particles`).
+
+Renaming a category later does **not** break note URLs — the permalink is
+`/garden/:year/:title/` and contains no category. It only breaks links to the
+`/garden/category/<old-name>/` archive.
+
+### Chips vs. archive pages (this used to be documented wrong)
+
+Two different things, easy to conflate:
+
+- **Archive pages are automatic.** `jekyll-archives` generates
+  `/garden/category/<name>/` and `/garden/tag/<name>/` for every value actually used
+  by at least one note. Nothing to configure.
+- **Filter chips at the top of `/garden/` are not.** They render only for values
+  explicitly listed in `display_categories:` / `display_tags:` in `_config.yml`.
+
+The six categories are listed in `display_categories:`, so they all get chips.
+`display_tags:` is deliberately **empty** — no tag chip row until a tag vocabulary
+settles. Tag archives still exist and are still linked from each note; they're just
+not advertised on the index yet. To start advertising tags, add the settled ones to
+`display_tags:`.
+
+### The beds and their artwork
+
+Each bed can have its own backdrop photograph. Drop images into
+[`assets/img/garden/`](assets/img/garden/) named after the bed — `tech.jpg`,
+`poetry.jpg`, and so on — plus `garden.jpg`, which is the default used by `/garden/`
+itself, the tag and year archives, and any bed with no image of its own.
+
+Nothing breaks if an image is missing: a bed with no picture falls back to
+`garden.jpg`, and if that is absent too the page renders on the plain background
+rather than a broken image. So adding `garden.jpg` alone is enough to dress the whole
+garden.
+
+Icons, taglines and image paths live in [`_data/garden.yml`](_data/garden.yml) — that
+is also where to point a bed at a `.png`, or reword the line under a bed's title. The
+bed list itself is still `display_categories:` in `_config.yml`; `_data/garden.yml`
+only decorates it.
+
+Keep backdrops around 2000px on the long edge. They are full-bleed, so a photo
+straight off a phone is several megabytes every visitor pays for. Note images belong
+in `assets/img/notes/`, not here.
+
+### Maturity and tending
+
+| Stage       | Means                                           |
+| ----------- | ----------------------------------------------- |
+| `seedling`  | just planted; rough, incomplete, possibly wrong |
+| `budding`   | been back at least once; it has a shape         |
+| `evergreen` | settled; further edits are upkeep, not rewrites |
+
+The tending workflow:
+
+1. Plant everything as `seedling` — every template defaults to it.
+2. When you revisit and materially change a note: edit the body, bump `maturity:`
+   if it earned the bump, and set `last_modified_at: YYYY-MM-DD`.
+3. Don't write a second note to correct an old one. Edit the old one. That's the
+   entire point of the garden.
+
+`last_modified_at:` is optional — without it a note shows only its planted date.
+
+### Body conventions
+
+**Prose wraps however you like.** Markdown reflows paragraphs, so whether you keep
+a paragraph on one long line or wrap it at eighty columns makes no difference to the
+output. (Prettier's `proseWrap` is left at `preserve`, so it won't rewrap anything
+for you either way.)
+
+**Verse needs `{: .poem}`.** This is the one place the rule above does not hold, and
+forgetting it is the easiest mistake to make here: without the class, Markdown runs
+every line of a stanza together into one paragraph. Type the lines exactly as they
+should break, then put `{: .poem}` on the line immediately after the stanza — no
+blank line between:
+
+```markdown
+line one
+line two
+{: .poem}
+```
+
+The class gives serif type, roomier line-height, a stem down the left, and — the part
+that actually matters — `white-space: pre-line`, which is what holds the line breaks.
+It works on any block, not just poems: lyrics quoted inside a cover note use it too.
+
+(For the curious: Jekyll pins kramdown's `hard_wrap` to false even though this site
+feeds it GFM input, so a single newline collapses to a space. Fixing that globally
+would turn every wrapped line on the site into a visible break, so verse is handled
+in CSS instead.)
+
+**YouTube:**
+
+```liquid
+{% include youtube.liquid id="VIDEO_ID" title="Accessible title" caption="Optional caption" %}
+```
+
+`id` is the bare 11-character video id (`?v=` value), **not** a URL. `title` and
+`caption` are optional.
+
+**Self-hosted audio:**
+
+```liquid
+{% include audio.liquid path="assets/audio/take-3.mp3" controls=true %}
+```
+
+**Images:**
+
+```liquid
+{% include figure.liquid path="assets/img/notes/photo.jpg" class="img-fluid rounded z-depth-1" zoomable=true caption="Caption." %}
+```
+
+**GIFs** need care: the imagemagick→webp pipeline is configured to skip `.gif`, but
+keep them out of the responsive resizer anyway. Use plain markdown
+`![alt](/assets/img/notes/thing.gif)`, or `avoid_scaling=true` when you want a
+caption:
+
+```liquid
+{% include figure.liquid path="assets/img/notes/thing.gif" avoid_scaling=true caption="Caption." %}
+```
+
+Anything longer than ~2 seconds should be an MP4 instead — smaller, and it can loop
+silently:
+
+```liquid
+{% include video.liquid path="assets/video/clip.mp4" loop=true muted=true autoplay=true %}
+```
+
+**Tabs** (original vs. translation, parallel text, two ways of doing the same
+thing). Requires `tabs: true` in the front matter or the JS never loads and you get
+a stack of unstyled divs:
+
+```liquid
+{% tabs lyrics %}
+{% tab lyrics original %}
+...
+{% endtab %}
+{% tab lyrics english %}
+...
+{% endtab %}
+{% endtabs %}
+```
+
+The group name (`lyrics` here) must be unique within the page.
+
+**Table of contents** for anything long — essays, language notes, tech write-ups:
+
+```yaml
+toc:
+  beginning: true
+```
 
 ### Code blocks with syntax highlighting
 
@@ -353,6 +541,67 @@ int main() {
 
 Supported languages: most things via Rouge highlighter — `bash`, `c`, `cpp`,
 `python`, `yaml`, `liquid`, `html`, `scss`, etc.
+
+### Optional front-matter switches
+
+| Key                                 | Effect                                                                        |
+| ----------------------------------- | ----------------------------------------------------------------------------- |
+| `featured: true`                    | pins the note as a card at the top of `/garden/`. Needs a `description:` too. |
+| `thumbnail: assets/img/notes/x.jpg` | image on the note's card in the listing                                       |
+| `giscus_comments: true`             | adds the "show comments" button (see below — inert until configured)          |
+| `related_posts: false`              | hides the auto related-notes strip at the bottom of the note                  |
+| `_styles: >`                        | a block of CSS scoped to that one note                                        |
+
+```yaml
+_styles: >
+  .my-thing { color: var(--global-theme-color); }
+```
+
+### Publishing checklist
+
+1. Scaffold: `python3 _scripts/new_page.py` → `2) garden note` → type.
+2. Write it. One long line per paragraph.
+3. `npx prettier . --write`
+4. `docker compose up` → `http://localhost:8080`
+5. Check **the note and `/garden/`, in light AND dark mode** (theme toggle in the
+   navbar): category chip, maturity badge, images, embeds, tabs if used.
+6. `git add` → `git commit` → `git push origin main`. The **Deploy site** Action
+   publishes in ~2 minutes.
+
+### Not enabled yet
+
+- **Comments (giscus) — one step left.** Discussions is enabled on the repo, and
+  `repo`, `repo_id`, `category` and `category_id` are already filled in under
+  `giscus:` in [`_config.yml`](_config.yml). The only thing missing is the **giscus
+  GitHub App**, which has to be installed from a browser because it needs a GitHub
+  sign-in: go to <https://github.com/apps/giscus>, press **Install**, choose **Only
+  select repositories**, pick `alexandergmzx.github.io`, and confirm. Comments start
+  working the moment that finishes — no rebuild, no config change. Until then the
+  "show comments" button renders but the thread fails to load.
+
+  Threads are filed under the **Announcements** discussion category. That is giscus's
+  recommended choice: only maintainers can open threads there, so visitors cannot
+  post into your Discussions directly — the app opens a thread the first time
+  somebody comments on a note. Renaming that category in the GitHub UI is safe;
+  `category_id:` is what actually binds, not the name.
+
+  Threads are matched to notes by **title** (`mapping: title`, `strict: 1`), so
+  renaming a note's `title:` orphans its existing comment thread.
+
+- **Backlinks / wiki-style `[[links]]` between notes.** Deliberately not built. Link
+  notes to each other with ordinary markdown links.
+- **Semantic related notes.** `lsi: false` in `_config.yml`. The related-notes strip
+  is date/category based, not meaning based; turning `lsi` on pulls in classifier
+  gems and slows every build for little gain at this size.
+- **Scheduled publishing.** The workflow exists but is disabled, parked as
+  [`.github/workflows/schedule-posts.txt`](.github/workflows/schedule-posts.txt). To
+  enable: rename it to `.yml` and create a `_scheduled/` directory. Files named
+  `_scheduled/YYYY-MM-DD-slug.md` get moved into `_posts/` on that date and pushed.
+  **Caveat before you enable it:** that push uses the default `GITHUB_TOKEN`, and
+  pushes made with `GITHUB_TOKEN` do **not** trigger other workflows — so **Deploy
+  site** won't fire and the note will sit on `main` unpublished until your next
+  manual push. Either give the workflow a personal access token or just publish by
+  hand.
 
 ---
 
@@ -373,8 +622,11 @@ News items appear on the homepage in the announcements strip. They're for short,
 dated personal updates: _"Accepted to X masters program"_, _"Released v1.0 of Y"_,
 _"Speaking at Z conference"_.
 
-If a news item needs more than ~3 lines or argues a point, make it a blog post
-([section 6](#6-blog-posts)) and add a news item that links to the post.
+If a news item needs more than ~3 lines or argues a point, make it a garden note
+([section 6](#6-the-garden-notes)) and add a news item that links to the note.
+
+News is **not** part of the garden: no category, no tags, no maturity, no comments.
+It's the announcement wire; the garden is the thing being announced.
 
 ---
 
@@ -658,7 +910,7 @@ python3 _scripts/new_page.py
 Pick a number:
 
 1. project → `_projects/`
-2. post → `_posts/`
+2. garden note → `_posts/`
 3. news → `_news/`
 4. book → `_books/`
 5. teaching → `_teachings/`
@@ -669,6 +921,44 @@ slugifies the title for the filename, and prints the resulting path. The body
 contains `<!-- TODO: write content here -->` so you can grep for un-finished pages.
 
 If a file with the same name already exists, the script asks before overwriting.
+
+### The garden note sub-menu
+
+Option `2` asks for title and description, then which kind of note it is:
+
+| Choice | Note type     | Template                 | Category     |
+| ------ | ------------- | ------------------------ | ------------ |
+| 1      | poem          | `_templates/poem.md`     | `poetry`     |
+| 2      | song cover    | `_templates/cover.md`    | `music`      |
+| 3      | language note | `_templates/language.md` | `language`   |
+| 4      | essay         | `_templates/essay.md`    | `philosophy` |
+| 5      | quick thought | `_templates/thought.md`  | `misc`       |
+| 6      | tech note     | `_templates/tech.md`     | `tech`       |
+| 7      | blank         | —                        | you pick     |
+
+The category is implied by the type — you never type it, except for `7) blank`,
+which asks and re-asks until you give one of the six (see
+[section 6](#6-the-garden-notes)).
+
+Then it asks for **tags**: space-separated, lowercase, 1-4. For a language note the
+prompt reminds you that the first tag is the language itself.
+
+The script loads the matching file from [`_templates/`](_templates/), substitutes
+`__TITLE__` / `__DATE__` / `__DESCRIPTION__` / `__TAGS__`, and writes the result to
+`_posts/YYYY-MM-DD-slug.md`. Every template ships `maturity: seedling`,
+`related_posts: false` and `giscus_comments: true`. Front-matter lines you left
+blank (no description, no tags) are dropped rather than emitted empty, and a
+templated note has no `<!-- TODO -->` marker — the template body _is_ the todo.
+
+If a template file is missing, the script falls back to plain garden front matter
+instead of failing.
+
+### Editing the type list
+
+Both lists live at the top of [`_scripts/new_page.py`](_scripts/new_page.py):
+`POST_CATEGORIES` (the six, mirroring `display_categories:` in `_config.yml`) and
+`POST_TYPES` (menu choice → label, template, category). Adding a note type = add a
+file to `_templates/` and a row to `POST_TYPES`.
 
 ---
 
@@ -727,7 +1017,7 @@ elements that load 480/800/1400 webp variants.
 
 ### Liquid escaping in code blocks
 
-If you write `{{ }}` or `{% %}` in a blog post, Liquid will try to evaluate it.
+If you write `{{ }}` or `{% %}` in a garden note, Liquid will try to evaluate it.
 Wrap in `{% raw %}...{% endraw %}` to show the literal text.
 
 ### Front matter `title:` vs body `# Title`
