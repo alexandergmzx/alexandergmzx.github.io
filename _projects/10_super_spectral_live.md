@@ -7,7 +7,7 @@ permalink: /projects/10_super_spectral/live/
 
 This is the [Super Spectral]({{ '/projects/10_super_spectral/' | relative_url }}) host analyzer, the browser half of a
 [wrist-worn singing-voice analyzer](https://github.com/alexandergmzx/superspectral). It runs **entirely in this browser**:
-the microphone stream goes into an `AudioWorklet`, the transform runs in a Worker, and the spectrum is drawn on a canvas.
+the microphone stream goes into an `AudioWorklet`, the transform runs in a Worker, the spectrum is drawn on a canvas and the waterfall on a WebGL history ring.
 **No audio leaves your machine** and there is no backend in the live path.
 
 Your browser will ask for microphone permission when you press **Start capture**. The six analysis presets are the same

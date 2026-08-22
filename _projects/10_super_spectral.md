@@ -2,6 +2,7 @@
 layout: page
 title: Super Spectral — wrist-worn singing-voice analyzer
 description: An ESP32-S3 smartwatch that analyzes the singing voice, and the browser analyzer that grew out of its research document
+img: assets/img/super_spectral.png
 importance: 1 # Delta robot is also 1; ordering between equals is Jekyll's file order
 category: academic
 github: https://github.com/alexandergmzx/superspectral
@@ -42,4 +43,4 @@ It is also an instrument in its own right. The same six analysis presets the wat
 
 Its latency and refresh rate are **measured, never claimed**, and they say nothing about the watch — a laptop is not a wrist.
 
-_The analyzer is under active development; the live page currently shows the spectrum and the capture chain. Waterfall, pitch and band-energy overlays follow._
+_The analyzer is under active development: the live page shows the spectrum and the scrolling waterfall, with the capture chain reported beside them. Pitch, ring/twang and formant overlays follow._

@@ -1,0 +1,170 @@
+<!-- SPDX-FileCopyrightText: 2026 Alexander Gomez -->
+<!-- SPDX-License-Identifier: GPL-3.0-or-later -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta
+      name="description"
+      content="Super Spectral host web application: a browser-native singing-voice spectral analyzer and second digital-injection-path instrument."
+    />
+    <!-- No favicon request on a LAN-only page: a 404 per load is noise in the backend log. -->
+    <link rel="icon" href="data:," />
+    <!-- Linked here rather than imported from main.ts so the <noscript> path is
+         styled too; Vite processes an HTML-referenced stylesheet the same way. -->
+
+    <!-- Roboto is al-folio's face, so the embed matches the page around it.
+         Loaded as `media="print"` and promoted on load: a webfont in the
+         critical path blocks first paint, and a rehearsal room may have no
+         internet at all — in which case this simply never promotes and the
+         `system-ui` fallback in `--ss-font-ui` is what renders. -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+      media="print"
+      onload="this.media='all'"
+    />
+
+    <!--
+      Theme before first paint. `src/app/theme.ts` owns this properly once the
+      module has loaded; this runs earlier, in <head>, because a page that
+      paints light and then flips to dark is a flash the iframe makes worse
+      (the surrounding site is already dark by then).
+
+      Order: the parent page's choice, then our own stored one, then the OS.
+      Storage key `superspectral.theme` — al-folio owns `theme` on this origin.
+    -->
+    <script>
+      (function () {
+        var root = document.documentElement;
+        var theme = null;
+        try {
+          if (window.parent !== window) {
+            var declared = window.parent.document.documentElement.getAttribute('data-theme');
+            if (declared === 'dark' || declared === 'light') theme = declared;
+          }
+        } catch (e) {
+          /* cross-origin parent: fall through to our own preference */
+        }
+        if (theme === null) {
+          try {
+            var stored = window.localStorage.getItem('superspectral.theme');
+            if (stored === 'dark' || stored === 'light') theme = stored;
+          } catch (e) {
+            /* storage blocked in a third-party frame: fall through to the OS */
+          }
+        }
+        if (theme === null) {
+          theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        root.setAttribute('data-theme', theme);
+      })();
+    </script>
+
+    <title>Super Spectral — host analyzer</title>
+    <script type="module" crossorigin src="./assets/index.min.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index.css">
+  </head>
+  <body>
+    <!--
+      Insecure-origin banner. navigator.mediaDevices is undefined on any origin
+      that is neither HTTPS nor localhost (ADR 0021 decision 8), which is exactly
+      what happens when the phone opens http://<lan-ip>:5173. Rendered in the
+      markup rather than created by script so it can never be the thing that
+      failed to load; main.ts unhides it. role="alert" so a screen reader
+      announces it when it appears.
+    -->
+    <div id="insecure-banner" class="banner" role="alert" hidden>
+      <strong>Capture unavailable — insecure origin.</strong>
+      <span id="insecure-banner-detail"></span>
+    </div>
+
+    <noscript>
+      <div class="banner banner--static">
+        <strong>This analyzer is a JavaScript program.</strong>
+        The spectrum, the waterfall and the f0 overlay are all computed in this
+        browser (ADR 0021 decision 2); with scripting disabled there is nothing
+        to show. The offline-compare endpoints of the FastAPI backend remain
+        usable from the command line.
+      </div>
+    </noscript>
+
+    <div class="app">
+      <header class="app__header">
+        <h1 class="app__title">Super Spectral</h1>
+        <p class="app__subtitle">
+          Host analyzer — live path on <em>this machine's</em> microphone.
+          Latency and refresh here are <strong>measured, never claimed</strong>
+          (ADR 0021 decision 3).
+        </p>
+        <p class="app__version" id="backend-version" aria-live="polite">
+          backend: <span class="muted">connecting…</span>
+        </p>
+        <!-- Hidden while embedded: inside the iframe the surrounding page owns
+             the setting, and a control that silently does nothing is worse than
+             no control. main.ts unhides it when the controller is standalone. -->
+        <button type="button" id="theme-toggle" class="theme-toggle" hidden>
+          <span id="theme-toggle-label">theme: system</span>
+        </button>
+      </header>
+
+      <main class="app__main">
+        <!-- W1: what track.getSettings() actually returned, beside what we asked
+             for. Constraints are a request, not a guarantee (ADR 0021 d.8). -->
+        <section class="panel panel--chain" id="capture-chain" aria-labelledby="capture-chain-h">
+          <h2 id="capture-chain-h">Capture chain</h2>
+          <p class="chain__state" id="capture-state" aria-live="polite">idle</p>
+          <dl class="chain" id="capture-chain-readback"></dl>
+          <p class="chain__counters" id="counters" aria-live="off"></p>
+        </section>
+
+        <!-- W1: Canvas2D spectrum line, peak markers, hold, smoothing. -->
+        <section class="panel panel--spectrum" aria-labelledby="spectrum-h">
+          <h2 id="spectrum-h">Spectrum</h2>
+          <canvas id="spectrum-canvas" class="canvas canvas--spectrum" width="1024" height="384">
+            A magnitude spectrum in dBFS against frequency. Numeric readouts are
+            in the readout strip below.
+          </canvas>
+        </section>
+
+        <!-- W2: WebGL scrolling waterfall (ADR 0011 colormap LUT). -->
+        <section class="panel panel--waterfall" aria-labelledby="waterfall-h">
+          <h2 id="waterfall-h">Waterfall</h2>
+          <canvas id="waterfall-canvas" class="canvas canvas--waterfall" width="1024" height="240">
+            A scrolling spectrogram; time runs downward, frequency across.
+          </canvas>
+        </section>
+
+        <!-- W3: f0 with note and cents, ring/twang band energy, L_Aeq, clipping. -->
+        <section class="panel panel--readouts" aria-labelledby="readouts-h">
+          <h2 id="readouts-h">Readouts</h2>
+          <ul class="readouts" id="readout-strip">
+            <li class="readout"><span class="readout__label">f0</span><span class="readout__value" id="readout-f0">—</span></li>
+            <li class="readout"><span class="readout__label">note</span><span class="readout__value" id="readout-note">—</span></li>
+            <li class="readout"><span class="readout__label">peak</span><span class="readout__value" id="readout-peak">—</span></li>
+            <li class="readout"><span class="readout__label">clip</span><span class="readout__value" id="readout-clip">—</span></li>
+          </ul>
+        </section>
+
+        <!-- The controls bar. The preset list is served, never bundled
+             (ADR 0021 decision 7a): the six names and their sha256 below are
+             the visible proof that the byte-identity contract holds. -->
+        <section class="panel panel--controls" aria-labelledby="controls-h">
+          <h2 id="controls-h">Controls</h2>
+          <div class="controls">
+            <button type="button" id="capture-button" disabled>
+              Start capture
+            </button>
+            <span class="muted" id="capture-hint">loading presets…</span>
+          </div>
+          <h3 id="presets-h">Presets <span class="muted" id="presets-provenance"></span></h3>
+          <ul class="presets" id="preset-list" aria-labelledby="presets-h">
+            <li class="muted">loading…</li>
+          </ul>
+        </section>
+      </main>
+    </div>
+
+  </body>
+</html>
