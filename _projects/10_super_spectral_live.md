@@ -26,6 +26,8 @@ compared against the repository.
   <a href="{{ '/assets/superspectral/index.html' | relative_url }}">Open full screen</a>
 </p>
 
+**Capture a note, then reach it.** Hold a note for half a second and press _Capture reference_: the analyzer keeps its pitch and its spectrum, draws the spectrum as a dotted ghost, and from then on tells you — in words, and with a needle on a cents bar — whether the note you are singing now is _in tune_, _flat_ or _sharp_ against it. Pitch decides; the ghost is there so you can see how close the timbre is. The reference stays in your browser and survives a reload.
+
 The analyzer follows this site's light/dark setting. Latency and refresh rate here are **measured, never claimed**, and
 they are properties of your browser and this laptop — they say nothing about the watch, which does its own real-time
 work on its own silicon.

@@ -43,4 +43,6 @@ It is also an instrument in its own right. The same six analysis presets the wat
 
 Its latency and refresh rate are **measured, never claimed**, and they say nothing about the watch — a laptop is not a wrist.
 
-_The analyzer is under active development: the live page shows the spectrum and the scrolling waterfall, with the capture chain reported beside them. Pitch, ring/twang and formant overlays follow._
+{% include figure.liquid loading="lazy" path="assets/img/super_spectral_reference.png" class="img-fluid rounded z-depth-1" zoomable=true alt="The analyzer with a captured reference note: a dotted ghost spectrum under the live trace, harmonic markers labelled H1, a match cell reading 'flat 12 cents' with a needle on a cents bar, and the cividis waterfall below" caption="A captured reference note (dotted) under the live spectrum, and the match readout: the live pitch is 12 cents flat of it. The pitch estimator is held to Praat on synthetic goldens to a median of about one cent." %}
+
+_The analyzer is under active development: the live page shows the spectrum, the scrolling waterfall, labelled harmonic peaks, a time-domain pitch estimate with note name and cents, and reference-note capture and matching. Ring/twang and formant overlays follow._

@@ -136,14 +136,59 @@
           </canvas>
         </section>
 
-        <!-- W3: f0 with note and cents, ring/twang band energy, L_Aeq, clipping. -->
+        <!-- W3: f0 with note and cents, the reference-note match, ring/twang
+             band energy, L_Aeq, clipping. The match cell is a NOTE-REACHING
+             display (ADR 0021 decision 1 note, roadmap Q54): a glyph, a word,
+             a needle on a cents bar and a data-state outline — four channels,
+             so that none of them is colour alone (WCAG 1.4.1). Every number in
+             it is the session's; main.ts only places it. -->
         <section class="panel panel--readouts" aria-labelledby="readouts-h">
           <h2 id="readouts-h">Readouts</h2>
           <ul class="readouts" id="readout-strip">
             <li class="readout"><span class="readout__label">f0</span><span class="readout__value" id="readout-f0">—</span></li>
             <li class="readout"><span class="readout__label">note</span><span class="readout__value" id="readout-note">—</span></li>
+            <li class="readout readout--match" id="readout-match" data-state="none">
+              <span class="readout__label">match</span>
+              <span class="readout__value">
+                <span class="match__glyph" id="readout-match-glyph" aria-hidden="true">—</span>
+                <span id="readout-match-text" aria-live="off">no reference</span>
+              </span>
+              <!-- The cents bar. Its geometry (band edges, tick positions) is
+                   set by main.ts from the page's constants at boot, so the
+                   markup carries no number that could drift from them. The
+                   in-tune band is HATCHED, not only tinted: a band that was a
+                   colour would be colour alone. -->
+              <svg class="cents-bar" id="cents-bar" viewBox="0 0 240 32" role="img" aria-labelledby="cents-bar-title">
+                <title id="cents-bar-title">Live f0 against the reference, in cents; the hatched band is in tune.</title>
+                <defs>
+                  <pattern id="cents-bar-hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)">
+                    <line x1="0" y1="0" x2="0" y2="6" stroke="currentColor" stroke-width="2" />
+                  </pattern>
+                </defs>
+                <rect class="cents-bar__near" id="cents-bar-near" x="0" y="8" width="0" height="14" />
+                <rect class="cents-bar__band" id="cents-bar-band" x="0" y="8" width="0" height="14" fill="url(#cents-bar-hatch)" />
+                <line class="cents-bar__axis" x1="20" y1="15" x2="220" y2="15" />
+                <g class="cents-bar__ticks" id="cents-bar-ticks"></g>
+                <g class="cents-bar__needle" id="cents-bar-needle" data-visible="false">
+                  <line x1="120" y1="3" x2="120" y2="27" />
+                  <polygon points="115,3 125,3 120,9" />
+                </g>
+              </svg>
+            </li>
+            <li class="readout readout--reference">
+              <span class="readout__label">reference</span>
+              <span class="readout__value readout__value--small" id="readout-reference">none</span>
+              <span class="readout__note" id="readout-reference-warning" data-kind="warn" hidden></span>
+            </li>
             <li class="readout"><span class="readout__label">peak</span><span class="readout__value" id="readout-peak">—</span></li>
             <li class="readout"><span class="readout__label">clip</span><span class="readout__value" id="readout-clip">—</span></li>
+          </ul>
+          <!-- The conventions every cell above depends on, with their tags.
+               Filled by main.ts from the same constants the session uses. -->
+          <p class="readouts__constants" id="constants-line" aria-live="off"></p>
+          <h3 id="peak-legend-h">Peaks <span class="muted">(strongest first; Hz and dB for every marker)</span></h3>
+          <ul class="peak-legend" id="peak-legend" aria-labelledby="peak-legend-h">
+            <li class="muted">—</li>
           </ul>
         </section>
 
@@ -157,6 +202,19 @@
               Start capture
             </button>
             <span class="muted" id="capture-hint">loading presets…</span>
+          </div>
+          <!-- The reference note: hold one, capture it, imitate it. The button
+               is enabled only while the last `holdFrames` frames would be
+               accepted (the same rule `captureReference` applies), and the hint
+               names the reason when they would not. -->
+          <div class="controls controls--reference">
+            <button type="button" id="capture-reference" class="button--secondary" disabled>
+              Capture reference
+            </button>
+            <button type="button" id="clear-reference" class="button--secondary" disabled>
+              Clear reference
+            </button>
+            <span class="muted" id="reference-hint">start capture, then hold a note</span>
           </div>
           <h3 id="presets-h">Presets <span class="muted" id="presets-provenance"></span></h3>
           <ul class="presets" id="preset-list" aria-labelledby="presets-h">
