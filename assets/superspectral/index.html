@@ -41,6 +41,12 @@
         var theme = null;
         try {
           if (window.parent !== window) {
+            // EMBEDDED, and the stylesheet needs to know before it paints:
+            // `overscroll-behavior: none` is right for a standalone page and
+            // wrong for a card in an article, where it would stop the reader
+            // scrolling past us (ADR 0024 decision 1, [12 A1]). Set here
+            // rather than from main.ts so the first frame is already correct.
+            root.setAttribute('data-embedded', '');
             var declared = window.parent.document.documentElement.getAttribute('data-theme');
             if (declared === 'dark' || declared === 'light') theme = declared;
           }
@@ -90,139 +96,639 @@
       </div>
     </noscript>
 
-    <div class="app">
-      <header class="app__header">
-        <h1 class="app__title">Super Spectral</h1>
-        <p class="app__subtitle">
-          Host analyzer — live path on <em>this machine's</em> microphone.
-          Latency and refresh here are <strong>measured, never claimed</strong>
-          (ADR 0021 decision 3).
-        </p>
-        <p class="app__version" id="backend-version" aria-live="polite">
-          backend: <span class="muted">connecting…</span>
-        </p>
-        <!-- Hidden while embedded: inside the iframe the surrounding page owns
-             the setting, and a control that silently does nothing is worse than
-             no control. main.ts unhides it when the controller is standalone. -->
-        <button type="button" id="theme-toggle" class="theme-toggle" hidden>
-          <span id="theme-toggle-label">theme: system</span>
-        </button>
-      </header>
+    <!--
+      THE ORDER OF THIS DOCUMENT IS THE ORDER OF IMPORTANCE, and it is also the
+      keyboard order: glance bar, rail, canvases, diagnostics. The layout before
+      this one gave the capture chain the whole left column and first place in
+      reading order, and put Start and the presets last — the owner's complaint
+      (2026-08-22) was exactly that, and every analyzer a singer actually uses
+      (Spectroid, Vocal Pitch Monitor, Tunable, Sing&See) puts the diagnostics
+      behind one door. So the chain is a collapsed `<details>` at the bottom and
+      the first thing Tab reaches is Start.
 
-      <main class="app__main">
-        <!-- W1: what track.getSettings() actually returned, beside what we asked
-             for. Constraints are a request, not a guarantee (ADR 0021 d.8). -->
-        <section class="panel panel--chain" id="capture-chain" aria-labelledby="capture-chain-h">
-          <h2 id="capture-chain-h">Capture chain</h2>
-          <p class="chain__state" id="capture-state" aria-live="polite">idle</p>
-          <dl class="chain" id="capture-chain-readback"></dl>
-          <p class="chain__counters" id="counters" aria-live="off"></p>
-        </section>
+      `data-mode` on `.app` is the whole Perform/Study/Tune switch: each mode's
+      `.*-only` elements are `display: none` under the other two. One
+      attribute, one CSS rule, no second copy of the markup — and since
+      ADR 0024 the CONTROL for it lives in the glance bar rather than at the
+      bottom of the rail, because the rail can now be hidden and an indicator
+      that folds away with its own control is a mode error waiting to happen.
 
-        <!-- W1: Canvas2D spectrum line, peak markers, hold, smoothing. -->
-        <section class="panel panel--spectrum" aria-labelledby="spectrum-h">
-          <h2 id="spectrum-h">Spectrum</h2>
-          <canvas id="spectrum-canvas" class="canvas canvas--spectrum" width="1024" height="384">
-            A magnitude spectrum in dBFS against frequency. Numeric readouts are
-            in the readout strip below.
-          </canvas>
-        </section>
+      `data-rail` is the same idea for the controls: `open`, `closed`, or
+      ABSENT, which means "take this width's default" — open on a laptop,
+      closed on a phone. Only an explicit choice is stored.
+    -->
+    <div class="app" id="app" data-mode="perform">
+      <h1 class="visually-hidden">Super Spectral — host analyzer</h1>
 
-        <!-- W2: WebGL scrolling waterfall (ADR 0011 colormap LUT). -->
-        <section class="panel panel--waterfall" aria-labelledby="waterfall-h">
-          <h2 id="waterfall-h">Waterfall</h2>
-          <canvas id="waterfall-canvas" class="canvas canvas--waterfall" width="1024" height="240">
-            A scrolling spectrogram; time runs downward, frequency across.
-          </canvas>
-        </section>
+      <!--
+        THE GLANCE ZONE (ADR 0012 decision 5): f0 as a note, the reference match,
+        the clipping flag and the armed/recording state — and nothing else. The
+        note is the largest text on the page because it is read from a music
+        stand: 3.5 rem is 56 px, about 21 arcmin of cap height at 1.5 m, four
+        times the 20/20 threshold.
 
-        <!-- W3: f0 with note and cents, the reference-note match, ring/twang
-             band energy, L_Aeq, clipping. The match cell is a NOTE-REACHING
-             display (ADR 0021 decision 1 note, roadmap Q54): a glyph, a word,
-             a needle on a cents bar and a data-state outline — four channels,
-             so that none of them is colour alone (WCAG 1.4.1). Every number in
-             it is the session's; main.ts only places it. -->
-        <section class="panel panel--readouts" aria-labelledby="readouts-h">
-          <h2 id="readouts-h">Readouts</h2>
-          <ul class="readouts" id="readout-strip">
-            <li class="readout"><span class="readout__label">f0</span><span class="readout__value" id="readout-f0">—</span></li>
-            <li class="readout"><span class="readout__label">note</span><span class="readout__value" id="readout-note">—</span></li>
-            <li class="readout readout--match" id="readout-match" data-state="none">
-              <span class="readout__label">match</span>
-              <span class="readout__value">
-                <span class="match__glyph" id="readout-match-glyph" aria-hidden="true">—</span>
-                <span id="readout-match-text" aria-live="off">no reference</span>
-              </span>
-              <!-- The cents bar. Its geometry (band edges, tick positions) is
-                   set by main.ts from the page's constants at boot, so the
-                   markup carries no number that could drift from them. The
-                   in-tune band is HATCHED, not only tinted: a band that was a
-                   colour would be colour alone. -->
-              <svg class="cents-bar" id="cents-bar" viewBox="0 0 240 32" role="img" aria-labelledby="cents-bar-title">
-                <title id="cents-bar-title">Live f0 against the reference, in cents; the hatched band is in tune.</title>
-                <defs>
-                  <pattern id="cents-bar-hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)">
-                    <line x1="0" y1="0" x2="0" y2="6" stroke="currentColor" stroke-width="2" />
-                  </pattern>
-                </defs>
-                <rect class="cents-bar__near" id="cents-bar-near" x="0" y="8" width="0" height="14" />
-                <rect class="cents-bar__band" id="cents-bar-band" x="0" y="8" width="0" height="14" fill="url(#cents-bar-hatch)" />
-                <line class="cents-bar__axis" x1="20" y1="15" x2="220" y2="15" />
-                <g class="cents-bar__ticks" id="cents-bar-ticks"></g>
-                <g class="cents-bar__needle" id="cents-bar-needle" data-visible="false">
-                  <line x1="120" y1="3" x2="120" y2="27" />
-                  <polygon points="115,3 125,3 120,9" />
-                </g>
-              </svg>
-            </li>
-            <li class="readout readout--reference">
-              <span class="readout__label">reference</span>
-              <span class="readout__value readout__value--small" id="readout-reference">none</span>
-              <span class="readout__note" id="readout-reference-warning" data-kind="warn" hidden></span>
-            </li>
-            <li class="readout"><span class="readout__label">peak</span><span class="readout__value" id="readout-peak">—</span></li>
-            <li class="readout"><span class="readout__label">clip</span><span class="readout__value" id="readout-clip">—</span></li>
-          </ul>
-          <!-- The conventions every cell above depends on, with their tags.
-               Filled by main.ts from the same constants the session uses. -->
-          <p class="readouts__constants" id="constants-line" aria-live="off"></p>
-          <h3 id="peak-legend-h">Peaks <span class="muted">(strongest first; Hz and dB for every marker)</span></h3>
-          <ul class="peak-legend" id="peak-legend" aria-labelledby="peak-legend-h">
-            <li class="muted">—</li>
-          </ul>
-        </section>
+        Nothing here is encoded by colour alone (WCAG 1.4.1, ADR 0012 d.6): the
+        match carries a glyph, a word, a needle position and an outline style,
+        and `#match-announce` says the same thing to a screen reader.
+      -->
+      <section class="glance" aria-label="Live readouts">
+        <div class="glance__cell glance__cell--note">
+          <span class="visually-hidden">note</span>
+          <span class="glance__note" id="readout-note">—</span>
+          <span class="glance__f0" id="readout-f0">—</span>
+        </div>
 
-        <!-- The controls bar. The preset list is served, never bundled
-             (ADR 0021 decision 7a): the six names and their sha256 below are
-             the visible proof that the byte-identity contract holds. -->
-        <section class="panel panel--controls" aria-labelledby="controls-h">
-          <h2 id="controls-h">Controls</h2>
-          <div class="controls">
-            <button type="button" id="capture-button" disabled>
-              Start capture
-            </button>
-            <span class="muted" id="capture-hint">loading presets…</span>
+        <div class="glance__cell glance__cell--match" id="readout-match" data-state="none">
+          <span class="visually-hidden">match</span>
+          <span class="glance__match">
+            <span class="match__glyph" id="readout-match-glyph" aria-hidden="true">—</span>
+            <span id="readout-match-text" aria-live="off">no reference</span>
+          </span>
+          <span class="glance__reference" id="readout-reference">none</span>
+        </div>
+
+        <!-- The meter, promoted out of the match cell into a cell of its own:
+             one dominant tuner needle with a visible in-tune zone is what every
+             tuner in the survey shows, and at 240 units wide inside a readout
+             the tick labels were 8 px. Its geometry (band edges, tick
+             positions) is set by main.ts from the page's constants at boot and
+             again whenever the tolerance changes, so the markup carries no
+             number that could drift from them. The in-tune band is HATCHED, not
+             only tinted: a band that was a colour would be colour alone. -->
+        <div class="glance__cell glance__cell--meter">
+          <svg class="cents-bar" id="cents-bar" viewBox="0 0 360 40" role="img" aria-labelledby="cents-bar-title">
+            <title id="cents-bar-title">Live f0 against the reference, in cents; the hatched band is in tune.</title>
+            <defs>
+              <pattern id="cents-bar-hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)">
+                <line x1="0" y1="0" x2="0" y2="6" stroke="currentColor" stroke-width="2" />
+              </pattern>
+            </defs>
+            <rect class="cents-bar__near" id="cents-bar-near" x="0" y="4" width="0" height="18" />
+            <rect class="cents-bar__band" id="cents-bar-band" x="0" y="4" width="0" height="18" fill="url(#cents-bar-hatch)" />
+            <line class="cents-bar__axis" x1="30" y1="13" x2="330" y2="13" />
+            <g class="cents-bar__ticks" id="cents-bar-ticks"></g>
+            <g class="cents-bar__needle" id="cents-bar-needle" data-visible="false">
+              <line x1="180" y1="0" x2="180" y2="26" />
+              <polygon points="172,0 188,0 180,9" />
+            </g>
+          </svg>
+        </div>
+
+        <div class="glance__cell glance__cell--flags">
+          <span class="glance__flag">
+            <span class="glance__label">clip</span>
+            <span class="glance__value" id="readout-clip">—</span>
+          </span>
+          <span class="glance__state" id="capture-state" aria-live="polite">idle</span>
+        </div>
+
+        <!-- THE MODE LIVES WHERE IT CAN ALWAYS BE SEEN AND ALWAYS BE REACHED.
+             It used to sit at the bottom of the rail, which was safe only
+             while the rail could not be hidden; once the controls fold away
+             the indicator would fold with them, and a mode you cannot see is
+             the textbook mode error ([12 R17]: two redundant cues, and the
+             system status always communicated). Here it is one of them — the
+             word, checked — and the layout itself is the other, because
+             Perform and Study draw different canvases. Moving the group does
+             not move the tab ring: the DOM order is still glance, rail,
+             canvases, footer, and the mode is now the first thing in it. -->
+        <div class="glance__cell glance__cell--mode">
+          <span class="rail__legend" id="mode-legend">display</span>
+          <div class="segmented" id="mode-control" role="radiogroup" aria-labelledby="mode-legend">
+            <button type="button" role="radio" id="mode-perform" class="segment" data-value="perform" aria-checked="true" tabindex="0">Perform</button>
+            <button type="button" role="radio" id="mode-study" class="segment" data-value="study" aria-checked="false" tabindex="-1">Study</button>
+            <button type="button" role="radio" id="mode-tune" class="segment" data-value="tune" aria-checked="false" tabindex="-1">Tune</button>
           </div>
-          <!-- The reference note: hold one, capture it, imitate it. The button
-               is enabled only while the last `holdFrames` frames would be
-               accepted (the same rule `captureReference` applies), and the hint
-               names the reason when they would not. -->
-          <div class="controls controls--reference">
+        </div>
+
+        <!-- "reference captured under preset X, this session runs Y: pitch
+             compared, spectrum not shown". A row of the strip rather than a
+             note inside the match cell, because in a 240 px column it wraps to
+             three lines, and out of flow it covered Start. -->
+        <p class="glance__warning" id="readout-reference-warning" data-kind="warn" hidden></p>
+
+        <!-- The match state, said once per change and at most twice a second
+             (`app/announce.ts`). A live region written at the 50 Hz hop rate is
+             not an announcement; it is a stutter most screen readers coalesce
+             into nothing. ADR 0012 decision 6(d). -->
+        <p class="visually-hidden" id="match-announce" aria-live="polite" aria-atomic="true"></p>
+      </section>
+
+      <!--
+        The rail: everything the singer touches, beside the canvas, never below
+        it — and now in TWO LEVELS, never three (ADR 0024 decision 3; the
+        progressive-disclosure rule is that two levels is where usability
+        stops falling, [12 R12]).
+
+        THE SURFACE is what is true while singing: Start, the reference pair,
+        one line of hint, and the control that opens the rest. THE SHEET is
+        everything you set down between phrases — the typed note, the source,
+        the presets, the tolerance.
+
+        On a laptop the sheet is simply the lower part of a column that is
+        open by DEFAULT and collapses only when the singer says so: hiding
+        desktop navigation by default halves discoverability ([12 R13]), so
+        this collapses, it does not vanish, and the collapsed strip still
+        carries the control that brings it back.
+
+        On a phone the same markup is a STANDARD bottom sheet — non-modal, no
+        scrim, closed by default ([12 R6], [12 R7]): the glance bar and the
+        spectrogram stay live and visible while it is open, which a modal
+        drawer's scrim would make impossible, and that is the whole reason the
+        sheet pattern was chosen over a drawer.
+
+        The toggle is the rail's LAST child so the DOM order stays the order
+        of importance — Start first, the way out last, exactly where a
+        `<summary>` sits relative to the body it closes.
+      -->
+      <aside class="rail" id="rail" aria-label="Controls">
+        <div class="rail__surface">
+          <button type="button" id="capture-button" class="rail__start" disabled>
+            Start capture
+          </button>
+
+        <!-- The reference note: hold one, capture it, imitate it. The button is
+             enabled only while the last `holdFrames` frames would be accepted
+             (the same rule `captureReference` applies), and the hint names the
+             reason when they would not. -->
+          <div class="rail__pair">
             <button type="button" id="capture-reference" class="button--secondary" disabled>
               Capture reference
             </button>
             <button type="button" id="clear-reference" class="button--secondary" disabled>
               Clear reference
             </button>
-            <span class="muted" id="reference-hint">start capture, then hold a note</span>
           </div>
-          <h3 id="presets-h">Presets <span class="muted" id="presets-provenance"></span></h3>
-          <ul class="presets" id="preset-list" aria-labelledby="presets-h">
+          <p class="rail__hint" id="reference-hint">start capture, then hold a note</p>
+        </div>
+
+        <div class="rail__more" id="rail-more">
+
+        <!-- Or TYPE it. A song never holds a note for the 25 frames a capture
+             needs, so the note the singer is aiming at has to be settable as a
+             target: a name ("G4", "F#3", "Gb4" — shown F♯4, one naming
+             convention on screen) or a frequency. ▼/▲ move the CURRENT
+             reference by exactly one equal-tempered semitone, which is the
+             warm-up ladder; a reference captured 30 cents sharp keeps its 30
+             cents on the way up. Disabled until the presets have loaded,
+             because a reference is stamped with the preset it was set under. -->
+        <form class="rail__row" id="note-form" aria-label="Typed reference">
+          <input
+            type="text"
+            id="note-input"
+            class="rail__input"
+            autocomplete="off"
+            spellcheck="false"
+            placeholder="G4 · 392 Hz"
+            aria-label="Reference note or frequency"
+            aria-describedby="reference-hint"
+            disabled
+          />
+          <button type="submit" id="note-set" class="button--secondary" disabled>Set</button>
+          <button type="button" id="note-down" class="button--secondary" aria-label="Reference down one semitone" disabled>▼−1</button>
+          <button type="button" id="note-up" class="button--secondary" aria-label="Reference up one semitone" disabled>▲+1</button>
+        </form>
+
+        <!--
+          THE SOURCE, SAID OUT LOUD. The owner practises against isolated vocal
+          stems, so the analyzer reads a file through the same worklet and the
+          same Worker the microphone feeds (ADR 0021 7(c), second note). Which
+          one is running is never implied: it is the checked radio here, the
+          state cell above, the footer summary and a row in the capture-chain
+          panel — four textual channels, no colour.
+
+          `Choose…` is a BUTTON, not a third radio. Selection follows focus in
+          this radiogroup, so arrowing onto a radio that opened the file dialog
+          would open it by accident; and the File radio stays disabled until a
+          file is actually loaded, because a source with nothing behind it is
+          not a source. The input itself is visually hidden rather than
+          `display: none` — Playwright's setInputFiles and the OS dialog both
+          need a real element.
+        -->
+        <div class="rail__group rail__group--segmented">
+          <span class="rail__legend" id="source-legend">source</span>
+          <div class="rail__source">
+            <div class="segmented" id="source-control" role="radiogroup" aria-labelledby="source-legend">
+              <button type="button" role="radio" id="source-microphone" class="segment" data-value="microphone" aria-checked="true" tabindex="0">Mic</button>
+              <button type="button" role="radio" id="source-file" class="segment segment--file" data-value="file" aria-checked="false" tabindex="-1" disabled>File</button>
+            </div>
+            <button type="button" id="file-choose" class="button--secondary rail__choose">Choose…</button>
+          </div>
+          <input type="file" id="file-input" class="visually-hidden" accept="audio/*,.wav,.mp3,.flac,.ogg,.m4a" tabindex="-1" aria-hidden="true" />
+        </div>
+
+        <!-- The transport used to be here, and it cost the rail 64 px — two
+             preset rows, which at the 620 px floor is the difference between
+             three presets visible with a file loaded and one. It is a bar
+             above the canvases now (ADR 0023 decision 10); the source hint
+             stays, because it belongs beside the control that chose the file. -->
+        <p class="rail__hint" id="source-hint" hidden></p>
+
+        <!-- The preset list is served, never bundled (ADR 0021 decision 7a).
+             The six sha256 that prove the byte-identity contract are in the
+             footer now: they are provenance, and provenance is not a control. -->
+        <div class="rail__group" id="preset-list" role="radiogroup" aria-label="Preset">
+          <p class="muted rail__hint">loading…</p>
+        </div>
+
+          <div class="rail__group rail__group--segmented">
+            <span class="rail__legend" id="tolerance-legend">in tune within</span>
+            <div class="segmented" id="tolerance-control" role="radiogroup" aria-labelledby="tolerance-legend">
+              <button type="button" role="radio" id="tolerance-5" class="segment" data-value="5" aria-checked="false" tabindex="-1">±5¢</button>
+              <button type="button" role="radio" id="tolerance-10" class="segment" data-value="10" aria-checked="true" tabindex="0">±10¢</button>
+              <button type="button" role="radio" id="tolerance-25" class="segment" data-value="25" aria-checked="false" tabindex="-1">±25¢</button>
+            </div>
+          </div>
+
+          <!-- DAMPING IS A SETTING, AND IT SAYS ITS OWN TIME CONSTANT. It is a
+               display filter over a measurement, which is the exact place an
+               instrument lies to its user if the filter is invisible: the
+               number beside the slider is what separates the drawn reading
+               from the measured one, and the footer keeps showing the
+               measured one either way. Defaulted high, on the evidence that a
+               VOICE needs more of it than an instrument does — "not enough
+               damping results in a shaky display, due to the intrinsic
+               shakiness of vocal pitch" ([12 R20], [12 R23]).
+
+               A native range, so a click on the track jumps the thumb and the
+               arrows step it: that is WCAG 2.5.7's non-drag alternative for
+               free ([12 S5]), and `aria-valuetext` is the clause a custom
+               slider always misses ([12 S8]). -->
+          <div class="rail__group rail__group--segmented">
+            <label class="rail__legend" for="tuner-damping">damping</label>
+            <div class="rail__source">
+              <input
+                type="range"
+                id="tuner-damping"
+                class="rail__range"
+                min="0"
+                max="500"
+                step="25"
+                value="150"
+                aria-valuetext="150 ms"
+              />
+              <output class="rail__hint rail__hint--value" id="tuner-damping-out" for="tuner-damping">150 ms</output>
+            </div>
+          </div>
+        </div>
+
+        <!-- THE DISCLOSURE CONTROL (ARIA APG's disclosure pattern, [12 S8]):
+             a real button, `aria-expanded` on the button, `aria-controls` on
+             the thing it shows. Its label says what will happen, in words —
+             an icon alone is not one of the handful that read without one
+             ([12 R14]). The label text is written by `renderRail()`, because
+             it differs between the laptop's "hide this column" and the
+             phone's "close this sheet". -->
+        <button type="button" id="rail-toggle" class="rail__toggle button--secondary" aria-expanded="true" aria-controls="rail-more">
+          <span class="rail__toggle-glyph" aria-hidden="true">◂</span>
+          <span class="rail__toggle-label" id="rail-toggle-label">Hide controls</span>
+        </button>
+      </aside>
+
+      <!--
+        THE CANVAS IS THE PAGE. Four canvases in one column, all of the same CSS
+        width, so that the frequency columns of the spectrum, the axis strip and
+        the spectrogram line up to the pixel (`src/render/axis.ts` is the single
+        mapper they all call).
+
+        Perform: the pitch strip dominates — cents against time, zoomed around
+        the reference, where a ±10-cent lane is tens of pixels tall. Study adds
+        the spectrum and moves the spectrogram down under the shared axis, where
+        the same lane is an exact 2.8-pixel hairline. Both are true; only one of
+        them can be sung to.
+      -->
+      <!--
+        THE PLAYER, above the canvases and only while a file is loaded.
+
+        It sits in the DOM AFTER the rail and is placed by grid area, so the
+        tab ring is unchanged and the first thing Tab reaches is still Start —
+        the same trick the canvas block itself uses. Everything on it is one
+        row at 930×620; the precise region fields and the render diagnostics
+        are a `study-only` second line, because a singer scrubbing to a phrase
+        does not need them and the row does not have the width.
+
+        THE SEEK IS A NATIVE RANGE, not a canvas and not a div with
+        `role="slider"`: it brings Arrow / Home / End / PageUp / PageDown for
+        free, which is the key set `wireRadiogroup` implements by hand for the
+        radio groups, and a hand-rolled slider would have to re-implement all
+        of it. The loop region is drawn BEHIND the track as a hatched band with
+        a dashed edge — a tinted band would be state carried by colour alone
+        (WCAG 1.4.1, ADR 0012 d.6). A and B stamp the playhead into the
+        region's ends: two stacked ranges would fight for the pointer and put
+        the focus order at odds with the visual one.
+      -->
+      <div class="canvas-column" id="canvas-column">
+        <div class="player" id="player" role="group" aria-label="File playback" hidden>
+          <div class="player__row">
+            <button type="button" id="transport-play" class="player__btn player__btn--wide">▶ Play</button>
+            <button type="button" id="transport-home" class="player__btn" aria-label="Back to the loop start" title="Back to the loop start">⏮</button>
+            <button type="button" id="transport-back" class="player__btn" aria-label="Back five seconds" title="Back 5 s">«5</button>
+            <button type="button" id="transport-fwd" class="player__btn" aria-label="Forward five seconds" title="Forward 5 s">5»</button>
+
+            <div class="player__track">
+              <div class="player__region" id="player-region" aria-hidden="true"></div>
+              <input
+                type="range"
+                id="transport-seek"
+                class="player__seek"
+                min="0"
+                max="0"
+                step="0.1"
+                value="0"
+                aria-label="Position in the file, seconds"
+                aria-valuetext="0:00.0"
+              />
+            </div>
+
+            <output class="player__time" id="transport-time" for="transport-seek" aria-live="off">0:00.0 / 0:00.0</output>
+
+            <!-- EACH MARK CARRIES ITS OWN RESET, beside it and nowhere else.
+                 A single "reset the loop" next to Play is the control NN/g's
+                 review of reset buttons warns about — pressed by mistake,
+                 with nothing to undo it ([12 R16], ADR 0024 decision 6). Two
+                 scoped resets, each attached to the mark it clears, with the
+                 word visible rather than a glyph alone ([12 R14]); the seek
+                 track sits between them and the transport cluster, which is
+                 the 24 px of clear space WCAG 2.5.8 asks for ([12 S2]). -->
+            <span class="player__mark">
+              <button type="button" id="region-set-a" class="player__btn" aria-label="Set the loop start here" title="Set the loop start here">A</button>
+              <button type="button" id="region-reset-a" class="player__btn player__btn--reset" aria-label="Reset the loop start to the beginning of the file" title="Reset A to the beginning">reset A</button>
+            </span>
+            <span class="player__mark">
+              <button type="button" id="region-set-b" class="player__btn" aria-label="Set the loop end here" title="Set the loop end here">B</button>
+              <button type="button" id="region-reset-b" class="player__btn player__btn--reset" aria-label="Reset the loop end to the end of the file" title="Reset B to the end">reset B</button>
+            </span>
+            <button type="button" id="transport-loop" class="player__btn player__btn--wide" aria-pressed="false">
+              <span class="transport__glyph" aria-hidden="true">○</span> Loop A–B
+            </button>
+          </div>
+
+          <!-- THE ONE KNOB. A stretch is perceived in doublings, so the slider
+               is log-spaced with stops at 1/2/4/8/16/32 and starts at 1×,
+               where nothing is rendered and the page is exactly as it was.
+               Everything else about the engine is a frozen constant with a
+               reason, listed in ADR 0023 decision 7 and shown in the chain
+               panel — the singer sets the factor and nothing else. -->
+          <div class="player__row player__row--stretch">
+            <label class="player__label" for="stretch-slider">stretch</label>
+            <input
+              type="range"
+              id="stretch-slider"
+              class="player__stretch"
+              list="stretch-stops"
+              min="0"
+              max="50"
+              step="1"
+              value="0"
+              aria-label="Time stretch factor"
+              aria-valuetext="1× (raw)"
+            />
+            <datalist id="stretch-stops">
+              <option value="0" label="1×"></option>
+              <option value="10" label="2×"></option>
+              <option value="20" label="4×"></option>
+              <option value="30" label="8×"></option>
+              <option value="40" label="16×"></option>
+              <option value="50" label="32×"></option>
+            </datalist>
+            <output class="player__stretch-value" id="stretch-value" for="stretch-slider">1× (raw)</output>
+
+            <!-- SMEAR is the window length, and it is the knob that decides
+                 whether the drone still sounds like a voice. Everything inside
+                 one window becomes a single frozen spectrum: 0.05 s keeps the
+                 vibrato and the vowel moving, 0.5 s is a motionless tone that
+                 is easier to tune against. The reference implementation's
+                 0.25 s sits near the frozen end, which is what "too drony"
+                 meant (roadmap Q58, answered 2026-08-23). -->
+            <label class="player__label" for="smear-slider">smear</label>
+            <input
+              type="range"
+              id="smear-slider"
+              class="player__smear"
+              min="0"
+              max="3"
+              step="1"
+              value="1"
+              aria-label="Smear: how much of the voice each window freezes"
+              aria-valuetext="0.10 s — keeps the voice moving"
+            />
+            <output class="player__smear-value" id="smear-value" for="smear-slider">0.10 s</output>
+          </div>
+
+          <!-- What this file IS, on the bar rather than in the rail: it is the
+               file's own furniture, and in the rail it cost a preset row. The
+               rail's hint keeps REFUSALS, because a file that failed to decode
+               leaves this bar hidden and an error nobody can see is worse than
+               a preset nobody can see. -->
+          <p class="player__facts" id="player-facts" aria-live="off"></p>
+
+          <!-- WHAT THE MARKS DID, said once. The state cell cannot carry it:
+               `transportSentence()` rewrites that cell on the very
+               `set-region` event a stamp or a reset produces, so a message
+               left there would be clobbered before it was read. A stamp is
+               visible in the band; a RESET can look like nothing happened,
+               which is exactly the case a live region is for (ADR 0012 d.6 —
+               once per change, never at the hop rate).
+
+               The two loop NUMBER FIELDS that stood here until 2026-08-23 are
+               gone, at the owner's request: "not that useful now there are
+               more buttons". WCAG 2.5.7 asks for a non-drag alternative to a
+               DRAGGING operation, and every loop endpoint still has three —
+               the native range jumps on a track click and steps 0.1 s on
+               arrows (Home/End/PageUp/PageDown too), the skips move the
+               playhead, and A and B stamp it. The fields were a second
+               equal-precision path, not the only one ([12 S5], ADR 0024
+               decision 5). The render diagnostics they carried moved into the
+               capture-chain panel, where the rest of the numbers live. -->
+          <output class="visually-hidden" id="player-announce" aria-live="polite" aria-atomic="true"></output>
+        </div>
+
+        <!--
+          TUNE: ONE THING TO LOOK AT. The clearest statement of why is from
+          somebody who designed a sing-in-tune app and watched singers use it:
+          "the user can only look at one thing at a time … the best app will be
+          one that finds a way to show the coarse view and the fine view
+          simultaneously in the same place" ([12 R20]). So the note and the
+          cents are one object here, not two cells, and the canvases are not
+          drawn at all — Perform's trace and Study's spectrum are both a second
+          moving thing, which is what this mode exists to remove.
+
+          THE MEASURED LINE IS SEPARATE FROM THE DRAWN ONE, on purpose. The big
+          number is smoothed and hysteretic; `#tuner-hz` is neither, and it
+          says `unvoiced` the instant the voice stops even while the reading
+          above it is still being held. A display filter that does not show its
+          own time constant is an instrument lying quietly, which is why
+          `#tuner-damping-value` is on screen and not in a settings panel.
+
+          ONE CONTROL: HOLD. The whole always-visible control surface of the
+          best-known free singing monitor is one HOLD button in the corner
+          ([12 R25]) — freeze the reading after a phrase, look at it, release.
+          Everything else about this mode is set in the sheet.
+        -->
+        <section class="tuner tune-only" id="tuner" data-state="none" data-held="false" data-stale="false" aria-label="Tuner">
+          <p class="tuner__note" id="tuner-note">—</p>
+          <p class="tuner__cents" id="tuner-cents">—</p>
+          <p class="tuner__match">
+            <span class="match__glyph" id="tuner-match-glyph" aria-hidden="true">—</span>
+            <span id="tuner-match-text">no pitch</span>
+          </p>
+
+          <!-- The same meter as the glance bar's, laid out by the same code
+               (`layoutMeter`) from the same constants, at full width. Its own
+               ids because a document may not have two of anything, and its own
+               hatch pattern for the same reason. -->
+          <svg class="cents-bar tuner__meter" id="tuner-meter" viewBox="0 0 360 40" role="img" aria-labelledby="tuner-meter-title">
+            <title id="tuner-meter-title">Live pitch against the note, in cents; the hatched band is in tune.</title>
+            <defs>
+              <pattern id="tuner-meter-hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)">
+                <line x1="0" y1="0" x2="0" y2="6" stroke="currentColor" stroke-width="2" />
+              </pattern>
+            </defs>
+            <rect class="cents-bar__near" id="tuner-meter-near" x="0" y="4" width="0" height="18" />
+            <rect class="cents-bar__band" id="tuner-meter-band" x="0" y="4" width="0" height="18" fill="url(#tuner-meter-hatch)" />
+            <line class="cents-bar__axis" x1="30" y1="13" x2="330" y2="13" />
+            <g class="cents-bar__ticks" id="tuner-meter-ticks"></g>
+            <g class="cents-bar__needle" id="tuner-meter-needle" data-visible="false">
+              <line x1="180" y1="0" x2="180" y2="26" />
+              <polygon points="172,0 188,0 180,9" />
+            </g>
+          </svg>
+
+          <p class="tuner__measured" id="tuner-hz">—</p>
+          <p class="tuner__reference" id="tuner-reference">—</p>
+          <p class="tuner__damping" id="tuner-damping-value">damping 150 ms (prov.)</p>
+          <button type="button" id="tuner-hold" class="tuner__hold button--secondary" aria-pressed="false">Hold</button>
+        </section>
+
+        <div class="canvas-block" id="canvas-block">
+          <canvas id="pitch-canvas" class="canvas canvas--pitch perform-only" width="1024" height="360">
+            The live pitch in cents against time, with the reference lane drawn as
+            a band the trace has to enter. Numbers are in the glance bar above.
+          </canvas>
+
+          <canvas id="spectrum-canvas" class="canvas canvas--spectrum study-only" width="1024" height="384">
+            A magnitude spectrum in dBFS against frequency. Numeric readouts are
+            in the glance bar above and in the capture chain below.
+          </canvas>
+
+          <canvas id="axis-canvas" class="canvas canvas--axis" width="1024" height="72">
+            The shared frequency axis: hertz on one row, note names on the other.
+          </canvas>
+
+          <!-- One grid cell, two canvases. The overlay is a transparent Canvas2D
+               layer over the WebGL spectrogram: the lane, the f0 trace and the
+               time ticks are one line of Canvas2D each and would each be a
+               shader. It never takes a pointer event. -->
+          <div class="canvas-stack">
+            <canvas id="waterfall-canvas" class="canvas canvas--waterfall" width="1024" height="240">
+              A scrolling spectrogram; time runs downward, frequency across.
+            </canvas>
+            <canvas id="waterfall-overlay" class="canvas canvas--overlay" width="1024" height="240" aria-hidden="true"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!--
+        ONE DOOR FOR THE DIAGNOSTICS. Spectroid puts them behind a ⋮ menu,
+        VoceVista behind a settings page, Friture behind per-widget dialogs.
+        Collapsed by default; the summary line keeps the two facts that must
+        never be hidden — the rate the chain actually runs at and whether
+        columns are being dropped.
+      -->
+      <details class="chain-details" id="capture-chain">
+        <summary class="chain-summary">
+          <span class="chain-summary__wordmark">Super Spectral</span>
+          <span class="chain-summary__facts" id="footer-summary">not capturing</span>
+          <span class="muted chain-summary__hint" id="capture-hint">loading presets…</span>
+        </summary>
+
+        <div class="chain-body">
+          <p class="chain-body__tagline">
+            Host analyzer — live path on <em>this machine's</em> microphone, or
+            on a local file played through the same chain.
+            Latency and refresh here are <strong>measured, never claimed</strong>
+            (ADR 0021 decision 3).
+          </p>
+          <p class="chain-body__version" id="backend-version" aria-live="polite">
+            backend: <span class="muted">connecting…</span>
+          </p>
+          <!-- Hidden while embedded: inside the iframe the surrounding page owns
+               the setting, and a control that silently does nothing is worse than
+               no control. main.ts unhides it when the controller is standalone. -->
+          <button type="button" id="theme-toggle" class="theme-toggle" hidden>
+            <span id="theme-toggle-label">theme: system</span>
+          </button>
+
+          <!-- W1: what track.getSettings() actually returned, beside what we
+               asked for. Constraints are a request, not a guarantee (d.8). -->
+          <h3>Capture chain</h3>
+          <dl class="chain" id="capture-chain-readback"></dl>
+          <p class="chain__counters" id="counters" aria-live="off"></p>
+          <p class="chain__constants" id="constants-line" aria-live="off"></p>
+
+          <!-- The stretch render's own numbers, moved off the player bar on
+               2026-08-23 with the loop fields they shared a row with. They are
+               diagnostics, and this is where the diagnostics live — behind one
+               door, which is the rule the whole footer exists to keep
+               (ADR 0024 decision 5). Empty unless a render is in force. -->
+          <p class="chain__constants" id="player-diagnostics" aria-live="off"></p>
+
+          <h3 id="peak-legend-h">Peaks <span class="muted">(strongest first; Hz and dB for every marker)</span></h3>
+          <p class="chain__peak"><span class="glance__label">strongest</span> <span id="readout-peak">—</span></p>
+          <ul class="peak-legend" id="peak-legend" aria-labelledby="peak-legend-h">
+            <li class="muted">—</li>
+          </ul>
+
+          <h3 id="digests-h">Preset provenance <span class="muted" id="presets-provenance"></span></h3>
+          <ul class="digests" id="preset-digests" aria-labelledby="digests-h">
             <li class="muted">loading…</li>
           </ul>
-        </section>
-      </main>
+        </div>
+      </details>
     </div>
+
+    <!--
+      The MODE before first paint, for the same reason the theme is set in
+      <head>. Perform hides the spectrum pane and the six guidance lines; a page
+      that painted Study and then dropped to Perform would reflow the whole
+      canvas block in front of the singer and size every canvas twice. This runs
+      here, not in <head>, because it writes to `#app` — the one element that
+      owns the mode — and that element does not exist until this point.
+
+      `src/app/prefs.ts` owns the preference properly once the module has
+      loaded and writes the same attribute again. Anything that is not the
+      string `study` is Perform, which is exactly what `parseMode` does: the
+      default has to be the same in both places or the page flickers on the
+      one key a corrupted storage would produce.
+    -->
+    <script>
+      (function () {
+        var app = document.getElementById('app');
+        var mode = 'perform';
+        var rail = null;
+        try {
+          var stored = window.localStorage.getItem('superspectral.mode');
+          if (stored === 'study' || stored === 'tune') mode = stored;
+          // THE RAIL'S STATE IS THREE-VALUED and the third value is the point:
+          // absent means "take whatever this width's default is", which is
+          // open on a laptop and closed on a phone. Only an explicit choice
+          // is stored, and only an explicit choice is written here — the same
+          // rule `parseRail` applies, and it has to be the same in both places
+          // or the sheet flickers open and shut on the first frame.
+          var stored = window.localStorage.getItem('superspectral.rail');
+          if (stored === 'open' || stored === 'closed') rail = stored;
+        } catch (e) {
+          /* storage blocked in a third-party frame: both defaults */
+        }
+        // `?mode=tune` wins for this page view and is never stored: the
+        // al-folio page embeds this file twice, and the short tuner card must
+        // not change what the singer sees in the analyzer proper.
+        var asked = new URLSearchParams(window.location.search).get('mode');
+        if (asked === 'perform' || asked === 'study' || asked === 'tune') mode = asked;
+        app.setAttribute('data-mode', mode);
+        if (rail !== null) app.setAttribute('data-rail', rail);
+      })();
+    </script>
 
   </body>
 </html>
