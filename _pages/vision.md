@@ -4,7 +4,7 @@ title: Vision & Venture
 permalink: /vision/
 description: #Where I am headed, how I got here, and what drives the work.
 nav: true
-nav_order: 5
+nav_order: 6
 ---
 
 I visualize myself being the most valuable system engineer in the aerospace industry.

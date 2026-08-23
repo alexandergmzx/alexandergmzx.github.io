@@ -67,6 +67,11 @@ posts_in_search: true
 bib_search: true
 
 # Dimensions
+# NOT free to change: /spectral/ embeds the Super Spectral analyzer in an iframe
+# whose own viewport is this minus 2x15px of Bootstrap gutter and 2x1px of border
+# = 898px, and the analyzer switches to its phone layout below 840px. Anything
+# under 872px here silently renders that phone layout on a laptop, and nothing in
+# either repository goes red. See MANUAL.md, "The Spectral tab".
 max_width: 930px
 
 # -----------------------------------------------------------------------------

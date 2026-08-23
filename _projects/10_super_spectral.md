@@ -25,9 +25,9 @@ The project is being built the slow way. Before any feature firmware exists ther
   <a
     class="btn btn-outline-primary"
     role="button"
-    href="{{ '/projects/10_super_spectral/live/' | relative_url }}"
+    href="{{ '/spectral/' | relative_url }}"
   >
-    <i class="fa-solid fa-wave-square"></i> Launch the live analyzer
+    <i class="fa-solid fa-wave-square"></i> Open the browser analyzer
   </a>
 </div>
 
@@ -42,6 +42,8 @@ The founding research document for this project specified a browser-native analy
 It is also an instrument in its own right. The same six analysis presets the watch uses are loaded here byte-for-byte, and the TypeScript implementation of the FFT conventions is held against the Python reference implementation on a committed set of synthetic test signals: across nineteen synthetic spectra the worst disagreement measured so far is **1.9 × 10⁻⁵ dB**, on the bins the tolerance table covers. What the browser shows and what the offline analysis computes are the same numbers, from two independent implementations.
 
 Its latency and refresh rate are **measured, never claimed**, and they say nothing about the watch — a laptop is not a wrist.
+
+It has a page of its own — [spectral]({{ '/spectral/' | relative_url }}) — with a tuner card and the analyzer proper.
 
 {% include figure.liquid loading="lazy" path="assets/img/super_spectral_reference.png" class="img-fluid rounded z-depth-1" zoomable=true alt="The analyzer in Perform with a captured reference note: a readout bar reading A3, 216.70 Hz, 26 cents flat of equal temperament, beside a large flat-31-cents reading against the captured reference of A3 +5 cents at 220.65 Hz; a cents meter whose needle sits left of the hatched in-tune band; a vibrato pitch trace swinging either side of that band; and the waterfall below with the reference marked across it" caption="Perform, tracking a synthetic vibrato vowel at 220 Hz with the reference note captured from it. The trace is that vibrato swinging either side of the band — caught in this frame 31 cents flat of the reference. The readout bar at the top stays there whatever else moves; the hatched lane through the middle of the pitch trace is the in-tune band, set here to ±10 cents. The pitch estimator is held to Praat on the synthetic goldens to a worst median of 1.03 cents." %}
 

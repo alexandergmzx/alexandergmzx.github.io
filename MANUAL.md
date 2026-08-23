@@ -47,6 +47,8 @@ an LLM for every change. Every section starts with the **file you edit**, then a
 | The phone publishing panel             | [`admin/index.html`](admin/index.html) (shell) and [`admin/config.yml`](admin/config.yml) (note schema)                                                              |
 | Garden categories (the six beds)       | [`_config.yml`](_config.yml) — `display_categories:`                                                                                                                 |
 | Add a news item                        | new file in [`_news/`](_news/)                                                                                                                                       |
+| The Spectral tab (tuner + analyzer)    | [`_pages/spectral.md`](_pages/spectral.md) — the frame heights in its `_styles` are a contract, see [section 5](#the-spectral-tab)                                   |
+| The analyzer bundle itself             | `assets/superspectral/` — **generated, never hand-edited**; see [section 5](#the-spectral-tab)                                                                       |
 | CV content                             | [`_data/cv.yml`](_data/cv.yml)                                                                                                                                       |
 | Downloadable CV PDF                    | replace `assets/pdf/alexander_gomez_cv.pdf`                                                                                                                          |
 | Social icons (email, github, linkedin) | [`_data/socials.yml`](_data/socials.yml)                                                                                                                             |
@@ -202,9 +204,10 @@ visitors to where they should go next.
 1. **Projects** (`_pages/projects.md`, `nav_order: 1`)
 2. **Teaching** (`_pages/teaching.md`, `nav_order: 2`)
 3. **Garden** (`_pages/garden.md`, `nav_order: 3`) — the digital garden at `/garden/`
-4. **Bookshelf** (`_pages/books.md`, `nav_order: 4`)
-5. **Vision & Venture** (`_pages/vision.md`, `nav_order: 5`)
-6. **more ▾** (`_pages/dropdown.md`, `nav_order: 6`) — contains CV, Repositories
+4. **Spectral** (`_pages/spectral.md`, `nav_order: 4`) — the browser analyzer at `/spectral/`
+5. **Bookshelf** (`_pages/books.md`, `nav_order: 5`)
+6. **Vision & Venture** (`_pages/vision.md`, `nav_order: 6`)
+7. **more ▾** (`_pages/dropdown.md`, `nav_order: 7`) — contains CV, Repositories
 
 ### Show or hide a page in the navbar
 
@@ -261,12 +264,12 @@ children:
    permalink: /newthing/
    description: One-line description for the page header.
    nav: true
-   nav_order: 7
+   nav_order: 8
    ---
    Body content as markdown.
    ```
 
-2. The page is now linked in the navbar at position 7.
+2. The page is now linked in the navbar at position 8.
 
 Or use the helper: `python3 _scripts/new_page.py` → pick `6) page`.
 
@@ -315,6 +318,51 @@ with that category. To remove a category, drop it from the list (any project
 files still using that category will be hidden until re-tagged or moved).
 
 Within each category, projects sort by `importance:` ascending.
+
+### The Spectral tab
+
+`/spectral/` ([`_pages/spectral.md`](_pages/spectral.md)) is a section of its own, not a project
+page — but it is the front door to the Super Spectral project, so it is documented here.
+
+**The bundle is generated.** `assets/superspectral/` is a Vite build produced in the
+[superspectral](https://github.com/alexandergmzx/superspectral) repository:
+
+```bash
+cd ~/Development/Spectral/host/web
+npm run sync:site        # builds, gates, then replaces assets/superspectral/ wholesale
+```
+
+`sync:site` deletes the directory before copying, so **anything you edit or add in there by hand
+is destroyed by the next sync.** Files that must travel with the bundle (its `LICENSE.md`) live in
+`host/web/public/` upstream instead. The script never runs git — commit here yourself. If the
+analyzer on the site looks older than the one you have been building, this is the command you
+forgot.
+
+**The frame heights are a contract with that repository.** Three numbers in the `_styles` block of
+`_pages/spectral.md`:
+
+| Number                    | What it is                                                                                                                                                                                                                                                                                                                                                          |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **898 px**                | The frame's own width: `max_width` 930 px − 2×15 px Bootstrap gutter − 2×1 px border. The analyzer's layout breakpoint is 840 px so this clears it. Drop `max_width` below **872 px** and the page silently renders the phone layout on a laptop.                                                                                                                   |
+| **620 px** (→ 618 inside) | The analyzer frame's floor. Every pane in the analyzer's own stylesheet was measured against it.                                                                                                                                                                                                                                                                    |
+| **500 px**                | The tuner card. Tune drops both canvases, so it needs less — but the shell **clips instead of scrolling**, so a frame a few pixels short silently eats the Hold button and the damping line, and no test anywhere goes red. Swept in Chrome at an 898 px column: clean down to **460 px**, clipping the note and Hold at 440. 500 px carries 40 px over that floor. |
+
+To re-check the tuner card after any change to either side: build locally, open `/spectral/`,
+switch the DevTools context to the tuner iframe, and run
+
+```js
+const t = document.getElementById("tuner"),
+  b = t.getBoundingClientRect();
+[...t.children].map((c) => [
+  c.id || c.tagName,
+  Math.round(c.getBoundingClientRect().top - b.top),
+  Math.round(c.getBoundingClientRect().bottom - b.bottom),
+]);
+```
+
+Every row's second number must be **≥ 0** and every third number **≤ 0**. Anything else is clipping.
+
+---
 
 ### Hiding a project temporarily
 
@@ -716,7 +764,10 @@ Prettier is skipped by design on this path (see [section 17](#17-code-formatting
 
 ## 7. News (short milestones)
 
-### File: [`_news/YYYY-MM-DD-slug.md`](_news/)
+### File: [`_news/slug.md`](_news/)
+
+The filename is free-form — **not** date-prefixed like `_posts/`. The `news` collection has no
+`permalink:` override in `_config.yml`, so the date comes entirely from front matter.
 
 ```yaml
 ---
