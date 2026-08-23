@@ -78,6 +78,16 @@ runs in a Worker, the spectrum is drawn on a canvas and the waterfall on a WebGL
 leaves your machine** and there is no backend in the live path. Your browser will ask for microphone
 permission the first time you press **Start capture**, in whichever of the two frames below you press it.
 
+<div class="text-center my-3">
+  <a
+    class="btn btn-outline-primary"
+    role="button"
+    href="{{ '/assets/superspectral/index.html' | relative_url }}"
+  >
+    <i class="fa-solid fa-expand"></i> Open the analyzer full screen
+  </a>
+</div>
+
 ## A tuner, to start with
 
 <iframe
@@ -101,8 +111,8 @@ and that one is, from the next page load onward.
 ## The analyzer
 
 <p class="text-center">
-  <strong><a href="{{ '/assets/superspectral/index.html' | relative_url }}">Open it full screen</a></strong> —
-  on a phone, do that rather than using the frame below.
+  On a phone, <a href="{{ '/assets/superspectral/index.html' | relative_url }}">open it full screen</a>
+  rather than using the frame below.
 </p>
 
 <iframe
