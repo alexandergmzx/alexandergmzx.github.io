@@ -30,6 +30,13 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/garden/";
           },
+        },{id: "nav-spectral",
+          title: "spectral",
+          description: "A singing-voice spectral analyzer that runs in your browser, and the wrist-worn instrument it was built for.",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/spectral/";
+          },
         },{id: "nav-bookshelf",
           title: "bookshelf",
           description: "",
@@ -130,6 +137,9 @@ ninja.data = [{
           section: "News",},{id: "news-published-my-miniature-warehouse-management-system-an-end-to-end-java-and-spring-boot-proof-of-concept-for-warehouse-picking-with-an-hht-api-live-admin-dashboard-qr-labels-postgresql-audit-ledgers-and-operational-diagnostics-explore-the-project-package",
           title: 'Published my Miniature Warehouse Management System: an end-to-end Java and Spring Boot proof...',
           description: "",
+          section: "News",},{id: "news-published-the-super-spectral-browser-analyzer-a-singing-voice-spectrogram-pitch-trace-and-tuner-that-run-entirely-in-your-own-browser-with-no-audio-leaving-your-machine-it-is-the-host-half-of-a-wrist-worn-analyzer-still-being-built-on-an-esp32-s3-what-it-reports-there-is-measured-and-it-says-nothing-yet-about-the-watch-microphone",
+          title: 'Published the Super Spectral browser analyzer — a singing-voice spectrogram, pitch trace and...',
+          description: "",
           section: "News",},{id: "projects-delta-robot-parallel-manipulator",
           title: 'Delta robot parallel manipulator',
           description: "3-DOF parallel manipulator simulated in ROS 2 Jazzy with RViz and a browser dashboard",
@@ -180,6 +190,11 @@ ninja.data = [{
           description: "End-to-end Spring Boot warehouse picking system with an HHT API, admin dashboard, and PostgreSQL audit trail",
           section: "Projects",handler: () => {
               window.location.href = "/projects/09_warehouse_management/";
+            },},{id: "projects-super-spectral-wrist-worn-singing-voice-analyzer",
+          title: 'Super Spectral — wrist-worn singing-voice analyzer',
+          description: "An ESP32-S3 smartwatch that analyzes the singing voice, and the browser analyzer that grew out of its research document",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/10_super_spectral/";
             },},{id: "teachings-python-for-devops",
           title: 'Python for DevOps',
           description: "Hands-on 12-week course covering Python tooling for automation, infrastructure, and CI/CD.",
