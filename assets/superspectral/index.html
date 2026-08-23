@@ -244,10 +244,17 @@
         `<summary>` sits relative to the body it closes.
       -->
       <aside class="rail" id="rail" aria-label="Controls">
+        <!-- START IS NOT A MENU ITEM, so it is not inside anything that folds
+             away. Its own row, above both the surface and the disclosure,
+             visible at every width and in BOTH rail states — the owner
+             collapsed the controls on 2026-08-23 and then could not start
+             capture, because the strip that replaced them carried only the way
+             back. Hiding the menus must never hide the instrument. -->
+        <button type="button" id="capture-button" class="rail__start" disabled>
+          Start capture
+        </button>
+
         <div class="rail__surface" id="rail-surface">
-          <button type="button" id="capture-button" class="rail__start" disabled>
-            Start capture
-          </button>
 
         <!-- The reference note: hold one, capture it, imitate it. The button is
              enabled only while the last `holdFrames` frames would be accepted
@@ -329,9 +336,26 @@
         <!-- The preset list is served, never bundled (ADR 0021 decision 7a).
              The six sha256 that prove the byte-identity contract are in the
              footer now: they are provenance, and provenance is not a control. -->
-        <div class="rail__group" id="preset-list" role="radiogroup" aria-label="Preset">
-          <p class="muted rail__hint">loading…</p>
-        </div>
+          <!-- THE PRESETS ARE A MENU, not six rows. As a radio group they were
+               six 44 px targets plus a guidance line each — most of a phone's
+               rail, and the owner's own complaint on 2026-08-23. A native
+               `<select>` is one row, brings its own keyboard handling and its
+               own accessible name, and on a phone it is the platform's picker
+               rather than a list to scroll past.
+
+               What six rows carried that one cannot, kept: the guidance line
+               below shows the SELECTED preset's, which is the only one anyone
+               was reading. The list is served, never bundled (ADR 0021
+               decision 7a) — `check-no-bundled-presets.mjs` greps the backend
+               build for that guidance text — and the six sha256 stay behind
+               the footer's door, because provenance is not a control. -->
+          <div class="rail__group" id="preset-list">
+            <label class="rail__legend" for="preset-select">preset</label>
+            <select id="preset-select" class="rail__select" disabled>
+              <option value="">loading…</option>
+            </select>
+            <p class="preset__guidance study-only" id="preset-guidance"></p>
+          </div>
 
           <div class="rail__group rail__group--segmented">
             <span class="rail__legend" id="tolerance-legend">in tune within</span>
