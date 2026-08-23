@@ -380,8 +380,15 @@
              an icon alone is not one of the handful that read without one
              ([12 R14]). The label text is written by `renderRail()`, because
              it differs between the laptop's "hide this column" and the
-             phone's "close this sheet". -->
-        <button type="button" id="rail-toggle" class="rail__toggle button--secondary" aria-expanded="true" aria-controls="rail-surface rail-more">
+             phone's "close this sheet".
+
+             `aria-controls` names `#rail-more` ALONE, and it is static because
+             it has to be: on a laptop the toggle collapses the surface as
+             well, on a phone it does not, and an IDREF list naming both would
+             be right at one breakpoint and over-report at the other. It names
+             what is controlled at EVERY width; `aria-expanded` is the part
+             that changes, and that one is written per render. -->
+        <button type="button" id="rail-toggle" class="rail__toggle button--secondary" aria-expanded="true" aria-controls="rail-more">
           <span class="rail__toggle-glyph" aria-hidden="true">◂</span>
           <span class="rail__toggle-label" id="rail-toggle-label">Hide controls</span>
         </button>
