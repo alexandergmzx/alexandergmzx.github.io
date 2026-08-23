@@ -849,7 +849,7 @@ generically — no template changes required.
 ### Replacing the downloadable PDF
 
 Drop the new PDF at `assets/pdf/alexander_gomez_cv.pdf` (overwriting the existing
-file). The download link on the CV page (`cv_pdf:` in `_data/socials.yml`)
+file). The download link on the CV page (`cv_pdf:` in [`_pages/cv.md`](_pages/cv.md))
 points there.
 
 ### Switching CV format
