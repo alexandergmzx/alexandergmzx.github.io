@@ -103,8 +103,10 @@
       reading order, and put Start and the presets last — the owner's complaint
       (2026-08-22) was exactly that, and every analyzer a singer actually uses
       (Spectroid, Vocal Pitch Monitor, Tunable, Sing&See) puts the diagnostics
-      behind one door. So the chain is a collapsed `<details>` at the bottom and
-      the first thing Tab reaches is Start.
+      behind one door. So the chain is a collapsed `<details>` at the bottom,
+      and the first two things Tab reaches are the display MODE and Start —
+      the mode first because it moved into the glance bar with ADR 0024, and
+      the glance bar is the first section of the document.
 
       `data-mode` on `.app` is the whole Perform/Study/Tune switch: each mode's
       `.*-only` elements are `display: none` under the other two. One
@@ -242,7 +244,7 @@
         `<summary>` sits relative to the body it closes.
       -->
       <aside class="rail" id="rail" aria-label="Controls">
-        <div class="rail__surface">
+        <div class="rail__surface" id="rail-surface">
           <button type="button" id="capture-button" class="rail__start" disabled>
             Start capture
           </button>
@@ -367,7 +369,7 @@
                 value="150"
                 aria-valuetext="150 ms"
               />
-              <output class="rail__hint rail__hint--value" id="tuner-damping-out" for="tuner-damping">150 ms</output>
+              <output class="rail__hint rail__hint--value" id="tuner-damping-out" for="tuner-damping" aria-live="off">150 ms</output>
             </div>
           </div>
         </div>
@@ -379,7 +381,7 @@
              ([12 R14]). The label text is written by `renderRail()`, because
              it differs between the laptop's "hide this column" and the
              phone's "close this sheet". -->
-        <button type="button" id="rail-toggle" class="rail__toggle button--secondary" aria-expanded="true" aria-controls="rail-more">
+        <button type="button" id="rail-toggle" class="rail__toggle button--secondary" aria-expanded="true" aria-controls="rail-surface rail-more">
           <span class="rail__toggle-glyph" aria-hidden="true">◂</span>
           <span class="rail__toggle-label" id="rail-toggle-label">Hide controls</span>
         </button>
@@ -401,11 +403,12 @@
         THE PLAYER, above the canvases and only while a file is loaded.
 
         It sits in the DOM AFTER the rail and is placed by grid area, so the
-        tab ring is unchanged and the first thing Tab reaches is still Start —
-        the same trick the canvas block itself uses. Everything on it is one
-        row at 930×620; the precise region fields and the render diagnostics
-        are a `study-only` second line, because a singer scrubbing to a phrase
-        does not need them and the row does not have the width.
+        tab ring keeps the document's own order — the same trick the canvas
+        block itself uses. Everything on it is one row at 898×620; the loop's
+        two number fields and the render diagnostics that shared their line
+        are gone (ADR 0024 decision 5), the fields because the seek carries
+        their precision from the keyboard and the diagnostics into the
+        capture-chain panel where the rest of the numbers live.
 
         THE SEEK IS A NATIVE RANGE, not a canvas and not a div with
         `role="slider"`: it brings Arrow / Home / End / PageUp / PageDown for
@@ -491,7 +494,7 @@
               <option value="40" label="16×"></option>
               <option value="50" label="32×"></option>
             </datalist>
-            <output class="player__stretch-value" id="stretch-value" for="stretch-slider">1× (raw)</output>
+            <output class="player__stretch-value" id="stretch-value" for="stretch-slider" aria-live="off">1× (raw)</output>
 
             <!-- SMEAR is the window length, and it is the knob that decides
                  whether the drone still sounds like a voice. Everything inside
@@ -512,7 +515,7 @@
               aria-label="Smear: how much of the voice each window freezes"
               aria-valuetext="0.10 s — keeps the voice moving"
             />
-            <output class="player__smear-value" id="smear-value" for="smear-slider">0.10 s</output>
+            <output class="player__smear-value" id="smear-value" for="smear-slider" aria-live="off">0.10 s</output>
           </div>
 
           <!-- What this file IS, on the bar rather than in the rail: it is the
