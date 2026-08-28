@@ -65,7 +65,18 @@ ninja.data = [{
               handler: () => {
                 window.location.href = "/repositories/";
               },
-            },{id: "post-how-this-garden-works",
+            },{id: "post-post-humanity-future-and-the-breach-of-wealth-inequality",
+        
+          title: "Post-Humanity future and the breach of wealth inequality",
+        
+        description: "Thoughts I&#39;ve been having living in Mexico unequal neighborhoods.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/garden/2026/post-humanity-future-and-the-breach-of-wealth-inequality/";
+          
+        },
+      },{id: "post-how-this-garden-works",
         
           title: "How this garden works",
         
