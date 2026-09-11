@@ -212,6 +212,7 @@ exclude:
   - AGENTS.md
   - CLAUDE.md
   - MANUAL.md
+  - TODO.md
   - ANALYTICS.md
   - QUICKSTART.md
   - CUSTOMIZE.md

@@ -10,11 +10,7 @@ module.exports = {
   // whole site, and it grows every time that bundle does. The analyzer ships
   // its own stylesheet inside its own iframe and shares none of ours. The same
   // holds for the Delta robot simulator bundle under assets/delta_sim/.
-  skippedContentGlobs: [
-    "_site/assets/**/*.html",
-    "_site/assets/superspectral/**/*.js",
-    "_site/assets/delta_sim/**/*.js",
-  ],
+  skippedContentGlobs: ["_site/assets/**/*.html", "_site/assets/superspectral/**/*.js", "_site/assets/delta_sim/**/*.js"],
   // Garden classes that only appear inside note bodies (`{: .poem}`, the
   // YouTube include) or on pages that exist only once notes do. Without this,
   // a deploy made while the garden is empty — or holding no poems — ships a
