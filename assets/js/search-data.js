@@ -156,9 +156,9 @@ ninja.data = [{
           description: "3-DOF parallel manipulator simulated in ROS 2 Jazzy with RViz and a browser dashboard",
           section: "Projects",handler: () => {
               window.location.href = "/projects/01_delta_robot/";
-            },},{id: "projects-delta-robot-interactive-simulator",
-          title: 'Delta robot — interactive simulator',
-          description: "The Delta_ROS2 dashboard running entirely in your browser — no ROS, no backend.",
+            },},{id: "projects-delta-robot",
+          title: 'Delta robot.',
+          description: "An interactive study in parallel motion.",
           section: "Projects",handler: () => {
               window.location.href = "/projects/01_delta_robot/sim/";
             },},{id: "projects-hostile-zone-rescue-robot-with-slam",
