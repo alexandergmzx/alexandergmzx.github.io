@@ -72,9 +72,9 @@ cv:
 
     Projects:
       - name: Delta robot parallel manipulator
-        summary: 3-DOF parallel mechanism programmed with a microcontroller and ROS2 Jazzy. Forward and inverse kinematics with coordinated multi-axis motion and real-time control. Built during the RWTH Aachen &amp; Universal Robots Executive Certificate program.
+        summary: '3-DOF parallel mechanism from the RWTH International Academy summer school "Robot Operating Systems Essentials" (IGMR, RWTH Aachen University). On the course kit, URDF, and node scaffold I wrote the inverse kinematics and completed the ROS 2 nodes, then migrated the stack to ROS 2 Jazzy and added a FastAPI + React dashboard, a forward-kinematics fix, and a browser simulator.'
         start_date: 2025-07
-        end_date: 2025-07
+        end_date: 2026-09
 
       - name: Hostile-zone rescue robot with SLAM
         summary: Hardware adaptation, disk imaging, modeling, and ROS programming of a mobile robot for closed-environment detection using Simultaneous Localization And Mapping.
@@ -121,13 +121,13 @@ cv:
       - name: Methodologies
         keywords: "SCRUM, Agile"
 
-    Certifications:
+    Certificates:
       - name: C++ — Data Structures Specialization
         issuer: University of Illinois Urbana-Champaign
 
-      - name: ROS2 Executive Certificate
-        issuer: RWTH Aachen
-        date: 2025-07
+      - name: 'Summer School "Robot Operating Systems Essentials" (RWTH Aachen University Certificate, 3 ECTS)'
+        issuer: RWTH International Academy / IGMR, RWTH Aachen University
+        date: 2025-08
 
       - name: Embedded Linux Diploma
         issuer: Universidad de Guadalajara

@@ -1,0 +1,6 @@
+Delta robot simulator — https://github.com/alexandergmzx/Delta_ROS2
+The robot model (delta_robot.glb) is derived from course material of the RWTH International Academy
+summer school "Robot Operating Systems Essentials" (IGMR, RWTH Aachen University, 2025).
+All rights reserved by its rights holders; reproduced with attribution for a non-commercial portfolio.
+Application code: (c) 2025-2026 Alexander Gomez, MIT. Full provenance and terms:
+https://github.com/alexandergmzx/Delta_ROS2/blob/main/NOTICE

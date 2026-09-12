@@ -5,4 +5,4 @@ inline: true
 related_posts: false
 ---
 
-Resurrected my [Delta robot parallel manipulator](/projects/01_delta_robot/) project — the [code is live on GitHub](https://github.com/alexandergmzx/Delta_ROS2). Back at it with my collaborator [Armando Rodriguez](https://github.com/armandorodb), who nudged me to pick it up again. :robot:
+Resurrected the [Delta robot parallel manipulator](/projects/01_delta_robot/) I started at the RWTH Aachen summer school "Robot Operating Systems Essentials" in 2025 — the [code is live on GitHub](https://github.com/alexandergmzx/Delta_ROS2). Back at it with my collaborator [Armando Rodriguez](https://github.com/armandorodb), who nudged me to pick it up again. :robot:
