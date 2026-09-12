@@ -142,8 +142,8 @@ ninja.data = [{
             window.location.href = "/garden/2026/what-grows-in-the-tech-bed/";
           
         },
-      },{id: "news-resurrected-my-delta-robot-parallel-manipulator-project-the-code-is-live-on-github-back-at-it-with-my-collaborator-armando-rodriguez-who-nudged-me-to-pick-it-up-again-robot",
-          title: 'Resurrected my Delta robot parallel manipulator project — the code is live on...',
+      },{id: "news-resurrected-the-delta-robot-parallel-manipulator-i-started-at-the-rwth-aachen-summer-school-robot-operating-systems-essentials-in-2025-the-code-is-live-on-github-back-at-it-with-my-collaborator-armando-rodriguez-who-nudged-me-to-pick-it-up-again-robot",
+          title: 'Resurrected the Delta robot parallel manipulator I started at the RWTH Aachen summer...',
           description: "",
           section: "News",},{id: "news-published-my-miniature-warehouse-management-system-an-end-to-end-java-and-spring-boot-proof-of-concept-for-warehouse-picking-with-an-hht-api-live-admin-dashboard-qr-labels-postgresql-audit-ledgers-and-operational-diagnostics-explore-the-project-package",
           title: 'Published my Miniature Warehouse Management System: an end-to-end Java and Spring Boot proof...',
