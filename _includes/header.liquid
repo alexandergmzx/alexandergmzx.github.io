@@ -1,36 +1,16 @@
 <header>
   <!-- Nav Bar -->
-  <nav id="navbar" class="navbar navbar-light navbar-expand-sm {% if site.navbar_fixed %}fixed-top{% else %}sticky-top{% endif %}" role="navigation">
+  <nav id="navbar" class="navbar navbar-light navbar-expand-lg {% if site.navbar_fixed %}fixed-top{% else %}sticky-top{% endif %}" role="navigation">
     <div class="container">
-      {% if page.permalink != '/' %}
-        <a class="navbar-brand title font-weight-lighter" href="{{ site.baseurl }}/">
-          {% if site.navbar_logo %}
-            <img
-              src="{{ site.navbar_logo | prepend: '/assets/img/' | relative_url }}"
-              alt="{{ site.title }}"
-              height="36"
-              style="max-height:36px;width:auto;"
-            >
-          {% elsif site.title == 'blank' %}
-            {% if site.first_name %}
-              <span class="font-weight-bold">
-                {{- site.first_name -}}
-              </span>
-            {% endif %}
-            {% if site.middle_name %}
-              {{- site.middle_name -}}
-            {% endif %}
-            {% if site.last_name %}
-              {{- site.last_name -}}
-            {% endif %}
-          {% else %}
-            {{- site.title -}}
-          {% endif %}
-        </a>
-      {% elsif site.enable_navbar_social %}
-        <!-- Social Icons -->
-        <div class="navbar-brand social">{% social_links %}</div>
-      {% endif %}
+      <a class="navbar-brand" href="{{ '/' | relative_url }}" aria-label="{{ site.title | escape }} — home">
+        {% if site.navbar_wordmark -%}
+          <span class="academic-wordmark">{{ site.navbar_wordmark }}</span>
+        {% elsif site.navbar_logo -%}
+          <img src="{{ site.navbar_logo | prepend: '/assets/img/' | relative_url }}" alt="{{ site.title | escape }}" height="36">
+        {% else -%}
+          {{- site.title -}}
+        {%- endif %}
+      </a>
       <!-- Navbar Toggle -->
       <button
         class="navbar-toggler collapsed ml-auto"
@@ -72,7 +52,7 @@
               {% if p.dropdown %}
                 {% assign has_active_child = false %}
                 {% for child in p.children %}
-                  {% if page.title == child.title %}
+                  {% if page.url == child.permalink %}
                     {% assign has_active_child = true %}
                   {% endif %}
                 {% endfor %}
@@ -97,7 +77,7 @@
                         <div class="dropdown-divider"></div>
                       {% else %}
                         <a
-                          class="dropdown-item {% if page.title == child.title %}active{% endif %}"
+                          class="dropdown-item {% if page.url == child.permalink %}active{% endif %}"
                           href="{% if child.permalink contains '://' %}{{ child.permalink }}{% else %}{{ child.permalink | relative_url }}{% endif %}"
                         >
                           {{- child.title -}}
@@ -129,19 +109,20 @@
           {% if site.search_enabled %}
             <!-- Search -->
             <li class="nav-item">
-              <button id="search-toggle" title="Search" onclick="openSearchModal()">
-                <span class="nav-link">ctrl k <i class="fa-solid fa-magnifying-glass"></i></span>
+              <button id="search-toggle" title="Search (Ctrl K)" aria-label="Search site" onclick="openSearchModal()">
+                <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
               </button>
             </li>
           {% endif %}
           {% if site.enable_darkmode %}
             <!-- Toogle theme mode -->
             <li class="toggle-container">
-              <button id="light-toggle" title="Change theme">
-                <i class="fa-half-sun-moon" id="light-toggle-system"></i>
-                <i class="fa-solid fa-moon" id="light-toggle-dark"></i>
-                <i class="fa-solid fa-sun" id="light-toggle-light"></i>
-              </button>
+              <label class="sr-only" for="theme-choice">Color theme</label>
+              <select id="theme-choice" aria-label="Color theme">
+                <option value="system">System</option>
+                <option value="light">Light</option>
+                <option value="dark">Dark</option>
+              </select>
             </li>
           {% endif %}
         </ul>

@@ -1,80 +1,88 @@
 ---
 layout: default
 ---
-<div class="post">
-  <header class="post-header">
-    <h1 class="post-title">
-      {% if site.title == 'blank' %}
-        <span class="font-weight-bold">{{ site.first_name }}</span> {{ site.middle_name }}
-        {{ site.last_name }}
-      {% else %}
-        {{ site.title }}
+<div class="academic-home">
+  <section class="intro" aria-labelledby="intro-title">
+    <div class="intro-text">
+      <p class="eyebrow">Embedded systems · Robotics</p>
+      <h1 id="intro-title">{{ site.title }}</h1>
+      <p class="specialties">Real-time software &nbsp; / &nbsp; Computer vision &nbsp; / &nbsp; Embedded engineering</p>
+      {{ content }}
+      <nav class="intro-links" aria-label="Background and projects">
+        <a href="#selected-work">Selected work <span aria-hidden="true">↓</span></a
+        ><a href="{{ '/assets/pdf/alexander_gomez_cv.pdf' | relative_url }}">Download CV <span aria-hidden="true">↗</span></a>
+      </nav>
+    </div>
+    <aside class="portrait-column" aria-label="Portrait and contact">
+      <figure>
+        <img class="portrait" src="{{ page.profile.image | prepend: 'assets/img/' | relative_url }}" width="675" height="779" alt="Alexander Gomez" />
+        <figcaption>Digital Systems &amp; Robotics<br />Tec de Monterrey</figcaption>
+      </figure>
+      <nav class="profile-links" aria-label="Profile links">
+        <a href="https://github.com/alexandergmzx">GitHub ↗</a><a href="https://www.linkedin.com/in/alexandergmzx/">LinkedIn ↗</a>
+      </nav>
+    </aside>
+  </section>
+  <section class="education" aria-label="Professional background">
+    <h2>In practice</h2>
+    <div>
+      <p>Embedded and automotive software</p>
+      <p>DXC Technology (Luxoft) · Dextra Technologies · Amdocs</p>
+    </div>
+    <a href="{{ '/cv/' | relative_url }}">Full background ↗</a>
+  </section>
+  <section class="home-section" aria-labelledby="selected-work">
+    <div class="section-heading">
+      <div class="section-label">
+        <span class="number" aria-hidden="true">01</span>
+        <h2 id="selected-work">Selected work</h2>
+      </div>
+      <a href="{{ '/projects/' | relative_url }}">All projects ↗</a>
+    </div>
+    {% for featured in site.data.featured_projects %}
+      {% assign project = site.projects | where: 'slug', featured.slug | first %}
+      {% if project %}
+        <article class="work-row">
+          <div class="work-image">
+            <img src="{{ project.img | relative_url }}" alt="{{ project.title | escape }}" loading="lazy" width="174" height="130">
+          </div>
+          <div class="work-body">
+            <p class="eyebrow">{{ featured.label }}</p>
+            <h3>
+              <a href="{{ project.url | relative_url }}">{{ featured.title | default: project.title }}</a>
+            </h3>
+            <p>{{ featured.summary | default: project.description }}</p>
+            <p class="work-meta">{{ featured.methods }}</p>
+          </div>
+          <span class="work-arrow" aria-hidden="true">↗</span>
+        </article>
       {% endif %}
-    </h1>
-    <p class="desc">{{ page.subtitle }}</p>
-  </header>
-
-  <article>
-    {% if page.profile %}
-      <div class="profile float-{% if page.profile.align == 'left' %}left{% else %}right{% endif %}">
-        {% if page.profile.image %}
-          {% assign profile_image_path = page.profile.image | prepend: 'assets/img/' %}
-          {% if page.profile.image_circular %}
-            {% assign profile_image_class = 'img-fluid z-depth-1 rounded-circle' %}
-          {% else %}
-            {% assign profile_image_class = 'img-fluid z-depth-1
-      rounded' %}
-          {% endif %}
-          {% capture sizes %}(min-width: {{ site.max_width }}) {{ site.max_width | minus: 30 | times: 0.3}}px, (min-width: 576px)
-      30vw, 95vw"{% endcapture %}
-          {%
-            include figure.liquid loading="eager" path=profile_image_path class=profile_image_class sizes=sizes alt=page.profile.image
-            cache_bust=true
-          %}
-        {% endif %}
-        {% if page.profile.more_info %}
-          <div class="more-info">{{ page.profile.more_info }}</div>
-        {% endif %}
+    {% endfor %}
+  </section>
+  <section class="home-section" aria-labelledby="updates">
+    <div class="section-heading">
+      <div class="section-label">
+        <span class="number" aria-hidden="true">02</span>
+        <h2 id="updates">Recent updates</h2>
       </div>
-    {% endif %}
-
-    <div class="clearfix">{{ content }}</div>
-
-    <!-- News -->
-    {% if page.announcements and page.announcements.enabled %}
-      <h2>
-        <a href="{{ '/news/' | relative_url }}" style="color: inherit">news</a>
-      </h2>
-      {% include news.liquid limit=true %}
-    {% endif %}
-
-    <!-- Latest posts -->
-    {% if page.latest_posts and page.latest_posts.enabled %}
-      <h2>
-        <a href="{{ '/garden/' | relative_url }}" style="color: inherit">latest notes</a>
-      </h2>
-      {% include latest_posts.liquid %}
-    {% endif %}
-
-    <!-- Selected papers -->
-    {% if page.selected_papers %}
-      <h2>
-        <a href="{{ '/publications/' | relative_url }}" style="color: inherit">selected publications</a>
-      </h2>
-      {% include selected_papers.liquid %}
-    {% endif %}
-
-    <!-- Social -->
-    {% if page.social %}
-      <div class="social">
-        <div class="contact-icons">{% social_links %}</div>
-
-        <div class="contact-note">{{ site.contact_note }}</div>
-      </div>
-    {% endif %}
-
-    {% if site.newsletter and site.newsletter.enabled and site.footer_fixed %}
-      {% include newsletter.liquid center=true %}
-    {% endif %}
-  </article>
+      <a href="{{ '/news/' | relative_url }}">Archive ↗</a>
+    </div>
+    <ul class="update-list">
+      {% assign recent_news = site.news | sort: 'date' | reverse %}
+      {% for item in recent_news limit: page.announcements.limit %}
+        <li>
+          <time datetime="{{ item.date | date: '%Y-%m-%d' }}">{{ item.date | date: '%d %b %Y' | upcase }}</time>
+          <div>
+            {% if item.summary -%}
+              {{- item.summary | markdownify -}}
+            {%- elsif item.inline -%}
+              {{- item.content -}}
+            {%- else -%}
+              <a href="{{ item.url | relative_url }}">{{ item.title }}</a>
+            {%- endif %}
+          </div>
+        </li>
+      {% endfor %}
+    </ul>
+  </section>
 </div>

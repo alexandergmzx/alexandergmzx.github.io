@@ -1,7 +1,7 @@
 ---
 layout: default
 permalink: /garden/
-title: garden
+title: Garden
 nav: true
 nav_order: 3
 pagination:

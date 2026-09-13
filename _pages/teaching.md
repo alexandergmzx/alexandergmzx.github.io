@@ -1,7 +1,7 @@
 ---
 layout: page
 permalink: /teaching/
-title: teaching
+title: Teaching
 description: Live cohorts, 1:1 mentoring, and code review in Python and DevOps — delivered through didakta.automato.
 nav: true
 nav_order: 2

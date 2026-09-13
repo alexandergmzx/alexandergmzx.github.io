@@ -1,0 +1,9 @@
+- slug: 01_delta_robot
+  label: Robotics / Course project & continued development
+  summary: A three-degree-of-freedom parallel robot, explored through ROS 2, inverse kinematics, and an interactive browser simulator.
+  methods: ROS 2 Jazzy · C++ · Python · Collaborative project
+- slug: 10_super_spectral
+  title: Super Spectral
+  label: Embedded audio / Work in progress
+  summary: Investigating singing-voice analysis on an ESP32-S3 smartwatch. The browser analyzer is available; the wearable remains in development.
+  methods: ESP32-S3 · Signal processing · Browser analyzer

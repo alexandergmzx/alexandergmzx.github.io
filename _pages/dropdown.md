@@ -1,13 +1,16 @@
 ---
 layout: page
-title: more
+title: More
 nav: true
 nav_order: 7
 dropdown: true
 children:
-  - title: CV
-    permalink: /cv/
-  - title: divider
-  - title: repositories
+  - title: Spectral
+    permalink: /spectral/
+  - title: Bookshelf
+    permalink: /books/
+  - title: Vision & Venture
+    permalink: /vision/
+  - title: Repositories
     permalink: /repositories/
 ---

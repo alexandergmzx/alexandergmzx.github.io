@@ -3,7 +3,7 @@ layout: page
 title: Vision & Venture
 permalink: /vision/
 description: #Where I am headed, how I got here, and what drives the work.
-nav: true
+nav: false
 nav_order: 6
 ---
 

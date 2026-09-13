@@ -2,6 +2,7 @@
 layout: post
 date: 2026-05-31 10:00:00-0600
 inline: true
+summary: "Returned to the [Delta robot project](/projects/01_delta_robot/) with my collaborator Armando Rodriguez."
 related_posts: false
 ---
 

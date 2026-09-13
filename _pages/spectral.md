@@ -3,7 +3,7 @@ layout: page
 title: spectral
 permalink: /spectral/
 description: A singing-voice spectral analyzer that runs in your browser, and the wrist-worn instrument it was built for.
-nav: true
+nav: false
 nav_order: 4
 _styles: >
   /* The floating back-to-top button is 40 px at z-index 10, 30 px from the

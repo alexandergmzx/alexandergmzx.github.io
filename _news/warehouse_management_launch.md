@@ -2,6 +2,7 @@
 layout: post
 date: 2026-07-15 12:00:00-0600
 inline: true
+summary: "Published the [Miniature Warehouse Management System](/projects/09_warehouse_management/), a Java and Spring Boot proof of concept."
 related_posts: false
 ---
 

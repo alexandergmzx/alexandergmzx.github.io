@@ -6,6 +6,7 @@ title: Alexander Gomez
 first_name: Alexander
 middle_name:
 last_name: Gomez
+navbar_wordmark: Alx-Gomez # temporary Caveat wordmark, pending handwritten artwork
 navbar_logo: alx-gomez-logo.png # logo image shown in navbar instead of name text; stored in assets/img/
 contact_note: >
   Reach out via LinkedIn or GitHub.

@@ -2,6 +2,7 @@
 layout: post
 date: 2026-08-23 18:00:00-0600
 inline: true
+summary: "Published the [Super Spectral browser analyzer](/spectral/): a singing-voice spectrogram, pitch trace, and tuner."
 related_posts: false
 ---
 
