@@ -10,56 +10,56 @@ ninja.data = [{
       window.location.href = "/";
     },
   },{id: "nav-projects",
-          title: "projects",
-          description: "Embedded systems, robotics, and computer-vision projects.",
+          title: "Projects",
+          description: "Embedded systems, robotics, and computer vision — from research to working systems.",
           section: "Navigation",
           handler: () => {
             window.location.href = "/projects/";
           },
         },{id: "nav-teaching",
-          title: "teaching",
+          title: "Teaching",
           description: "Live cohorts, 1:1 mentoring, and code review in Python and DevOps — delivered through didakta.automato.",
           section: "Navigation",
           handler: () => {
             window.location.href = "/teaching/";
           },
         },{id: "nav-garden",
-          title: "garden",
+          title: "Garden",
           description: "",
           section: "Navigation",
           handler: () => {
             window.location.href = "/garden/";
           },
-        },{id: "nav-spectral",
-          title: "spectral",
-          description: "A singing-voice spectral analyzer that runs in your browser, and the wrist-worn instrument it was built for.",
+        },{id: "nav-cv",
+          title: "CV",
+          description: "Education, professional experience, and technical background.",
           section: "Navigation",
           handler: () => {
-            window.location.href = "/spectral/";
+            window.location.href = "/cv/";
           },
-        },{id: "nav-bookshelf",
-          title: "bookshelf",
-          description: "",
-          section: "Navigation",
-          handler: () => {
-            window.location.href = "/books/";
-          },
-        },{id: "nav-vision-amp-venture",
-          title: "Vision &amp; Venture",
-          description: "",
-          section: "Navigation",
-          handler: () => {
-            window.location.href = "/vision/";
-          },
-        },{id: "dropdown-cv",
-              title: "CV",
+        },{id: "dropdown-spectral",
+              title: "Spectral",
               description: "",
               section: "Dropdown",
               handler: () => {
-                window.location.href = "/cv/";
+                window.location.href = "/spectral/";
+              },
+            },{id: "dropdown-bookshelf",
+              title: "Bookshelf",
+              description: "",
+              section: "Dropdown",
+              handler: () => {
+                window.location.href = "/books/";
+              },
+            },{id: "dropdown-vision-amp-venture",
+              title: "Vision &amp; Venture",
+              description: "",
+              section: "Dropdown",
+              handler: () => {
+                window.location.href = "/vision/";
               },
             },{id: "dropdown-repositories",
-              title: "repositories",
+              title: "Repositories",
               description: "",
               section: "Dropdown",
               handler: () => {
