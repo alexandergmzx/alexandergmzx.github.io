@@ -49,6 +49,8 @@ an LLM for every change. Every section starts with the **file you edit**, then a
 | Add a news item                        | new file in [`_news/`](_news/)                                                                                                                                       |
 | The Spectral tab (tuner + analyzer)    | [`_pages/spectral.md`](_pages/spectral.md) — the frame heights in its `_styles` are a contract, see [section 5](#the-spectral-tab)                                   |
 | The analyzer bundle itself             | `assets/superspectral/` — **generated, never hand-edited**; see [section 5](#the-spectral-tab)                                                                       |
+| The Swarm tab (recorded Overview demo) | [`_pages/swarm.md`](_pages/swarm.md) — the frame heights in its `_styles` are a contract, see [section 5](#the-swarm-tab)                                            |
+| The Overview demo bundle itself        | `assets/swarm/` — **generated, never hand-edited**; see [section 5](#the-swarm-tab)                                                                                  |
 | CV content                             | [`_data/cv.yml`](_data/cv.yml)                                                                                                                                       |
 | Downloadable CV PDF                    | replace `assets/pdf/alexander_gomez_cv.pdf`                                                                                                                          |
 | Social icons (email, github, linkedin) | [`_data/socials.yml`](_data/socials.yml)                                                                                                                             |
@@ -204,10 +206,8 @@ visitors to where they should go next.
 1. **Projects** (`_pages/projects.md`, `nav_order: 1`)
 2. **Teaching** (`_pages/teaching.md`, `nav_order: 2`)
 3. **Garden** (`_pages/garden.md`, `nav_order: 3`) — the digital garden at `/garden/`
-4. **Spectral** (`_pages/spectral.md`, `nav_order: 4`) — the browser analyzer at `/spectral/`
-5. **Bookshelf** (`_pages/books.md`, `nav_order: 5`)
-6. **Vision & Venture** (`_pages/vision.md`, `nav_order: 6`)
-7. **more ▾** (`_pages/dropdown.md`, `nav_order: 7`) — contains CV, Repositories
+4. **CV** (`_pages/cv.md`, `nav_order: 4`)
+5. **More ▾** (`_pages/dropdown.md`, `nav_order: 7`) — contains Spectral (`/spectral/`), Swarm (`/swarm/`), Bookshelf, Vision & Venture, Repositories. Those pages are `nav: false`; the dropdown's `children:` list is what puts them in the navbar.
 
 ### Show or hide a page in the navbar
 
@@ -361,6 +361,50 @@ const t = document.getElementById("tuner"),
 ```
 
 Every row's second number must be **≥ 0** and every third number **≤ 0**. Anything else is clipping.
+
+### The Swarm tab
+
+`/swarm/` ([`_pages/swarm.md`](_pages/swarm.md)) is the SWARM ground station's **Overview** — the
+operator's instrument — playing back a recorded synthetic-plume run. Like Spectral it is a section of
+its own, reached from the **More** dropdown.
+
+**The bundle is generated.** `assets/swarm/` is a Vite build produced in the private
+`swarm` repository (`ground-station/README.md`, "Overview and the recorded demo"):
+
+```bash
+cd ~/Development/swarm/ground-station/dashboard
+npm run build:demo        # copies the Madrid basemap, builds dist-demo/ with base './'
+rm -rf ~/Development/al-folio/assets/swarm && cp -r dist-demo ~/Development/al-folio/assets/swarm
+```
+
+The copy is wholesale, so **anything you edit or add in there by hand is destroyed by the next
+copy.** Files that must travel with the bundle (`map-assets/NOTICE.md`, the fonts and sprites, the
+recording) live in `ground-station/dashboard/public/` upstream. Nothing runs git — commit here
+yourself. The chunks arrive named `*.min.js` on purpose: `jekyll-terser` re-minifies every other
+`.js` under `assets/` (with `drop_console`) and has no exclude list, and it drops a file whose parse
+fails. `jekyll-minifier`, purgecss, lychee and Prettier are told to skip the directory in
+`_config.yml`, `purgecss.config.js`, `.github/workflows/broken-links-site.yml` and `.prettierignore`,
+in the same lines that skip `delta_sim` and `superspectral`.
+
+**The frame heights are a contract with that repository.** The numbers in the `_styles` block of
+`_pages/swarm.md`:
+
+| Number      | What it is                                                                                                                                                                                                                                                                                            |
+| ----------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **898 px**  | The frame's own width: `max_width` 930 px − 2×15 px Bootstrap gutter − 2×1 px border. The Overview's phone breakpoint is 700 px, so 898 keeps the map and the 260 px inspector in two columns. Drop `max_width` below **732 px** and the page renders the phone layout on a laptop.                   |
+| **1210 px** | The desktop frame. Measured: the Overview is about 1205 px of content at 898 px (swarm `docs/validation/map-ui.md` row 18). There is **no postMessage height bridge** — the bundle never reports its height — so if the Overview grows, the frame clips into an inner scrollbar and nothing goes red. |
+| **2160 px** | The phone frame, applied below a 732 px viewport (700 + 30 + 2), where the inspector moves under the map and the eight roster cards stack. Measured headless at a 358 px frame. Too tall shows a blank strip under the console; too short scrolls inside.                                             |
+
+To re-measure after any change to either side, serve the bundle under `/assets/swarm/` (the
+`python3 -m http.server` recipe in swarm's map-ui Part 6 step 3), open
+`/assets/swarm/index.html?embed=1` at the width in question and read
+
+```js
+Math.ceil(document.querySelector(".overview").getBoundingClientRect().height);
+```
+
+Put that number plus five into the matching rule. The theme inside the frame follows the visitor's
+OS scheme, not this site's toggle — that is a decision in swarm's ADR 0040, not a bug here.
 
 ---
 

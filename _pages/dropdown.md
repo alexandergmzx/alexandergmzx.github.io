@@ -7,6 +7,8 @@ dropdown: true
 children:
   - title: Spectral
     permalink: /spectral/
+  - title: Swarm
+    permalink: /swarm/
   - title: Bookshelf
     permalink: /books/
   - title: Vision & Venture
