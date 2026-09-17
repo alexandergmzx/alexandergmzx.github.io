@@ -365,15 +365,17 @@ Every row's second number must be **≥ 0** and every third number **≤ 0**. An
 ### The Swarm tab
 
 `/swarm/` ([`_pages/swarm.md`](_pages/swarm.md)) is the SWARM ground station's **Overview** — the
-operator's instrument — playing back a recorded synthetic-plume run. Like Spectral it is a section of
-its own, reached from the **More** dropdown.
+operator's instrument — playing back a recorded synthetic two-source run over the Monterrey
+metropolitan area (110 synthetic nodes, four simulated gateways; the assumed sources are named on the
+page as assumptions, never as a measured attribution). Like Spectral it is a section of its own,
+reached from the **More** dropdown.
 
 **The bundle is generated.** `assets/swarm/` is a Vite build produced in the private
 `swarm` repository (`ground-station/README.md`, "Overview and the recorded demo"):
 
 ```bash
 cd ~/Development/swarm/ground-station/dashboard
-npm run build:demo        # copies the Madrid basemap, builds dist-demo/ with base './'
+npm run build:demo        # copies the scene's basemap (Monterrey metro, z13), builds dist-demo/ with base './'
 rm -rf ~/Development/al-folio/assets/swarm && cp -r dist-demo ~/Development/al-folio/assets/swarm
 ```
 
@@ -389,11 +391,11 @@ in the same lines that skip `delta_sim` and `superspectral`.
 **The frame heights are a contract with that repository.** The numbers in the `_styles` block of
 `_pages/swarm.md`:
 
-| Number      | What it is                                                                                                                                                                                                                                                                                            |
-| ----------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **898 px**  | The frame's own width: `max_width` 930 px − 2×15 px Bootstrap gutter − 2×1 px border. The Overview's phone breakpoint is 700 px, so 898 keeps the map and the 260 px inspector in two columns. Drop `max_width` below **732 px** and the page renders the phone layout on a laptop.                   |
-| **1210 px** | The desktop frame. Measured: the Overview is about 1205 px of content at 898 px (swarm `docs/validation/map-ui.md` row 18). There is **no postMessage height bridge** — the bundle never reports its height — so if the Overview grows, the frame clips into an inner scrollbar and nothing goes red. |
-| **2160 px** | The phone frame, applied below a 732 px viewport (700 + 30 + 2), where the inspector moves under the map and the eight roster cards stack. Measured headless at a 358 px frame. Too tall shows a blank strip under the console; too short scrolls inside.                                             |
+| Number      | What it is                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **898 px**  | The frame's own width: `max_width` 930 px − 2×15 px Bootstrap gutter − 2×1 px border. The Overview's phone breakpoint is 700 px, so 898 keeps the map and the 260 px inspector in two columns. Drop `max_width` below **732 px** and the page renders the phone layout on a laptop.                                                                                                                                                                           |
+| **2617 px** | The desktop frame. Measured: the Overview is 2612 px of content at 898 px with the Monterrey recording, whose roster is grouped by cell with the selected node's cell (36 cards) open by default (swarm `docs/validation/map-ui.md` row 22; the Madrid recording measured 1205 px). There is **no postMessage height bridge** — the bundle never reports its height — so if the Overview grows, the frame clips into an inner scrollbar and nothing goes red. |
+| **4645 px** | The phone frame, applied below a 732 px viewport (700 + 30 + 2), where the inspector moves under the map and the roster cards stack one per row. Measured headless at a 358 px frame: 4640 px. Too tall shows a blank strip under the console; too short scrolls inside.                                                                                                                                                                                      |
 
 To re-measure after any change to either side, serve the bundle under `/assets/swarm/` (the
 `python3 -m http.server` recipe in swarm's map-ui Part 6 step 3), open
