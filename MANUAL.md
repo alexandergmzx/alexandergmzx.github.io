@@ -379,6 +379,10 @@ npm run build:demo        # copies the scene's basemap (Monterrey metro, z13), b
 rm -rf ~/Development/al-folio/assets/swarm && cp -r dist-demo ~/Development/al-folio/assets/swarm
 ```
 
+The bundle carries two recordings: the Monterrey metro scene the Overview plays, and a local
+nine-sensor experiment that the guided presentation at `assets/swarm/index.html#/project` plays, each
+with its own basemap (about 14.3 MB in total; the build refuses to exceed 15 MB).
+
 The copy is wholesale, so **anything you edit or add in there by hand is destroyed by the next
 copy.** Files that must travel with the bundle (`map-assets/NOTICE.md`, the fonts and sprites, the
 recording) live in `ground-station/dashboard/public/` upstream. Nothing runs git — commit here
