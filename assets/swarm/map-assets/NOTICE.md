@@ -32,6 +32,12 @@ site ever needs it. The style also names `Noto Sans Devanagari Regular v1` insid
 a `case` expression for Devanagari-script labels; neither site has any, so it is
 not vendored.
 
+## Fonts (`fonts/`, outside map-assets)
+
+| Asset | Origin | Licence |
+|---|---|---|
+| `fonts/eb-garamond/EBGaramond-Regular.woff2` (the walkthrough's headings) | EB Garamond Regular, © 2017 The EB Garamond Project Authors, via Google Fonts; subset to Latin and converted to WOFF2 with fontTools (recipe and digests in `fonts/eb-garamond/SOURCE.md`) | [SIL OFL 1.1](../fonts/eb-garamond/OFL.txt); no Reserved Font Name |
+
 ## Known gaps
 
 - `@protomaps/basemaps` 5.7.2 references a sprite named `townhall` that neither the vendored
