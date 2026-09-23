@@ -400,7 +400,7 @@ the emission rate is the synthetic source's; and the 2023 side-by-side carries n
 
 After copying, build this site locally and verify the primary `/swarm/` link,
 `#/project?step=N` refresh, and the secondary `#/overview?demo=1` link under `/assets/swarm/`.
-No backend is required. The map follows the visitor's OS theme.
+No backend is required. The walkthrough follows the theme chosen on the portfolio (`localStorage.theme`), else the visitor's OS; its fonts ship inside the bundle (`assets/swarm/fonts/`).
 
 ---
 

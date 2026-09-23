@@ -19,7 +19,7 @@ The walkthrough has seven steps:
 4. **How readings travel**: fourteen nodes in a 5-second cycle, with the delay from each reading to the station.
 5. **Deploying the nodes**, carried out on foot in four waves.
 6. **Following the readings** as they arrive, with a possible relocation at every later phase.
-7. Where the source is, whether the evidence confirms it, and how much it emits, set beside the 2023 record without any verdict.
+7. Where the source is, whether the evidence supports it, and how much it emits, set beside the 2023 record without any verdict.
 
 <p class="my-4">
   <a class="btn btn-primary" href="{{ '/assets/swarm/index.html' | relative_url }}">Open the walkthrough →</a>

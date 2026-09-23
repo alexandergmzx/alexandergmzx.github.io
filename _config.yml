@@ -280,6 +280,7 @@ jekyll-minifier:
       "assets/swarm/assets/*",
       "assets/swarm/demo/*",
       "assets/swarm/map-assets/*",
+      "assets/swarm/fonts/*",
     ]
 
 # -----------------------------------------------------------------------------
