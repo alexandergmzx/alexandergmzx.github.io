@@ -49,7 +49,7 @@ an LLM for every change. Every section starts with the **file you edit**, then a
 | Add a news item                        | new file in [`_news/`](_news/)                                                                                                                                       |
 | The Spectral tab (tuner + analyzer)    | [`_pages/spectral.md`](_pages/spectral.md) — the frame heights in its `_styles` are a contract, see [section 5](#the-spectral-tab)                                   |
 | The analyzer bundle itself             | `assets/superspectral/` — **generated, never hand-edited**; see [section 5](#the-spectral-tab)                                                                       |
-| The Swarm tab (incident walkthrough)   | [`_pages/swarm.md`](_pages/swarm.md) — a link page to the generated bundle; see [section 5](#the-swarm-tab)                                                             |
+| The Swarm tab (incident walkthrough)   | [`_pages/swarm.md`](_pages/swarm.md) — a link page to the generated bundle; see [section 5](#the-swarm-tab)                                                          |
 | The Overview demo bundle itself        | `assets/swarm/` — **generated, never hand-edited**; see [section 5](#the-swarm-tab)                                                                                  |
 | CV content                             | [`_data/cv.yml`](_data/cv.yml)                                                                                                                                       |
 | Downloadable CV PDF                    | replace `assets/pdf/alexander_gomez_cv.pdf`                                                                                                                          |
