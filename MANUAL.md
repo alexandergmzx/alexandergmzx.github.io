@@ -364,9 +364,9 @@ Every row's second number must be **≥ 0** and every third number **≤ 0**. An
 
 ### The Swarm tab
 
-`/swarm/` ([`_pages/swarm.md`](_pages/swarm.md)) introduces the six-step incident walkthrough
+`/swarm/` ([`_pages/swarm.md`](_pages/swarm.md)) introduces the seven-step walkthrough of a real-time monitoring network (fourteen simulated nodes; the incident study is its worked example)
 and links to `assets/swarm/index.html`, which opens it by default (`#/project`). The explicit
-`#/overview?demo=1` link shows the separate nine-sensor local simulation. The portfolio no longer
+`#/overview?demo=1` link shows the separate nine-node local simulation. The portfolio no longer
 embeds the tall operator dashboard, so the old fixed iframe heights do not apply to this page.
 
 **The bundle is generated.** Build and verify it in the private `swarm` repository:
@@ -386,15 +386,17 @@ the generated files. The package contains two recordings (`incident.json` for th
 
 The walkthrough loads its recording independently of both maps. Downloads time out after
 15 seconds and expose Retry controls; a failed city map cannot invalidate the street map. Browser
-checks cover the six steps by keyboard at three widths in both languages, slow, missing and
+checks cover the seven steps by keyboard at three widths in both languages, slow, missing and
 tampered assets, reduced motion and no-WebGL fallback. Use `CHROMIUM_PATH` with `test:browser`
 for a system browser, or install Playwright Chromium in the dashboard first.
 
 **The public copy is traced.** Every sentence of the walkthrough maps to a source row in the swarm
-repository (`docs/research/2026-09-incident-walkthrough/06-decision-trace.md`). Edits to this page's
+repository (`docs/research/2026-09-incident-walkthrough-v2/06-decision-trace.md`). Edits to this page's
 introduction keep to the same facts: the 2023 items are a record, not an accident; no chemical
 claims; the simulated source says nothing about any real emission point; every figure from the
-evaluation keeps its configuration, its stress and its n.
+evaluation keeps its configuration, its stress and its n; a node is a node, never a "sensor"; every
+mention of fourteen nodes says they are beyond the boards on order and that the schedule is simulated;
+the emission rate is the synthetic source's; and the 2023 side-by-side carries no verdict.
 
 After copying, build this site locally and verify the primary `/swarm/` link,
 `#/project?step=N` refresh, and the secondary `#/overview?demo=1` link under `/assets/swarm/`.
