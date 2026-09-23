@@ -49,7 +49,7 @@ an LLM for every change. Every section starts with the **file you edit**, then a
 | Add a news item                        | new file in [`_news/`](_news/)                                                                                                                                       |
 | The Spectral tab (tuner + analyzer)    | [`_pages/spectral.md`](_pages/spectral.md) — the frame heights in its `_styles` are a contract, see [section 5](#the-spectral-tab)                                   |
 | The analyzer bundle itself             | `assets/superspectral/` — **generated, never hand-edited**; see [section 5](#the-spectral-tab)                                                                       |
-| The Swarm tab (recorded Overview demo) | [`_pages/swarm.md`](_pages/swarm.md) — the frame heights in its `_styles` are a contract, see [section 5](#the-swarm-tab)                                            |
+| The Swarm tab (incident walkthrough)   | [`_pages/swarm.md`](_pages/swarm.md) — a link page to the generated bundle; see [section 5](#the-swarm-tab)                                                             |
 | The Overview demo bundle itself        | `assets/swarm/` — **generated, never hand-edited**; see [section 5](#the-swarm-tab)                                                                                  |
 | CV content                             | [`_data/cv.yml`](_data/cv.yml)                                                                                                                                       |
 | Downloadable CV PDF                    | replace `assets/pdf/alexander_gomez_cv.pdf`                                                                                                                          |
@@ -364,10 +364,10 @@ Every row's second number must be **≥ 0** and every third number **≤ 0**. An
 
 ### The Swarm tab
 
-`/swarm/` ([`_pages/swarm.md`](_pages/swarm.md)) introduces the guided local experiment
-and links to `assets/swarm/index.html`, which opens the guided presentation by default.
-The explicit `#/overview?demo=1` link shows sensor details for the same local experiment. The portfolio no longer embeds the
-tall operator dashboard, so the old fixed iframe heights do not apply to this page.
+`/swarm/` ([`_pages/swarm.md`](_pages/swarm.md)) introduces the six-step incident walkthrough
+and links to `assets/swarm/index.html`, which opens it by default (`#/project`). The explicit
+`#/overview?demo=1` link shows the separate nine-sensor local simulation. The portfolio no longer
+embeds the tall operator dashboard, so the old fixed iframe heights do not apply to this page.
 
 **The bundle is generated.** Build and verify it in the private `swarm` repository:
 
@@ -378,19 +378,26 @@ npm run test:browser
 ```
 
 Copy `dist-demo/` wholesale to `assets/swarm/` only after validation; never hand-edit
-the generated files. The package contains one nine-sensor recording, its local basemap and a city-context archive, with
-a 15 MB budget enforced at build time. JavaScript chunks retain `.min.js` names to
-avoid being rewritten by Jekyll's minifier. Existing exclusions in `_config.yml`,
-`purgecss.config.js`, link checking and `.prettierignore` still apply.
+the generated files. The package contains two recordings (`incident.json` for the walkthrough,
+`session.json` for the Overview) and three archives (`context.pmtiles`, `incident.pmtiles`,
+`basemap.pmtiles`), with a 15 MB budget enforced at build time. JavaScript chunks retain
+`.min.js` names to avoid being rewritten by Jekyll's minifier. Existing exclusions in
+`_config.yml`, `purgecss.config.js`, link checking and `.prettierignore` still apply.
 
-The guided demo loads recordings independently of maps. Downloads time out after
-15 seconds and expose Retry controls; a failed city map cannot invalidate the local
-map. Browser checks cover both languages, phone and desktop controls, phase replay,
-slow/missing assets and no-WebGL fallback. Use `CHROMIUM_PATH` with `test:browser`
+The walkthrough loads its recording independently of both maps. Downloads time out after
+15 seconds and expose Retry controls; a failed city map cannot invalidate the street map. Browser
+checks cover the six steps by keyboard at three widths in both languages, slow, missing and
+tampered assets, reduced motion and no-WebGL fallback. Use `CHROMIUM_PATH` with `test:browser`
 for a system browser, or install Playwright Chromium in the dashboard first.
 
+**The public copy is traced.** Every sentence of the walkthrough maps to a source row in the swarm
+repository (`docs/research/2026-09-incident-walkthrough/06-decision-trace.md`). Edits to this page's
+introduction keep to the same facts: the 2023 items are a record, not an accident; no chemical
+claims; the simulated source says nothing about any real emission point; every figure from the
+evaluation keeps its configuration, its stress and its n.
+
 After copying, build this site locally and verify the primary `/swarm/` link,
-`#/project` refresh, and the secondary `#/overview?demo=1` link under `/assets/swarm/`.
+`#/project?step=N` refresh, and the secondary `#/overview?demo=1` link under `/assets/swarm/`.
 No backend is required. The map follows the visitor's OS theme.
 
 ---
