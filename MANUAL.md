@@ -51,7 +51,7 @@ an LLM for every change. Every section starts with the **file you edit**, then a
 | The Spectral tab (tuner + analyzer)    | [`_pages/spectral.md`](_pages/spectral.md) — the frame heights in its `_styles` are a contract, see [section 5](#the-spectral-tab)                                   |
 | The analyzer bundle itself             | `assets/superspectral/` — **generated, never hand-edited**; see [section 5](#the-spectral-tab)                                                                       |
 | The SWARM page (`/swarm/`)             | [`_projects/11_swarm.md`](_projects/11_swarm.md) (`permalink: /swarm/`) — the card, the homepage row, the More ▾ tab and the page; see [section 5](#the-swarm-tab)   |
-| The Overview demo bundle itself        | `assets/swarm/` — **generated, never hand-edited**; see [section 5](#the-swarm-tab)                                                                                  |
+| The walkthrough bundle itself          | `assets/swarm/` — **generated, never hand-edited**; see [section 5](#the-swarm-tab)                                                                                  |
 | CV content                             | [`_data/cv.yml`](_data/cv.yml)                                                                                                                                       |
 | Downloadable CV PDF                    | replace `assets/pdf/alexander_gomez_cv.pdf`                                                                                                                          |
 | Social icons (email, github, linkedin) | [`_data/socials.yml`](_data/socials.yml)                                                                                                                             |
@@ -370,8 +370,8 @@ makes one page serve as the card on `/projects/`, the target of the first row of
 (`_data/featured_projects.yml`) and the More ▾ tab. Unlike Spectral there is no separate tab page; do not add a
 `_pages/swarm.md`, which would collide on the permalink. The page introduces the seven-step walkthrough of a real-time
 monitoring network (fourteen simulated nodes; the incident study is its worked example) and links to
-`assets/swarm/index.html`, which opens it by default (`#/project`). The explicit `#/overview?demo=1` link shows the
-separate nine-node local simulation. Its step-5 figure ships in two captures, `swarm_walkthrough_step5.png` and
+`assets/swarm/index.html`, which opens it (`#/project`). The bundle is the walkthrough alone; every demo path,
+an old `#/overview?demo=1` link included, opens it. Its step-5 figure ships in two captures, `swarm_walkthrough_step5.png` and
 `swarm_walkthrough_step5_dark.png`, shown by the theme's `.only-light` / `.only-dark` classes; recapture both together.
 The page, the featured row and any SWARM news item follow the traced-copy rules below.
 
@@ -384,9 +384,8 @@ npm run test:browser
 ```
 
 Copy `dist-demo/` wholesale to `assets/swarm/` only after validation; never hand-edit
-the generated files. The package contains two recordings (`incident.json` for the walkthrough,
-`session.json` for the Overview) and three archives (`context.pmtiles`, `incident.pmtiles`,
-`basemap.pmtiles`), with a 15 MB budget enforced at build time. JavaScript chunks retain
+the generated files. The package contains one recording (`incident.json`) and two archives (`incident.pmtiles`, the street map,
+and `context.pmtiles`, the city map), with a 15 MB budget enforced at build time. JavaScript chunks retain
 `.min.js` names to avoid being rewritten by Jekyll's minifier. Existing exclusions in
 `_config.yml`, `purgecss.config.js`, link checking and `.prettierignore` still apply.
 
@@ -405,7 +404,7 @@ mention of fourteen nodes says they are beyond the boards on order and that the 
 the emission rate is the synthetic source's; and the 2023 side-by-side carries no verdict.
 
 After copying, build this site locally and verify the primary `/swarm/` link,
-`#/project?step=N` refresh, and the secondary `#/overview?demo=1` link under `/assets/swarm/`.
+`#/project?step=N` refresh, and that an old `#/overview?demo=1` link under `/assets/swarm/` opens the walkthrough.
 No backend is required. The walkthrough follows the theme chosen on the portfolio (`localStorage.theme`), else the visitor's OS; its fonts ship inside the bundle (`assets/swarm/fonts/`).
 
 ---

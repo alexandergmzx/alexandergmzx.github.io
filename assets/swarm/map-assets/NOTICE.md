@@ -20,7 +20,7 @@ Related, not vendored here:
 | Component | Where | Licence / obligation |
 |-----------|-------|----------------------|
 | Map data (`datasets/geo/<site>/basemap.pmtiles`) | Protomaps daily build `20260912.pmtiles`, derived from OpenStreetMap and Natural Earth | [ODbL 1.0](https://opendatacommons.org/licenses/odbl/1-0/) — the map must show "© OpenStreetMap contributors" (the style's attribution control does this; do not hide it) |
-| Map data in the recorded demo (`demo/basemap.pmtiles`, emitted by `npm run build:demo`) | a build-time copy of `datasets/geo/madrid/basemap.pmtiles`, never tracked twice | ODbL 1.0 — the © OpenStreetMap contributors control stays visible in the embed and in any screenshot |
+| Map data in the recorded demo (`demo/incident.pmtiles` and `demo/context.pmtiles`, emitted by `npm run build:demo`) | build-time copies of `datasets/geo/monterrey-incident/basemap.pmtiles` and `datasets/geo/monterrey-region/basemap.pmtiles`, never tracked twice | ODbL 1.0 — the © OpenStreetMap contributors control stays visible in the walkthrough and in any screenshot |
 | Basemap style (`@protomaps/basemaps` 5.7.2, npm) | node_modules, bundled by Vite | [BSD-3-Clause](https://github.com/protomaps/basemaps/blob/main/LICENSE) |
 | MapLibre GL JS, pmtiles (npm) | node_modules, bundled by Vite | BSD-3-Clause; BSD-3-Clause |
 

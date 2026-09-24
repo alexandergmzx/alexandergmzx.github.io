@@ -16,9 +16,6 @@ The project is built the slow way. A proposal fixed the research question before
   <a class="btn btn-outline-primary" role="button" href="{{ '/assets/swarm/index.html' | relative_url }}">
     <i class="fa-solid fa-route"></i> Open the walkthrough
   </a>
-  <a class="btn btn-outline-primary" role="button" href="{{ '/assets/swarm/index.html' | relative_url }}#/overview?demo=1">
-    <i class="fa-solid fa-map-location-dot"></i> Explore the node Overview
-  </a>
 </div>
 
 ## What is measured, and what is simulated
@@ -62,11 +59,9 @@ _The research I propose next measures the monitoring layer on the bench with the
 I am seeking master’s supervision in real-time monitoring and communication systems, to turn this prototype’s monitoring layer into measured, reproducible results.
 
 <details markdown="1">
-<summary>Explore node details and technical notes</summary>
+<summary>Technical notes</summary>
 
-The [detailed node Overview]({{ '/assets/swarm/index.html' | relative_url }}#/overview?demo=1) shows a separate recorded simulation with nine fictional nodes in central Monterrey, with additional readings and inspection controls. The walkthrough is the default whenever you open the public demo.
-
-The public bundle includes two recordings and three map archives. It requires no running ground-station server. Text and readings remain available while maps load, and failed downloads can be retried. Packaged estimator outputs are checked against the retained recording databases. Each step of the 2023 chronology links its public source.
+The public bundle is the walkthrough alone: one recording and two map archives, a street map and a city map. It requires no running ground-station server. Text and readings remain available while maps load, and failed downloads can be retried. Packaged estimator outputs are checked against the retained recording databases. Each step of the 2023 chronology links its public source.
 
 Map data © [OpenStreetMap contributors](https://www.openstreetmap.org/copyright), ODbL. Weather data by [Open-Meteo.com](https://open-meteo.com/) (CC BY 4.0), NOAA HRRR model. [Third-party notices]({{ '/assets/swarm/map-assets/NOTICE.md' | relative_url }}).
 

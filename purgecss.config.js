@@ -10,7 +10,7 @@ module.exports = {
   // whole site, and it grows every time that bundle does. The analyzer ships
   // its own stylesheet inside its own iframe and shares none of ours. The same
   // holds for the Delta robot simulator bundle under assets/delta_sim/ and for
-  // the SWARM Overview demo under assets/swarm/, whose 2.7 MB of MapLibre is the
+  // the SWARM walkthrough bundle under assets/swarm/, whose 2.7 MB of MapLibre is the
   // largest of the three.
   skippedContentGlobs: [
     "_site/assets/**/*.html",
