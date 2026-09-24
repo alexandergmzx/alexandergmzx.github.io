@@ -5,9 +5,10 @@ description: Low-cost environmental nodes on a shared radio schedule and a local
 img: assets/img/swarm_walkthrough.png
 importance: 0 # listed first among academic projects (Delta robot and Super Spectral are 1)
 category: academic
+permalink: /swarm/ # the More ▾ tab points here too; there is no separate tab page
 ---
 
-**SWARM** is my research prototype in real-time monitoring and communication. Each node carries a particle sensor, a CO₂ sensor and an environment sensor. It is designed to send one compact frame every five seconds in its own slot of a shared radio schedule to a local ground station, which stores the readings and computes a provisional source estimate. The question it asks: can a low-cost real-time network keep a station informed fast enough to guide a response?
+**SWARM** is my research prototype in real-time monitoring and communication. Each node carries a particle sensor, a CO₂ sensor and an environment sensor. It is designed to send one compact frame every five seconds in its own slot of a shared radio schedule to a local ground station, which stores the readings and computes a provisional source estimate; in the recorded simulation, the station also decides where the next nodes go. The question it asks: can a low-cost real-time network keep a station informed fast enough to guide a response?
 
 The project is built the slow way. A proposal fixed the research question before any code; architectural choices are recorded as decision records; every figure the public page prints is traced to its source and recomputed from the recording; and the simulation study behind the walkthrough was pre-registered, with its thresholds fixed on separate episodes before the evaluation ran.
 
@@ -15,8 +16,8 @@ The project is built the slow way. A proposal fixed the research question before
   <a class="btn btn-outline-primary" role="button" href="{{ '/assets/swarm/index.html' | relative_url }}">
     <i class="fa-solid fa-route"></i> Open the walkthrough
   </a>
-  <a class="btn btn-outline-primary" role="button" href="{{ '/swarm/' | relative_url }}">
-    <i class="fa-solid fa-circle-info"></i> About the walkthrough
+  <a class="btn btn-outline-primary" role="button" href="{{ '/assets/swarm/index.html' | relative_url }}#/overview?demo=1">
+    <i class="fa-solid fa-map-location-dot"></i> Explore the node Overview
   </a>
 </div>
 
@@ -28,12 +29,45 @@ The project is built the slow way. A proposal fixed the research question before
 
 ## The walkthrough
 
-Seven steps run from Nuevo León's SIMA network and a documented 2023 record at Ternium's Planta Guerrero to a simulated response: how readings travel from fourteen nodes to one station, how the nodes are deployed and relocated, and where the source is, whether the evidence supports it and how much it emits, set beside the 2023 record without any verdict.
+The walkthrough has seven steps:
 
-In the pre-registered evaluation, without added stress, computed placement with optional relocation ended with a supported location in 18 of 20 simulated episodes; the 90 % region contained the source in 14 of them and the rate interval in 17. A fixed spread-out layout of the same nodes did about as well, and under light wind or a varying background the station reported model disagreement instead of a location. In simulation, a failure is close to decisive; a success is necessary but not sufficient evidence for the field.
+1. **Nuevo León's SIMA network**: 15 fixed stations that measure hourly across the metropolitan area.
+2. **A documented 2023 record** at Ternium's Planta Guerrero in San Nicolás de los Garza: PROFEPA's inspection visits in February 2023, press reports and replies. None of those records measures how much was emitted, or what.
+3. From here on, a **simulation**, starting with the weather and the search area.
+4. **How readings travel**: fourteen nodes in a 5-second cycle, with the delay from each reading to the station.
+5. **Deploying the nodes**, carried out on foot in four waves.
+6. **Following the readings** as they arrive, with a possible relocation at every later phase.
+7. Where the source is, whether the evidence supports it, and how much it emits, set beside the 2023 record without any verdict.
 
-It has a page of its own — [swarm]({{ '/swarm/' | relative_url }}) — and a separate [detailed node Overview]({{ '/assets/swarm/index.html' | relative_url }}#/overview?demo=1).
-
+<div class="only-light">
 {% include figure.liquid loading="lazy" path="assets/img/swarm_walkthrough_step5.png" class="img-fluid rounded z-depth-1" zoomable=true alt="Step 5 of the walkthrough, Deploy the nodes: on the left, the step's text on node 1's site, each wave's sites and when readings count; on the right, a street map around the plant with fourteen numbered nodes coloured by wave, the dashed search area and plant outline, the candidate sites as hollow circles, and a violet shading with a ring around the model's estimate" caption="Step 5, deploying the nodes: a recorded simulation with a synthetic source. Nodes are coloured by the wave that carried them out; the shading is where the model would place a source if there is one, and the ring is its 90 % region, drawn only for a supported state." %}
+</div>
+<div class="only-dark">
+{% include figure.liquid loading="lazy" path="assets/img/swarm_walkthrough_step5_dark.png" class="img-fluid rounded z-depth-1" zoomable=true alt="Step 5 of the walkthrough, Deploy the nodes: on the left, the step's text on node 1's site, each wave's sites and when readings count; on the right, a street map around the plant with fourteen numbered nodes coloured by wave, the dashed search area and plant outline, the candidate sites as hollow circles, and a violet shading with a ring around the model's estimate" caption="Step 5, deploying the nodes: a recorded simulation with a synthetic source. Nodes are coloured by the wave that carried them out; the shading is where the model would place a source if there is one, and the ring is its 90 % region, drawn only for a supported state." %}
+</div>
+
+**Recorded simulation, not field measurements.**
+
+- No SWARM node was deployed in 2023.
+- The readings come from the same simplified plume and noise model the estimator assumes.
+- A rule fixed before any run chose the episode shown: the median of the supported episodes of a pre-registered evaluation.
+- In that evaluation, without added stress, computed placement with optional relocation ended with a supported location in 18 of 20 simulated episodes. The 90 % region contained the source in 14 of them and the rate interval in 17.
+- A fixed spread-out layout of the same nodes did about as well, and under light wind or a varying background the station reported model disagreement instead of a location.
+- A first version of the study, with eight nodes, ended its public episode with insufficient evidence; it stays in the record.
+
+In simulation, a failure is close to decisive; a success is necessary but not sufficient evidence for the field.
 
 _The research I propose next measures the monitoring layer on the bench with the boards on hand: frames lost at each distance, how closely nodes keep their slots in a shared schedule, and the time from a reading to an alert. Field trials with reference instruments belong with a group that has them, and the 50 m localization and four-hour autonomy figures remain research targets._
+
+I am seeking master’s supervision in real-time monitoring and communication systems, to turn this prototype’s monitoring layer into measured, reproducible results.
+
+<details markdown="1">
+<summary>Explore node details and technical notes</summary>
+
+The [detailed node Overview]({{ '/assets/swarm/index.html' | relative_url }}#/overview?demo=1) shows a separate recorded simulation with nine fictional nodes in central Monterrey, with additional readings and inspection controls. The walkthrough is the default whenever you open the public demo.
+
+The public bundle includes two recordings and three map archives. It requires no running ground-station server. Text and readings remain available while maps load, and failed downloads can be retried. Packaged estimator outputs are checked against the retained recording databases. Each step of the 2023 chronology links its public source.
+
+Map data © [OpenStreetMap contributors](https://www.openstreetmap.org/copyright), ODbL. Weather data by [Open-Meteo.com](https://open-meteo.com/) (CC BY 4.0), NOAA HRRR model. [Third-party notices]({{ '/assets/swarm/map-assets/NOTICE.md' | relative_url }}).
+
+</details>
