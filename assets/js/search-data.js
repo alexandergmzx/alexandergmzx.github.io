@@ -158,6 +158,9 @@ ninja.data = [{
           section: "News",},{id: "news-published-the-super-spectral-browser-analyzer-a-singing-voice-spectrogram-pitch-trace-and-tuner-that-run-entirely-in-your-own-browser-with-no-audio-leaving-your-machine-it-is-the-host-half-of-a-wrist-worn-analyzer-still-being-built-on-an-esp32-s3-what-it-reports-there-is-measured-and-it-says-nothing-yet-about-the-watch-microphone",
           title: 'Published the Super Spectral browser analyzer — a singing-voice spectrogram, pitch trace and...',
           description: "",
+          section: "News",},{id: "news-published-the-swarm-walkthrough-seven-steps-from-nuevo-león-s-air-quality-stations-and-a-documented-2023-record-to-a-simulated-response-in-which-fourteen-nodes-report-every-five-seconds-and-a-local-station-locates-a-synthetic-source-judges-whether-the-evidence-supports-it-and-estimates-how-much-it-emits-the-radio-link-is-measured-on-the-bench-fourteen-nodes-on-a-shared-schedule-are-simulated-one-step-beyond-the-ten-board-fleet-planned-for-mid-october-satellite",
+          title: 'Published the SWARM walkthrough — seven steps from Nuevo León’s air-quality stations and...',
+          description: "",
           section: "News",},{id: "projects-delta-robot-parallel-manipulator",
           title: 'Delta robot parallel manipulator',
           description: "3-DOF parallel manipulator simulated in ROS 2 Jazzy with RViz and a browser dashboard",
@@ -213,6 +216,11 @@ ninja.data = [{
           description: "An ESP32-S3 smartwatch that analyzes the singing voice, and the browser analyzer that grew out of its research document",
           section: "Projects",handler: () => {
               window.location.href = "/projects/10_super_spectral/";
+            },},{id: "projects-swarm-a-low-cost-real-time-monitoring-network",
+          title: 'SWARM — a low-cost real-time monitoring network',
+          description: "Low-cost environmental nodes on a shared radio schedule and a local ground station, shown through a seven-step walkthrough of a simulated response",
+          section: "Projects",handler: () => {
+              window.location.href = "/swarm/";
             },},{id: "teachings-python-for-devops",
           title: 'Python for DevOps',
           description: "Hands-on 12-week course covering Python tooling for automation, infrastructure, and CI/CD.",
