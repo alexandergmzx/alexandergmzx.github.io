@@ -42,6 +42,7 @@ an LLM for every change. Every section starts with the **file you edit**, then a
 | Hardcoded "about" link in navbar       | [`_config.yml`](_config.yml) — `navbar_about:` (true/false)                                                                                                          |
 | The "more" dropdown contents           | [`_pages/dropdown.md`](_pages/dropdown.md)                                                                                                                           |
 | Add a new project                      | new file in [`_projects/`](_projects/)                                                                                                                               |
+| Homepage "Selected work" rows          | [`_data/featured_projects.yml`](_data/featured_projects.yml) — `slug` (the `_projects` filename), `label`, `summary`, `methods`; file order is display order         |
 | Project categories                     | [`_pages/projects.md`](_pages/projects.md) — `display_categories:`                                                                                                   |
 | Add a garden note                      | [`/admin/`](#publishing-from-the-phone) from any browser, or a new file in [`_posts/`](_posts/) — `YYYY-MM-DD-slug.md`, scaffolded from [`_templates/`](_templates/) |
 | The phone publishing panel             | [`admin/index.html`](admin/index.html) (shell) and [`admin/config.yml`](admin/config.yml) (note schema)                                                              |
@@ -50,6 +51,7 @@ an LLM for every change. Every section starts with the **file you edit**, then a
 | The Spectral tab (tuner + analyzer)    | [`_pages/spectral.md`](_pages/spectral.md) — the frame heights in its `_styles` are a contract, see [section 5](#the-spectral-tab)                                   |
 | The analyzer bundle itself             | `assets/superspectral/` — **generated, never hand-edited**; see [section 5](#the-spectral-tab)                                                                       |
 | The Swarm tab (incident walkthrough)   | [`_pages/swarm.md`](_pages/swarm.md) — a link page to the generated bundle; see [section 5](#the-swarm-tab)                                                          |
+| The SWARM project entry                | [`_projects/11_swarm.md`](_projects/11_swarm.md) — the card, the homepage row and the project page; paired with the tab as Spectral's is                             |
 | The Overview demo bundle itself        | `assets/swarm/` — **generated, never hand-edited**; see [section 5](#the-swarm-tab)                                                                                  |
 | CV content                             | [`_data/cv.yml`](_data/cv.yml)                                                                                                                                       |
 | Downloadable CV PDF                    | replace `assets/pdf/alexander_gomez_cv.pdf`                                                                                                                          |
@@ -368,6 +370,10 @@ Every row's second number must be **≥ 0** and every third number **≤ 0**. An
 and links to `assets/swarm/index.html`, which opens it by default (`#/project`). The explicit
 `#/overview?demo=1` link shows the separate nine-node local simulation. The portfolio no longer
 embeds the tall operator dashboard, so the old fixed iframe heights do not apply to this page.
+
+As with Spectral, the tab is paired with a project entry, [`_projects/11_swarm.md`](_projects/11_swarm.md), which is
+the card on `/projects/`, the first row of the homepage's Selected work (`_data/featured_projects.yml`) and the target
+of the tab's link back. The project page, that row and any SWARM news item follow the same traced-copy rules as this page.
 
 **The bundle is generated.** Build and verify it in the private `swarm` repository:
 

@@ -9,7 +9,7 @@ nav_order: 8
 
 ## Can a low-cost real-time network keep a station informed fast enough to guide a response?
 
-**SWARM** is my research prototype in real-time monitoring and communication. Each node carries a particle sensor, a CO₂ sensor and an environment sensor. It is designed to send one compact frame every five seconds in its own slot of a shared radio schedule to a local ground station, which stores the readings and computes a provisional source estimate; in the recorded simulation, the station also decides where the next nodes go.
+**[SWARM]({{ '/projects/11_swarm/' | relative_url }})** is my research prototype in real-time monitoring and communication. Each node carries a particle sensor, a CO₂ sensor and an environment sensor. It is designed to send one compact frame every five seconds in its own slot of a shared radio schedule to a local ground station, which stores the readings and computes a provisional source estimate; in the recorded simulation, the station also decides where the next nodes go.
 
 The walkthrough has seven steps:
 
@@ -44,6 +44,12 @@ In simulation, a failure is close to decisive; a success is necessary but not su
 - **Proposed research:** measure the real-time monitoring layer on the bench with the boards on hand. That means frames lost at each distance, how closely nodes keep their slots in a shared schedule, and the time from a reading to an alert. Field trials with reference instruments belong with a group that has them, and the 50 m localization and four-hour autonomy figures remain research targets.
 
 I am seeking master’s supervision in real-time monitoring and communication systems, to turn this prototype’s monitoring layer into measured, reproducible results.
+
+<div class="text-center my-3">
+  <a class="btn btn-outline-primary" role="button" href="{{ '/projects/11_swarm/' | relative_url }}">
+    <i class="fa-solid fa-microchip"></i> The project, and what is measured
+  </a>
+</div>
 
 <details markdown="1">
 <summary>Explore node details and technical notes</summary>

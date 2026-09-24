@@ -1,3 +1,8 @@
+- slug: 11_swarm
+  title: SWARM
+  label: Real-time monitoring / Research prototype
+  summary: A low-cost network of environmental nodes and a local ground station, shown through a seven-step walkthrough of a simulated response. The bench radio link is measured; fourteen nodes on a shared schedule are simulated.
+  methods: ESP-IDF · LoRa TDMA · FastAPI ground station · MapLibre
 - slug: 01_delta_robot
   label: Robotics / Course project & continued development
   summary: A three-degree-of-freedom parallel robot, explored through ROS 2, inverse kinematics, and an interactive browser simulator.
