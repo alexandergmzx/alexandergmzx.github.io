@@ -11,6 +11,8 @@ A simple, clean, and responsive Jekyll theme for academics.
 - **Troubleshooting & FAQ?** → [TROUBLESHOOTING.md](TROUBLESHOOTING.md)
 - **Customization & theming?** → [CUSTOMIZE.md](CUSTOMIZE.md)
 - **Quick 5-min start?** → [QUICKSTART.md](QUICKSTART.md)
+- **Open to-dos for this site?** → [TODO.md](TODO.md) (read it at the start of a session; check items off as they are done)
+- **Owner's editing manual?** → [MANUAL.md](MANUAL.md)
 
 ## Essential Commands
 
