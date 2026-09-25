@@ -2,9 +2,8 @@
 layout: page
 title: Vision & Venture
 permalink: /vision/
-description: #Where I am headed, how I got here, and what drives the work.
+description: Where I am headed, how I got here, and what drives the work.
 nav: false
-nav_order: 6
 ---
 
 I visualize myself being the most valuable system engineer in the aerospace industry.
@@ -23,17 +22,24 @@ I am a confident engineer, who looks for the best in every person and environmen
 
 ## Maker journey
 
-| Year | Milestone                                                                                               |
-| ---- | ------------------------------------------------------------------------------------------------------- |
-| 2009 | As a kid, built my first remote controlled beetle robot kit independently using hot glue                |
-| 2013 | Created Visual Basic apps in Excel; built and competed with my first line-follower robot in high-school |
-| 2014 | Programmed my first Bluetooth home-automation app wit Arduino; joined the EE Students Society           |
-| 2014 | Won 3rd place in my first mini-sumo robot competition                                                   |
-| 2015 | Won 2nd place in the Bogotron line-follower contest                                                     |
-| 2018 | Intl. Exchange at TU Graz to study Circuits Simulation, Embedded systems and Noise/Crosstalk on ICs     |
-| 2019 | Graduated — BEng Digital Systems & Robotics, Tec de Monterrey                                           |
-| 2023 | Completed Diploma in Embedded Linux, Universidad de Guadalajara                                         |
-| Now  | Applying to a masters in embedded systems; building bare-metal drivers and animatronics on weekends     |
+| Year | Milestone                                                                                                                |
+| ---- | ------------------------------------------------------------------------------------------------------------------------ |
+| 2009 | As a kid, built my first remote controlled beetle robot kit independently using hot glue                                 |
+| 2013 | Created Visual Basic apps in Excel; built and competed with my first line-follower robot in high school                  |
+| 2014 | Programmed my first Bluetooth home-automation app with Arduino; joined the EE Students Society                           |
+| 2014 | Won 3rd place in my first mini-sumo robot competition                                                                    |
+| 2015 | Won 2nd place in the Bogotron line-follower contest                                                                      |
+| 2016 | President of SEIR, the robotics engineering student society at Tec de Monterrey (August 2016 to June 2017)               |
+| 2018 | Exchange semester at TU Graz: circuit simulation, embedded systems, noise and crosstalk on ICs                           |
+| 2019 | Graduated: BEng Digital Systems and Robotics, Tec de Monterrey; EGEL Sobresaliente (CENEVAL)                             |
+| 2020 | Bare-metal STM32 drivers; embedded systems certificates (CU Boulder, FastBit, Linux Foundation, Google)                  |
+| 2021 | Amdocs: backend telecom services in C, debugging a production application with GDB                                       |
+| 2022 | Dextra Technologies: AUTOSAR diagnostics for a body control module, then embedded Linux telematics                       |
+| 2023 | Embedded Linux diploma, Universidad de Guadalajara; SWARM begins as a question about the air in Monterrey                |
+| 2024 | CentroGeo diploma in remote sensing; a career break for professional development begins                                  |
+| 2025 | RWTH Aachen summer school on ROS 2; delta robot with Armando Rodríguez, continued in ROS 2 Jazzy; fish_brain animatronic |
+| 2026 | DXC Technology; parcel-sortation fleet designed, simulation in progress; SWARM walkthrough published                     |
+| Now  | Applying to a research master's                                                                                          |
 
 ---
 

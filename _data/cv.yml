@@ -1,10 +1,10 @@
 cv:
   name: Jesus Alexander Gomez Gomez
-  label: Embedded Systems Engineer
-  location: Mexico City metro area
-  image: ""
-  summary: Embedded Systems Engineer with 3+ years of professional experience in real-time systems, embedded C/C++ development, and cross-functional team collaboration across multiple international projects.
+  label: Embedded and Robotics Engineer
+  website: https://alexander-gomez.com
+  summary: "Embedded and robotics engineer with four years of embedded C and C++ across automotive and telecom: AUTOSAR diagnostics, embedded Linux telematics and safety-critical firmware on a multi-core SoC. Since 2023, creator of [SWARM](/swarm/), a low-cost real-time monitoring network with a bench-measured radio link and a fourteen-node response recorded in simulation. Seeking a research master's in real-time monitoring systems. I say what is measured, what is simulated, and what is still a target."
 
+  # Not printed by _layouts/cv.liquid; kept as a record of the profile handles.
   social_networks:
     - network: GitHub
       username: alexandergmzx
@@ -13,143 +13,230 @@ cv:
 
   address:
     city: Mexico City
-    countryCode: MX
+    region: Mexico
 
   sections:
+    # Experience always renders first; every other section renders in the order below.
+    # An open-ended role needs the literal "end_date: Present" (a missing end_date prints nothing).
+    Experience:
+      - company: DXC Technology
+        position: Embedded Software Developer
+        location: Remote
+        start_date: 2026-03
+        end_date: Present
+        summary: Low-level software for enterprise clients, from safety-critical automotive firmware to large-scale transaction systems.
+        highlights:
+          - RTOS-based memory and inter-processor communication firmware on a heterogeneous multi-core SoC (TI TDA4) for an automotive ADAS program.
+          - Python test automation for power-mode validation.
+          - On-target debugging and bring-up on physical benches with Lauterbach Trace32.
+
+      - company: Career break
+        position: Professional development
+        start_date: 2024-08
+        end_date: 2026-02
+        summary: A deliberate period of robotics and sensing work, building toward a research master's.
+        highlights:
+          - "[SWARM](/swarm/): node firmware, ground-station estimator, browser dashboard and the recorded fourteen-node simulation."
+          - Delta robot from the RWTH summer school, continued in ROS 2 Jazzy with an [interactive browser simulator](/projects/01_delta_robot/sim/), with Armando Rodríguez.
+          - "[yahboomcar-ros2](https://github.com/alexandergmzx/yahboomcar-ros2): mobile-robot SLAM stack on slam_toolbox, validated in simulation with measured gates; physical SLAM not delivered."
+          - "[fish_brain](https://github.com/alexandergmzx/fish_brain): animatronic Big Mouth Billy Bass driven from a Python host over serial to an Arduino UNO R4, with text-to-speech."
+          - Coursework of the period (RWTH ROS Essentials summer school, CentroGeo remote-sensing diploma) is listed under Education.
+
+      - company: Dextra Technologies, a Deloitte business
+        position: Embedded Software Engineer II
+        location: Monterrey, Nuevo Leon, Mexico
+        start_date: 2022-01
+        end_date: 2024-07
+        summary: Embedded software for automotive clients, from AUTOSAR diagnostics on a production ECU to embedded Linux telematics.
+        highlights:
+          - "Continental, Body Control Module (2022 to 2023): developed and maintained AUTOSAR diagnostics modules (DEM/DCM) against the RTE and BSW layers of a C RTOS application."
+          - "Continental: translated IBM Rational DOORS requirements into MISRA C, verified with unit tests and on a physical bench tester; reproduced and debugged reported issues for production maintenance; supported the team's migration to Git."
+          - "Verizon Connect, fleet telematics (2023 to 2024): developed and maintained Pomulator, a multi-threaded C++ vehicle-trip emulator on embedded Linux (Yocto), with micro-applications that improved data availability for Android-level testing."
+          - "Verizon Connect: implemented CAN diagnostics to retrieve critical vehicle data, expanding the information available to end users."
+          - Daily collaboration with teams in the US, Ireland, England, Germany, India and Poland.
+
+      - company: Amdocs
+        position: Software Developer
+        location: Zapopan, Jalisco, Mexico
+        start_date: 2021-01
+        end_date: 2022-01
+        summary: Backend telecom services for AT&amp;T Mexico in C, Python, Unix shell and Oracle SQL.
+        highlights:
+          - "Debugged a production C application: reproduced faults, read core dumps with GDB, and took defects from root cause to fix."
+          - Delivered under SCRUM, working directly with the client.
+
     Education:
+      - institution: RWTH Aachen University (RWTH International Academy / IGMR)
+        location: Aachen, Germany
+        url: https://www.rwth-aachen.de/
+        studyType: Summer School Certificate, 3 ECTS
+        area: Robot Operating Systems Essentials
+        start_date: 2025-07
+        end_date: 2025-08
+        highlights:
+          - "28 July to 10 August 2025, two weeks in person: ROS and ROS 2, delta robot kinematics and control, Arduino programming, hardware/software integration."
+          - "Capstone: a three-DOF delta parallel manipulator with Armando Rodríguez, continued afterwards in ROS 2 Jazzy with an [interactive browser simulator](/projects/01_delta_robot/sim/)."
+
+      - institution: CentroGeo (Centro de Investigación en Ciencias de Información Geoespacial)
+        location: Online, Mexico City
+        url: https://www.centrogeo.org.mx/
+        studyType: Diploma, accredited
+        area: Remote Sensing and its Application to Earth Observation
+        start_date: 2024-08
+        end_date: 2024-09
+        highlights:
+          - "96-hour online diploma in three modules: remote sensing systems, digital image processing and its mathematical tools, and optical image analysis, with hands-on satellite imagery work in QGIS."
+          - The geospatial foundation behind SWARM's source estimation.
+
       - institution: Universidad de Guadalajara
         location: Jalisco, Mexico
-        area: Embedded Linux
         studyType: Diploma
+        area: Embedded Linux
         start_date: 2022-08
         end_date: 2023-05
         highlights:
-          - Completed May 2023.
+          - "Embedded Linux systems: cross-compilation and device-level development."
+
+      - institution: TU Graz
+        location: Graz, Austria
+        url: https://www.tugraz.at/
+        studyType: Exchange semester
+        area: Circuit Simulation and Embedded Systems
+        start_date: 2018-02
+        end_date: 2018-06
+        highlights:
+          - Circuit simulation in the lab, including noise and crosstalk analysis on integrated circuits.
+          - Coursework in embedded systems and space-qualified hardware design, plus software quality management with FMEA.
 
       - institution: Tecnológico de Monterrey
         location: Mexico City, Mexico
         url: https://tec.mx/en
-        area: Digital Systems and Robotics
         studyType: Bachelor of Engineering
+        area: Digital Systems and Robotics Engineering
         start_date: 2014-08
         end_date: 2019-12
         highlights:
-          - President of the Society of Robotics Engineering Students (SEIR), 2014–2017.
-          - International exchange at TU Graz (2018) — Space Systems Engineering &amp; Embedded Systems.
+          - President of SEIR (Sociedad de Estudiantes de Ingeniería en Robótica), August 2016 to June 2017.
+          - "Selected projects, listed under Projects: rescue-zone detection robot (capstone), Mexican Sign Language recognition, inverse-kinematics quadruped."
+          - Swimming, tai chi and singing.
 
-      - institution: TU Graz
-        location: Styria, Austria
-        area: Space Systems Engineering & Embedded Systems
-        studyType: Exchange Program
-        start_date: 2018-01
-        end_date: 2018-06
-        highlights:
-          - Designed and built a closed-loop temperature regulation system (MOSFET heating, precision sensors, PID firmware, sub-degree accuracy).
-
-    Experience:
-      - company: Dextra Technologies (a Deloitte Consulting business)
-        position: Embedded Software Developer II
-        location: Monterrey, Nuevo Leon, Mexico
-        start_date: 2022-01
-        end_date: 2024-07
-        summary: Real-time embedded development across two international automotive projects.
-        highlights:
-          - "Verizon Connect (2023–2024): developed and maintained Pomulator, a system to emulate car trips with micro-applications that improved data availability for high-level (Android) testing. Multi-threaded C++ on Yocto with bash tooling; CAN diagnostics for crucial telemetry. Collaborated remotely with the Dublin team."
-          - "Continental (2022–2023): developed and maintained diagnostics modules in C for the Body Control Module RTOS — requirements-to-code, unit tests, and physical bench testing. Reproduced and debugged hardware-level issues."
-          - Cross-functional collaboration with teams in Ireland, the US, England, Germany, India, and Poland.
-          - Led the team's migration to Git repositories.
-
-      - company: Amdocs
-        position: Software Developer I
-        location: Zapopan, Jalisco, Mexico
-        start_date: 2021-01
-        end_date: 2022-01
-        summary: Backend telecom services for AT&amp;T Mexico.
-        highlights:
-          - Analyzed, supported, and maintained backend services in Unix shell, Python, and C/C++.
-          - GDB-based memory-fault debugging on a production codebase.
-          - SCRUM delivery with direct client communication.
-
+    # The projects include ignores dates, so each summary starts with its period.
     Projects:
+      - name: SWARM, a low-cost real-time monitoring network
+        url: /swarm/
+        summary: 2023 to present. Low-cost nodes on a shared radio schedule and a local ground station that estimates a source and directs where the next nodes go.
+        highlights:
+          - "Measured: bench radio link, 10/10 link-test frames from each of two boards at desk range (3 September 2026)."
+          - "Implemented: frame decoding, storage, provisional source estimation and the browser dashboard."
+          - "Simulated: a fourteen-node response, recorded. The 50 m localization and four-hour autonomy figures remain targets."
+          - Seeking research supervision on the monitoring layer.
+
+      - name: Parcel-sortation robot fleet
+        url: /projects/12_parcel_sortation_fleet/
+        summary: 2026 to present, design stage. Self-built tilt-tray robots on ESP32-S3 and micro-ROS with a central ROS 2 traffic controller. Design complete; simulation in progress; nothing measured yet.
+
       - name: Delta robot parallel manipulator
-        summary: '3-DOF parallel mechanism from the RWTH International Academy summer school "Robot Operating Systems Essentials" (IGMR, RWTH Aachen University). On the course kit, URDF, and node scaffold I wrote the inverse kinematics and completed the ROS 2 nodes, then migrated the stack to ROS 2 Jazzy and added a FastAPI + React dashboard, a forward-kinematics fix, and a browser simulator.'
-        start_date: 2025-07
-        end_date: 2026-09
+        url: /projects/01_delta_robot/
+        summary: "2025 to present, with Armando Rodríguez. Three-DOF parallel robot in ROS 2 Jazzy: kinematics, control and an [interactive browser simulator](/projects/01_delta_robot/sim/)."
 
-      - name: Hostile-zone rescue robot with SLAM
-        summary: Hardware adaptation, disk imaging, modeling, and ROS programming of a mobile robot for closed-environment detection using Simultaneous Localization And Mapping.
-        start_date: 2019-08
-        end_date: 2019-12
+      - name: yahboomcar-ros2, mobile-robot SLAM stack
+        url: https://github.com/alexandergmzx/yahboomcar-ros2
+        summary: SLAM stack for a Yahboom micro-ROS car on slam_toolbox, validated in simulation with measured gates (map quality, TF availability, sensor health). Physical SLAM not delivered.
 
-      - name: Mexican Sign Language recognition (OpenCV + Keras)
-        summary: Researched, modeled, and trained an AI for real-time recognition of the LSM (Lengua de Señas Mexicana) hand-sign alphabet from a webcam.
-        start_date: 2019-02
-        end_date: 2019-05
+      - name: fish_brain, an animatronic Big Mouth Billy Bass
+        url: https://github.com/alexandergmzx/fish_brain
+        summary: October 2025 to present. Driven from a Python host over serial to an Arduino UNO R4, with text-to-speech; a next iteration on the Arduino UNO Q, with on-board loudspeaker and controls, is in progress.
+
+      - name: Rescue-zone detection robot (capstone)
+        url: /projects/02_slam_rescue_robot/
+        summary: "2019, team of three, ROS Kinetic: RGB-D perception, RTAB-Map integration and custom odometry on an X80 platform."
+
+      - name: Mexican Sign Language recognition
+        url: /projects/03_sign_language_cv/
+        summary: "February to May 2019, team of six. Real-time recognition of the Mexican Sign Language (LSM) hand-sign alphabet from a live camera: VGG16 transfer learning in Keras, OpenCV capture."
 
       - name: Furuta self-balancing pendulum
-        summary: Designed and implemented an inverted pendulum on Arduino with PID control, rotary-encoder position feedback, and PWM-controlled DC motor for real-time stabilization.
-        start_date: 2019-08
-        end_date: 2019-12
+        url: /projects/04_furuta_pendulum/
+        summary: August to December 2019. Inverted pendulum on Arduino with PID control, rotary-encoder feedback and a PWM-driven DC motor.
 
       - name: Inverse-kinematics quadruped robot
-        summary: CAD design, PCB layout, mathematical modeling, and firmware for an obstacle-avoiding four-legged robot.
-        start_date: 2018-09
-        end_date: 2018-12
+        summary: "September to December 2018, team project for Applied Robotics. Obstacle-avoiding quadruped: CAD, PCB design, inverse-kinematics modelling and firmware."
 
-      - name: Bare-metal STM32 driver tutorial
-        summary: Custom GPIO, UART, and serial-display drivers written from register-level programming without HAL libraries — demonstrating hardware abstraction and low-level embedded fundamentals.
+      - name: Bare-metal STM32 drivers
         url: https://github.com/alexandergmzx/handmade_drivers_on_baremetal
-        start_date: 2020-06
-        end_date: 2020-06
+        summary: June 2020. GPIO, UART and serial-display drivers written at register level, without HAL libraries.
 
-      - name: "Billy Mouth — animatronic text-to-speech"
-        summary: Self text-to-speech-to-movements system driving an animatronic mouth.
-        start_date: 2025-10
-        end_date: 2025-10
+      - name: Earlier projects, 2014 to 2016
+        highlights:
+          - "Los Rancherous (March to May 2016): a game built to learn Java, with José Luis; most of the art and the music our own."
+          - "VGA pong (August to December 2015): two-player keyboard pong on an Altera DE2 FPGA in VHDL, with José Luis. [Source](https://github.com/alexandergmzx/vong)."
+          - "Domótica para todos (from June 2014): where it started. Arduino programming and circuits, basic Android development and web programming, with the support of an experienced mechatronics engineer."
 
     Skills:
-      - name: Embedded Systems
-        keywords: "RTOS development, embedded Linux, real-time systems, bare-metal firmware"
+      - name: Languages
+        keywords: [Embedded C, C++, Python, Bash]
+      - name: RTOS and platforms
+        keywords: [SafeRTOS, FreeRTOS, Embedded Linux, Yocto]
       - name: Robotics
-        keywords: "ROS2, SLAM, inverse kinematics, PID control"
+        keywords: [ROS 2, micro-ROS, SLAM, Isaac Sim, Webots]
+      - name: Automotive
+        keywords: [Classic AUTOSAR, MISRA C, CAN, UDS diagnostics, Vector CANoe]
       - name: Hardware
-        keywords: "CAN bus, microcontrollers (STM32, Arduino), sensors, AC/DC motors, Ethernet"
-      - name: Testing &amp; Debugging
-        keywords: "GDB, unit testing, bench testing"
-      - name: Tools
-        keywords: "Yocto, LabVIEW, Cadence PSpice, Siemens TIA Portal, MATLAB, Simulink, Git"
-      - name: Methodologies
-        keywords: "SCRUM, Agile"
+        keywords: [Inter-process communication (IPC), multi-core SoC, TI TDA4, ESP32, STM32, Raspberry Pi]
+      - name: Tools and testing
+        keywords: [Lauterbach Trace32, GDB, Jenkins, Bazel, Git, unit testing, HIL testing]
 
+    Awards:
+      - title: "EGEL Electronic Engineering (CENEVAL): Sobresaliente"
+        awarder: CENEVAL
+        date: 2019-10
+        summary: "National graduation exam in Electronic Engineering. Result: Sobresaliente, the highest performance level."
+
+    # One-place rule: RWTH, CentroGeo and UdG live in Education only.
     Certificates:
-      - name: C++ — Data Structures Specialization
+      - name: Computer Vision with Embedded Machine Learning
+        issuer: Edge Impulse
+        date: 2025-09
+      - name: Accelerated Computer Science Fundamentals Specialization
         issuer: University of Illinois Urbana-Champaign
-
-      - name: 'Summer School "Robot Operating Systems Essentials" (RWTH Aachen University Certificate, 3 ECTS)'
-        issuer: RWTH International Academy / IGMR, RWTH Aachen University
-        date: 2025-08
-
-      - name: Embedded Linux Diploma
-        issuer: Universidad de Guadalajara
-        date: 2023-05
-
-      - name: Google IT Automation with Python — Professional Certificate
+        date: 2020-12
+      - name: Google IT Automation with Python Specialization
         issuer: Google
-
+        date: 2020-10
       - name: Open Source Software Development, Linux and Git Specialization
         issuer: The Linux Foundation
-
-      - name: LabVIEW Associate Developer
-        issuer: Tecnológico de Monterrey
+        date: 2020-07
+      - name: Embedded Hardware and Operating Systems
+        issuer: Coursera
+        date: 2020-05
+      - name: Introduction to Embedded Systems Software and Development Environments
+        issuer: University of Colorado Boulder
+        date: 2020-05
+      - name: Mastering Microcontroller with Embedded Driver Development
+        issuer: FastBit Embedded Brain Academy
+        date: 2020-04
+      - name: C Programming for Embedded Applications
+        issuer: LinkedIn Learning
+        date: 2020-03
+      - name: Embedded Software and Hardware Architecture
+        issuer: University of Colorado Boulder
+        date: 2020-02
+      - name: Certified Associate LabVIEW Developer (expired)
+        issuer: National Instruments
+        date: 2019-11
 
     Languages:
       - name: Spanish
-        summary: Native speaker
+        summary: Native
       - name: English
-        summary: IELTS C1
+        summary: Full professional proficiency (C1, IELTS Band 7.0)
       - name: German
-        summary: A2
+        summary: Elementary (A2)
+      - name: French
+        summary: Elementary
 
     Interests:
       - name: Sports
-        keywords: "Water polo, basketball, association football"
+        keywords: [Swimming, association football, water polo, basketball, tai chi]
+      - name: Music
+        keywords: [Singing]

@@ -2,7 +2,7 @@
 layout: about
 title: about
 permalink: /
-subtitle: Computer Vision · Robotics · Embedded Software Engineering
+subtitle: Embedded Systems · Robotics · Real-time Monitoring
 
 profile:
   align: right
@@ -26,9 +26,8 @@ latest_posts:
   category: tech # only surface notes from this garden bed here; leave blank for all of them
 ---
 
-<p class="intro-lead">I am an embedded systems engineer working with real-time software, robotics, and computer vision.</p>
+<p class="intro-lead">I build software that has to answer to hardware.</p>
 
 <div class="body-copy">
-  <p>My work spans embedded C/C++, RTOSes, embedded Linux, and CAN-bus diagnostics. I am interested in how software behaves on real hardware—and in building tools that improve the lives of the people around me.</p>
-  <p>I hold a BEng in Digital Systems &amp; Robotics from Tec de Monterrey and am applying to master’s programs in embedded systems.</p>
+  <p>Embedded and robotics engineer: four years in embedded C and C++ across automotive and telecom, today at DXC Technology. Since 2023 my own work is <a href="/swarm/">SWARM</a>, a low-cost real-time monitoring network: the radio link is measured on the bench, the fourteen-node response is recorded in simulation. Next, a research master's in real-time monitoring systems. The longer story is on the <a href="/vision/">Vision page</a>; the full record is in the <a href="/cv/">CV</a>.</p>
 </div>

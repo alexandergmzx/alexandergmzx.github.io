@@ -11,11 +11,11 @@ navbar_logo: alx-gomez-logo.png # logo image shown in navbar instead of name tex
 contact_note: >
   Reach out via LinkedIn or GitHub.
 description: > # the ">" symbol means to ignore newlines until "footer_text:"
-  Computer Vision · Robotics · Embedded Software Engineering.
+  Embedded and robotics engineer. Real-time systems in C/C++ and ROS 2. Creator of SWARM, a low-cost real-time monitoring network.
 footer_text: >
   Powered by <a href="https://jekyllrb.com/" target="_blank">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio">al-folio</a> theme.
   Hosted by <a href="https://pages.github.com/" target="_blank">GitHub Pages</a>.
-keywords: embedded systems, robotics, computer vision, real-time systems, embedded linux, RTOS, C++, ROS2, microcontrollers, software developer
+keywords: embedded systems, robotics, computer vision, real-time systems, embedded linux, RTOS, C++, ROS2, microcontrollers, software developer, ROS 2, micro-ROS, ESP32, real-time monitoring, AUTOSAR, SWARM
 lang: en # the language of your site (for example: en, fr, cn, ru, etc.)
 icon: favicon_alx.png # favicon stored under assets/img/
 
