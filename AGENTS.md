@@ -53,6 +53,17 @@ Before every commit, you **must** run these steps:
     # Check navigation, pages, images, and dark mode.
     ```
 
+## CI Workflows: What Fails and Why
+
+These workflows emailed the owner with failures for months. Keep them green:
+
+- **Prettier code formatter** (`.github/workflows/prettier.yml`) runs `npx prettier . --check` on every push to `main`. Any unformatted file in the push fails it. Before every commit, run `npm ci` once (the versions CI pins in `package-lock.json`), then `npx prettier . --write`. Confirm with `npx prettier . --check`, which must print "All matched files use Prettier code style!".
+- **Lighthouse Badger** (`.github/workflows/lighthouse-badger.yml`) is manual-only on purpose. It needs a `LIGHTHOUSE_BADGER_TOKEN` secret (a personal access token), which is not configured, so every automatic run failed at checkout. Its `URLS` and `REPO_BRANCH` still point at the al-folio template (`alshedivat.github.io/al-folio/`, branch `master`). A manual run fails until both are changed to this site and `main`. Do not uncomment `page_build:` or `schedule:` until the secret exists.
+- **Render a CV** (`.github/workflows/render-cv.yml`) is manual-only on purpose. The CV PDF is a Google Docs export, and `_data/cv.yml` carries keys RenderCV rejects (`label`, `summary`, `address`), so the old push trigger failed on every CV edit. Do not restore the `push:` trigger.
+- **Check for broken links** is skipped on this fork (it is gated to `alshedivat/al-folio`). **Check for broken links on site** runs lychee offline after each deploy and checks internal links only. A typo in an internal path such as `/projects/<slug>/` fails it.
+
+After a push, check the runs with `gh run list --limit 10`.
+
 ## Critical Configuration
 
 When modifying `_config.yml`, these **must be updated together**:
