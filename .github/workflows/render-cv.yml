@@ -1,14 +1,7 @@
 name: Render a CV
+# Manual runs only. The downloadable PDF (assets/pdf/alexander_gomez_cv.pdf) is a Google Docs export,
+# and _data/cv.yml carries keys RenderCV rejects, so a push trigger would fail on every CV edit.
 on:
-  push:
-    branches:
-      - main
-      - master
-    paths:
-      - "_data/cv.yml"
-      - "assets/rendercv/design.yaml"
-      - "assets/rendercv/locale.yaml"
-      - "assets/rendercv/settings.yaml"
   workflow_call:
   workflow_dispatch:
 permissions:
