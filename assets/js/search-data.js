@@ -201,9 +201,9 @@ ninja.data = [{
           description: "Register-level GPIO, UART, and display drivers — no HAL",
           section: "Projects",handler: () => {
               window.location.href = "/projects/07_stm32_baremetal/";
-            },},{id: "projects-billy-mouth-animatronic-text-to-speech",
-          title: 'Billy Mouth — animatronic text-to-speech',
-          description: "Self text-to-speech-to-movements system driving an animatronic",
+            },},{id: "projects-fish-brain-an-animatronic-big-mouth-billy-bass-that-talks",
+          title: 'fish_brain: an animatronic Big Mouth Billy Bass that talks',
+          description: "Animatronic Big Mouth Billy Bass driven from a Python host over serial to an Arduino, with text-to-speech",
           section: "Projects",handler: () => {
               window.location.href = "/projects/08_billy_mouth_animatronic/";
             },},{id: "projects-miniature-warehouse-management-system",
@@ -221,6 +221,11 @@ ninja.data = [{
           description: "Low-cost environmental nodes on a shared radio schedule and a local ground station, shown through a seven-step walkthrough of a simulated response",
           section: "Projects",handler: () => {
               window.location.href = "/swarm/";
+            },},{id: "projects-parcel-sortation-robot-fleet",
+          title: 'Parcel-sortation robot fleet',
+          description: "Self-built tilt-tray robots on ESP32-S3 and micro-ROS under a central ROS 2 traffic controller. Design complete; simulation in progress.",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/12_parcel_sortation_fleet/";
             },},{id: "teachings-python-for-devops",
           title: 'Python for DevOps',
           description: "Hands-on 12-week course covering Python tooling for automation, infrastructure, and CI/CD.",
